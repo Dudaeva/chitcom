@@ -1,0 +1,8 @@
+#Папка backend'a
+.env
+node_modules
+.idea
+
+/client/node_modules
+/client/.idea
+/client/README.md
