@@ -42,11 +42,11 @@ module.exports.usersController = {
 
             const candidate = await User.findOne({login});
             if (!candidate)
-                return res.status(404).json({error: "Пользователь с такими данными не существует"});;
+                return res.status(404).json({error: "Пользователь с такими данными не существует"});
 
             const isPasswordValid = bcrypt.compareSync(password, candidate.password);
             if (!isPasswordValid)
-                return res.status(404).json({error: "Пользователь с такими данными не существует"});;
+                return res.status(404).json({error: "Пользователь с такими данными не существует"});
 
             const { name, id, avatar_URI, telegram_URI, } = candidate;
             const token = generateNewToken({ name, id, avatar_URI, telegram_URI });
