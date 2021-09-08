@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import styles from "./posts.module.css";
-import chit from "../images/horizontal_on_white_by_logaster.png";
+import chit from "../../images/horizontal_on_white_by_logaster.png";
 import Footer from "./Footer";
 
 function SinglePostPage(props) {
