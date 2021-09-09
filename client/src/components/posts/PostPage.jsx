@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./posts.module.css";
 import { makeStyles } from "@material-ui/core/styles";
-import Pagination from "@material-ui/lab/Pagination";
-import chit from "../images/horizontal_on_white_by_logaster.png";
+import chit from "../../images/horizontal_on_white_by_logaster.png";
 import Header from "./Header";
 import Footer from "./Footer";
+import {Pagination, TextField} from "@mui/material";
+import {Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,7 @@ function PostPage(props) {
         <div className={styles.main}>
           <div className={styles.title}>
             <h1>Посты</h1>
-            <h3>Мы здесь для того, чтобы помочь разработчикам развиваться!</h3>
+            <Typography component="h3" >Мы здесь для того, чтобы помочь разработчикам развиваться!</Typography>
           </div>
         </div>
         <div className={styles.content}>
@@ -39,7 +40,7 @@ function PostPage(props) {
               </a>
               SEPTEMBER 2, 2021
             </div>
-            {/* блок с заголовкой поста */}
+            {/* блок с заголовком поста */}
             <div>
               <h1>
                 Pandemic lockdowns accelerated cloud migration by three to four
