@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SpacingGrid() {
+export default function QuestionsPage() {
   const classes = useStyles();
 
   return (
