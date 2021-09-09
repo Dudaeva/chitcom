@@ -3,16 +3,20 @@ import SignUp from "./components/Authorization/SignUp";
 import SignIn from "./components/Authorization/SignIn";
 import {Posts, OnePost} from "./components/posts/"
 import {useSelector} from "react-redux";
+import HomePage from "./components/HomePage/HomePage";
+
 
 
 const App = () => {
 
     const { token } = useSelector(store => store.users);
 
-
     return (
       <>
           <Switch>
+              <Route exact path="/">
+                  <HomePage />
+              </Route>
               <Route exact path="/posts">
                   <Posts />
               </Route>
