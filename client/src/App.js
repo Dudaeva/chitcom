@@ -1,29 +1,36 @@
 import { Redirect, Route, Switch } from "react-router-dom";
 import SignUp from "./components/Authorization/SignUp";
-import PostPage from "./components/posts/PostPage";
-import SinglePostPage from "./components/posts/SinglePostPage";
 import SignIn from "./components/Authorization/SignIn";
+import {Posts, OnePost} from "./components/posts/"
+import {useSelector} from "react-redux";
 
-function App() {
-  return (
+const App = () => {
+
+    const { token } = useSelector(store => store.users);
+
+
+    return (
       <>
           <Switch>
               <Route exact path="/posts">
-                  <PostPage />
+                  <Posts />
               </Route>
               <Route exact path="/posts/:id">
-                  <SinglePostPage />
+                  <OnePost />
               </Route>
-              <Route path="/sign-up">
+              <Route path="/my-profile">
+                  Мой профиль
+              </Route>
+              <Route exact path="/sign-up">
                   <SignUp />
               </Route>
-              <Route path="/sign-in">
+              <Route exact path="/sign-in">
                   <SignIn />
               </Route>
               <Redirect to="/" />
           </Switch>
       </>
-  );
+    );
 }
 
 export default App;

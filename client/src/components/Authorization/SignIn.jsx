@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Paper, SnackbarContent, Snackbar, CssBaseline, Input, InputLabel, withStyles,
     FormControl,  Avatar , Button , InputAdornment, IconButton } from "@material-ui/core";
 import { PeopleAlt, VisibilityTwoTone, VisibilityOffTwoTone } from "@material-ui/icons";
@@ -12,7 +12,8 @@ import {Typography} from "@mui/material";
 
 
 const SignIn = (props) =>  {
-    const { error, success, signingIn } = useSelector(store => store.users);
+    const { error, success, signingIn, token } = useSelector(store => store.users);
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -23,7 +24,7 @@ const SignIn = (props) =>  {
         errorOpen: false
     })
 
-    const errorClose = e => {
+    const errorClose = () => {
         setState({...state, errorOpen: false });
     };
 
@@ -37,30 +38,33 @@ const SignIn = (props) =>  {
         setState({...state, hidePassword: !state.hidePassword });
     };
 
-    const submitRegistration = e => {
-        e.preventDefault();
-        const {login, password} = state;
 
+    if (success?.includes("Вы успешно авторизовались!")) {
+        setTimeout(() => {
+            document.cookie = `token=Bearer ${json.token};expires=${json.expires}; path=/;`;
+            history.push("/")
+        }, 3000);
+    }
+    else if (token) history.push("/my-profile");
+
+    const submitRegistration = e => {
+
+        e.preventDefault();
+
+        const {login, password} = state;
         dispatch(signInAccount(login, password));
 
         setState({...state, errorOpen: true});
+
     };
 
     const { classes } = props;
-
-    if (success) {
-        setTimeout(() => {
-            dispatch(clearData());
-            history.push("/sign-in")
-        }, 2000)
-    };
-
     return (
         <div className={classes.main}>
             <CssBaseline />
 
             <Paper className={classes.paper}>
-                {error || success && (
+                {(error || success) && (
                     <Snackbar
                         variant={error ? "error" : "success"}
                         key={error || success}
@@ -70,7 +74,7 @@ const SignIn = (props) =>  {
                         }}
                         open={state.errorOpen}
                         onClose={errorClose}
-                        autoHideDuration={3000}
+                        autoHideDuration={4000}
                     >
                         <SnackbarContent
                             className={classes.error}

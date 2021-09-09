@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Paper, SnackbarContent, Snackbar, CssBaseline, Input, InputLabel, withStyles,
     FormControl,  Avatar , Button , InputAdornment, IconButton } from "@material-ui/core";
 import { PeopleAlt, VisibilityTwoTone, VisibilityOffTwoTone } from "@material-ui/icons";
@@ -37,6 +37,9 @@ const SignUp = (props) =>  {
         setState({...state, hidePassword: !state.hidePassword });
     };
 
+    if (success?.includes("Пользователь успешно зарегистрирован!"))
+        setTimeout(() => history.push("/sign-in"), 3000);
+
     const submitRegistration = e => {
         e.preventDefault();
         const newUserCredentials = {
@@ -50,13 +53,6 @@ const SignUp = (props) =>  {
     };
 
     const { classes } = props;
-
-    if (success) {
-        setTimeout(() => {
-            dispatch(clearData());
-            history.push("/sign-in")
-        }, 2000)
-    };
 
     return (
         <div className={classes.main}>

@@ -34,10 +34,10 @@ const reducer = (state = initialState, action) => {
             return {...state, signingUp: false, error: action.error}
 
         case "users/createUser/fulfilled" :
-            return {...state, signingUp: false, success: action.success}
+            return {...state, success: action.success}
 
-        case "users/createUser/clear" :
-            return {...state, signingUp: false, success: null, error: null}
+        case "users/data/clear" :
+            return {...state, signingUp: false, signingIn: false, success: null, error: null}
 
         default:
             return state;
@@ -67,12 +67,12 @@ export const createUser = (data) => async (dispatch) => {
         Вы будете автоматически переправлены на страницу авторизации`});
 }
 
-export const clearData = () => (dispatch) => {
-    dispatch({type: "users/createUser/clear"});
-}
+export const clearData = () => (dispatch) =>
+    dispatch({type: "users/data/clear"});
+
 
 export const signInAccount = (login, password) => async dispatch => {
-    dispatch({type: "users/singin/pending"});
+    dispatch({type: "users/signin/pending"});
 
     const res = await fetch("/signin", {
         method: "POST",
@@ -83,10 +83,8 @@ export const signInAccount = (login, password) => async dispatch => {
 
     if (json.error)
         dispatch({type: "users/signin/rejected", error: json.error});
-    else {
+    else
         dispatch({type: "users/signin/fulfilled", payload: {success: json.success, token: json.token}});
-        document.cookie = `token=Bearer ${json.token};expires=${json.expires}; path=/;`;
-    }
 }
 
 export const signOut = () => (dispatch) => {
