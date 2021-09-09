@@ -41,7 +41,7 @@ const SignIn = (props) =>  {
 
     if (success?.includes("Вы успешно авторизовались!")) {
         setTimeout(() => {
-            document.cookie = `token=Bearer ${json.token};expires=${json.expires}; path=/;`;
+            //document.cookie = `token=Bearer ${json.token};expires=${json.expires}; path=/;`;
             history.push("/")
         }, 3000);
     }
