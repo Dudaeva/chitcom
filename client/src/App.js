@@ -4,6 +4,7 @@ import SignIn from "./components/Authorization/SignIn";
 import {Posts, OnePost} from "./components/posts/"
 import {useSelector} from "react-redux";
 
+
 const App = () => {
 
     const { token } = useSelector(store => store.users);
