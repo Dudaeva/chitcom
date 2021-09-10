@@ -3,6 +3,9 @@ import {DateRange as DateRangeIcon, Comment as CommentIcon} from "@material-ui/i
 import SearchBar from "./SearchBar";
 import Header from "../Header";
 import {useHistory} from "react-router-dom";
+import {useEffect} from "react";
+import {getQuestions} from "../../redux/feautures/questions";
+import {useDispatch, useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,9 +41,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QuestionsPage() {
+const QuestionsPage = () => {
   const classes = useStyles();
+  const {asks, loading, error} = useSelector(store => store.questions);
+
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getQuestions())
+  }, [])
 
   return (
       <>
@@ -50,112 +60,70 @@ export default function QuestionsPage() {
           <SearchBar />
 
           <Box>
-            <Grid container className={classes.question}>
-              <Box
-                  mx={1}
-                  pb={1}
-                  display="flex"
-                  alignItems="center"
-                  flexDirection="column"
-                  width={200}
-              >
-                <CardMedia
-                    image={"https://ru.joblum.com/uploads/115/114179.png"}
-                    className={classes.avatar}
-                />
-                <Box pb={2} mb={2} className={classes.login}>
-                  Евгений Кузьмин
-                </Box>
-                <Box>@telegram</Box>
-              </Box>
-
-              <Box
-                  position="relative"
-                  width="70%"
-                  className={classes.block}
-              >
-                <Box height="100%" p={4} >
-                  <Typography
-                      fontWeight={500}
-                      variant="h5"
-                      style={{cursor: "pointer"}}
-                      onClick={() => history.push("/asks/1")}
+            {loading ?
+                <h4>Загружаем вопросы...</h4> :
+                asks?.map(question =>
+                <Grid container className={classes.question}>
+                  <Box
+                      mx={1}
+                      pb={1}
+                      display="flex"
+                      alignItems="center"
+                      flexDirection="column"
+                      width={200}
                   >
-                    Что на работе делает Java Программист без опыта работы, который
-                    только что устроился.
-                  </Typography>
-                </Box>
-                <Box
-                    alignItems="center"
-                    display="flex"
-                    justifyContent="space-around"
-                    className={classes.comment}
-                >
-                  <Box>
-                    <DateRangeIcon />
-                    27.12.2019
+                    <CardMedia
+                        image={question.author.avatar_URI}
+                        className={classes.avatar}
+                    />
+                    <Box pb={2} mb={2} className={classes.login}>
+                      {question.author.name || question.author.login}
+                    </Box>
+                    {question.author.telegram_URI &&
+                      <Box>
+                        <a href={`https://t.me/${question.author.telegram_URI}`}>
+                           @{question.author.telegram_URI}
+                        </a>
+                      </Box>}
                   </Box>
-                  <Box>
-                    <CommentIcon />
-                    212 комментариев
-                  </Box>
-                </Box>
-              </Box>
-            </Grid>
-            <Grid container className={classes.question}>
-              <Box
-                  mx={1}
-                  pb={1}
-                  display="flex"
-                  alignItems="center"
-                  flexDirection="column"
-                  width={200}
-              >
-                <CardMedia
-                    image={"https://ru.joblum.com/uploads/115/114179.png"}
-                    className={classes.avatar}
-                />
-                <Box pb={2} mb={2} className={classes.login}>
-                  Евгений Кузьмин
-                </Box>
-                <Box>@telegram</Box>
-              </Box>
 
-              <Box
-                  position="relative"
-                  width="70%"
-                  className={classes.block}
-              >
-                <Box height="100%" p={4} >
-                  <Typography
-                      fontWeight={500}
-                      variant="h5"
-                      style={{cursor: "pointer"}}
-                      onClick={() => history.push("/asks/1")}
+                  <Box
+                      position="relative"
+                      width="70%"
+                      className={classes.block}
                   >
-                    Что на работе делает Java Программист без опыта работы, который
-                    только что устроился.
-                  </Typography>
-                </Box>
-                <Box
-                    alignItems="center"
-                    display="flex"
-                    justifyContent="space-around"
-                    className={classes.comment}
-                >
-                  <Box>
-                    <DateRangeIcon />
-                    27.12.2019
+                    <Box height="100%" p={4} >
+                      <Typography
+                          fontWeight={500}
+                          variant="h5"
+                          style={{cursor: "pointer"}}
+                          onClick={() => history.push(`/asks/${question.id}`)}
+                      >
+                        {question.title}
+                      </Typography>
+                    </Box>
+                    <Box
+                        alignItems="center"
+                        display="flex"
+                        justifyContent="space-around"
+                        className={classes.comment}
+                    >
+                      <Box>
+                        <DateRangeIcon />
+                        {question.createdAt.slice(0, 10)}
+                      </Box>
+                      <Box>
+                        <CommentIcon />
+                        {question.answers.length} ответов
+                      </Box>
+                    </Box>
                   </Box>
-                  <Box>
-                    <CommentIcon />
-                    212 комментариев
-                  </Box>
-                </Box>
-              </Box>
-            </Grid>
+                </Grid>
+              )}
           </Box>
         </Paper>
       </>
   );
 }
+
+export default QuestionsPage;
