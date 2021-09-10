@@ -38,15 +38,6 @@ const SignIn = (props) =>  {
         setState({...state, hidePassword: !state.hidePassword });
     };
 
-
-    if (success?.includes("Вы успешно авторизовались!")) {
-        setTimeout(() => {
-            //document.cookie = `token=Bearer ${json.token};expires=${json.expires}; path=/;`;
-            history.push("/")
-        }, 3000);
-    }
-    else if (token) history.push("/my-profile");
-
     const submitRegistration = e => {
 
         e.preventDefault();

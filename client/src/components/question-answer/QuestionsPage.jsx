@@ -6,6 +6,7 @@ import { Box, CardMedia, Typography } from "@material-ui/core";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import CommentIcon from "@material-ui/icons/Comment";
 import SearchBar from "./SearchBar";
+import Header from "../Header";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,123 +46,125 @@ export default function QuestionsPage() {
   const classes = useStyles();
 
   return (
-    <Paper className={classes.paper}>
-      {/* Здесь будет header */}
+      <>
+        <Header />
+        <Paper className={classes.paper}>
 
-      <SearchBar />
+          <SearchBar />
 
-      <Grid container className={classes.question}>
-        <Box
-          ml={4}
-          mr={1}
-          display="flex"
-          alignItems="center"
-          flexDirection="column"
-          height={320}
-          width={200}
-        >
-          <CardMedia
-            image={"https://ru.joblum.com/uploads/115/114179.png"}
-            className={classes.avatar}
-          />
-          <Box pb={2} mb={2} className={classes.login}>
-            Евгений Кузьмин
-          </Box>
-          <Box>@telegram</Box>
-        </Box>
-
-        <Box
-          position="relative"
-          height={320}
-          width="70%"
-          className={classes.block}
-        >
-          <Box height="100%" p={4}>
-            <Typography>
-              <h2>
-                Что на работе делает Java Программист без опыта работы, который
-                только что устроился.
-              </h2>
-              Часть 1 Итак, всем привет! В эту предновогоднюю пятницу я пришел
-              на своё рабочее место и решил поделиться с новичками дела, уже как
-              сторожил - а чем же занимается джуниор на работе по своему опыту.
-              Это будет короткий пост, времени мало - тасков куча, да и кучу
-              мануалов опять читать) учеба по 5 часов каждый...
-            </Typography>
-          </Box>
-          <Box
-            alignItems="center"
-            display="flex"
-            justifyContent="space-around"
-            className={classes.comment}
-          >
-            <Box>
-              <DateRangeIcon />
-              27.12.2019
+          <Grid container className={classes.question}>
+            <Box
+                ml={4}
+                mr={1}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                height={320}
+                width={200}
+            >
+              <CardMedia
+                  image={"https://ru.joblum.com/uploads/115/114179.png"}
+                  className={classes.avatar}
+              />
+              <Box pb={2} mb={2} className={classes.login}>
+                Евгений Кузьмин
+              </Box>
+              <Box>@telegram</Box>
             </Box>
-            <Box>
-              <CommentIcon />
-              212 комментариев
-            </Box>
-          </Box>
-        </Box>
-      </Grid>
 
-      <Grid container className={classes.question}>
-        <Box
-          ml={4}
-          mr={1}
-          display="flex"
-          alignItems="center"
-          flexDirection="column"
-          width={200}
-        >
-          <CardMedia
-            image={"https://ru.joblum.com/uploads/115/114179.png"}
-            className={classes.avatar}
-          />
-          <Box pb={2} mb={2} className={classes.login}>
-            Евгений Кузьмин
-          </Box>
-          <Box>@telegram</Box>
-        </Box>
+            <Box
+                position="relative"
+                height={320}
+                width="70%"
+                className={classes.block}
+            >
+              <Box height="100%" p={4}>
+                <Typography>
+                  <h2>
+                    Что на работе делает Java Программист без опыта работы, который
+                    только что устроился.
+                  </h2>
+                  Часть 1 Итак, всем привет! В эту предновогоднюю пятницу я пришел
+                  на своё рабочее место и решил поделиться с новичками дела, уже как
+                  сторожил - а чем же занимается джуниор на работе по своему опыту.
+                  Это будет короткий пост, времени мало - тасков куча, да и кучу
+                  мануалов опять читать) учеба по 5 часов каждый...
+                </Typography>
+              </Box>
+              <Box
+                  alignItems="center"
+                  display="flex"
+                  justifyContent="space-around"
+                  className={classes.comment}
+              >
+                <Box>
+                  <DateRangeIcon />
+                  27.12.2019
+                </Box>
+                <Box>
+                  <CommentIcon />
+                  212 комментариев
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
 
-        <Box
-          position="relative"
-          height={320}
-          width="70%"
-          className={classes.block}
-        >
-          <Box height="100%" p={4}>
-            <Typography>
-              <h2>
-                Что на работе делает Java Программист без опыта работы, который
-                только что устроился.
-              </h2>
-              Часть 1 Итак, всем привет! В эту предновогоднюю пятницу я пришел
-              на своё рабочее место и решил поделиться с новичками дела, уже как
-              сторожил - а чем же занимается джуниор на работе по своему опыту.
-              Это будет короткий пост, времени мало - тасков куча, да и кучу
-              мануалов опять читать) учеба по 5 часов каждый...
-            </Typography>
-          </Box>
-          <Box
-            alignItems="center"
-            display="flex"
-            justifyContent="space-around"
-            className={classes.comment}
-          >
-            <Box>
-              <DateRangeIcon />
-              27.12.2019
+          <Grid container className={classes.question}>
+            <Box
+                ml={4}
+                mr={1}
+                display="flex"
+                alignItems="center"
+                flexDirection="column"
+                width={200}
+            >
+              <CardMedia
+                  image={"https://ru.joblum.com/uploads/115/114179.png"}
+                  className={classes.avatar}
+              />
+              <Box pb={2} mb={2} className={classes.login}>
+                Евгений Кузьмин
+              </Box>
+              <Box>@telegram</Box>
             </Box>
-            <Box>
-              <CommentIcon />
-              212 комментариев
+
+            <Box
+                position="relative"
+                height={320}
+                width="70%"
+                className={classes.block}
+            >
+              <Box height="100%" p={4}>
+                <Typography>
+                  <h2>
+                    Что на работе делает Java Программист без опыта работы, который
+                    только что устроился.
+                  </h2>
+                  Часть 1 Итак, всем привет! В эту предновогоднюю пятницу я пришел
+                  на своё рабочее место и решил поделиться с новичками дела, уже как
+                  сторожил - а чем же занимается джуниор на работе по своему опыту.
+                  Это будет короткий пост, времени мало - тасков куча, да и кучу
+                  мануалов опять читать) учеба по 5 часов каждый...
+                </Typography>
+              </Box>
+              <Box
+                  alignItems="center"
+                  display="flex"
+                  justifyContent="space-around"
+                  className={classes.comment}
+              >
+                <Box>
+                  <DateRangeIcon />
+                  27.12.2019
+                </Box>
+                <Box>
+                  <CommentIcon />
+                  212 комментариев
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        </Box>
-      </Grid>
-    </Paper>
+          </Grid>
+        </Paper>
+      </>
   );
 }
