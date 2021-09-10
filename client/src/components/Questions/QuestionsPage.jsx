@@ -3,7 +3,7 @@ import {DateRange as DateRangeIcon, Comment as CommentIcon} from "@material-ui/i
 import SearchBar from "./SearchBar";
 import Header from "../Header";
 import {useHistory} from "react-router-dom";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {getQuestions} from "../../redux/feautures/questions";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 const QuestionsPage = () => {
   const classes = useStyles();
   const {asks, loading, error} = useSelector(store => store.questions);
+  const [searchValue, setSearchValue] = useState(String);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -57,13 +58,13 @@ const QuestionsPage = () => {
         <Header />
         <Paper className={classes.paper}>
 
-          <SearchBar />
+          <SearchBar values = {{searchValue, setSearchValue}}/>
 
           <Box>
             {loading ?
                 <h4>Загружаем вопросы...</h4> :
-                asks?.map(question =>
-                <Grid container className={classes.question}>
+                asks?.filter(item => item.title.includes(searchValue)).map(question =>
+                <Grid container className={classes.question} key={question.id}>
                   <Box
                       mx={1}
                       pb={1}
@@ -97,7 +98,7 @@ const QuestionsPage = () => {
                           fontWeight={500}
                           variant="h5"
                           style={{cursor: "pointer"}}
-                          onClick={() => history.push(`/asks/${question.id}`)}
+                          onClick={() => history.push(`/asks/${question._id}`)}
                       >
                         {question.title}
                       </Typography>
@@ -110,7 +111,7 @@ const QuestionsPage = () => {
                     >
                       <Box>
                         <DateRangeIcon />
-                        {question.createdAt.slice(0, 10)}
+                        {new Date(question.createdAt).toLocaleDateString()} -- {new Date(question.createdAt).toTimeString().slice(0, 12)}
                       </Box>
                       <Box>
                         <CommentIcon />

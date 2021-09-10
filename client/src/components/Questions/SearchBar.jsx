@@ -13,6 +13,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import { purple } from "@material-ui/core/colors";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import AskQuestion from "./AskQuestion";
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -33,10 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SearchBar(props) {
+function SearchBar({values: {searchValue, setSearchValue}}) {
   const classes = useStyles();
 
-  const [value, setValue] = useState("");
   return (
     <Grid
       container
@@ -52,18 +52,18 @@ function SearchBar(props) {
           fullWidth
           size="small"
           className={classes.input}
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
+          onChange={(e) => setSearchValue(e.target.value)}
+          value={searchValue}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <SearchIcon />
               </InputAdornment>
             ),
-            endAdornment: value && (
+            endAdornment: searchValue && (
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={() => setValue("")}
+                onClick={() => setSearchValue("")}
               >
                 <CancelIcon />
               </IconButton>
@@ -72,9 +72,7 @@ function SearchBar(props) {
         />
       </Box>
       <Box>
-        <ColorButton variant="contained" color="primary">
-          Задать вопрос
-        </ColorButton>
+        <AskQuestion />
       </Box>
     </Grid>
   );
