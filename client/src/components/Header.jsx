@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header = () => {
-    const token = "1";
+    const token = "";
     const classes = useStyles();
     const history = useHistory();
 

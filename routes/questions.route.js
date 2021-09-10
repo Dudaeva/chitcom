@@ -3,10 +3,10 @@ const { questionsController } = require("../controllers/questions.controller");
 
 const router = Router();
 
-router.post("/question", questionsController.addQuestion);
+router.post("/questions", questionsController.addQuestion);
 router.patch("/question/:id", questionsController.updateQuestion);
 router.delete("/question/:id", questionsController.deleteQuestion);
-router.get("/question", questionsController.getAllQuestions);
-router.get("/question/:id", questionsController.getQuestionsById);
+router.get("/questions", questionsController.getAllQuestions);
+router.get("/question/:id", questionsController.getQuestionById);
 
 module.exports = router;

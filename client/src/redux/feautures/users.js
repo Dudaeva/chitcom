@@ -45,11 +45,9 @@ const reducer = (state = initialState, action) => {
 }
 
 const aURI = "https://krot.mobi/uploads/posts/2020-10/1603480760_1-p-fon-dlya-avatarki-3.jpg";
-const tYOURID = "eva_sbn";
-const tURI = `https://t.me/${tYOURID}`;
 
 export const createUser = (data) => async (dispatch) => {
-    const { name, login, password, avatar_URI = aURI, telegram_URI = tURI } = data;
+    const { name, login, password, avatar_URI = aURI, telegram_URI = "eva_sbn" } = data;
 
     dispatch({type: "users/createUser/pending"});
 
