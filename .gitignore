@@ -6,3 +6,6 @@ node_modules
 /client/node_modules
 /client/.idea
 /client/README.md
+
+/client/package-lock.json
+/package-lock.json
