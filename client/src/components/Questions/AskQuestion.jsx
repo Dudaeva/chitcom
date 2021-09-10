@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { DialogTitle, TextField, Dialog, DialogActions, DialogContent,
         DialogContentText, Button } from "@material-ui/core"
 import {useDispatch} from "react-redux";
+import {askNewQuestion} from "../../redux/feautures/questions";
 
 const AskQuestion = () => {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
+    const [inputTitle, setInputTitle] = useState("");
+    const [inputText, setInputText] = useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -16,7 +19,9 @@ const AskQuestion = () => {
     };
 
     const handleSubmit = () => {
-        dispatch();
+        dispatch(askNewQuestion(inputTitle, inputText));
+        setInputText("");
+        setInputTitle("");
     }
 
     return (
@@ -37,6 +42,7 @@ const AskQuestion = () => {
                         label="Заголовок"
                         type="text"
                         fullWidth
+                        onChange={(e) => setInputTitle(e.target.value)}
                     />
                     <TextField
                         autoFocus
@@ -45,13 +51,14 @@ const AskQuestion = () => {
                         label="Текст вашего вопроса"
                         type="text"
                         fullWidth
+                        onChange={e => setInputText(e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
                         Отмена
                     </Button>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={handleSubmit} color="primary">
                         Спросить
                     </Button>
                 </DialogActions>

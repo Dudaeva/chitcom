@@ -30,4 +30,22 @@ export const getQuestions = () => async (dispatch) => {
     }
 }
 
+export const askNewQuestion = (title, text, author = "613b74ab9fbd2d296753e985") => async (dispatch) => {
+    dispatch({type: "questions/askQuestion/pending"});
+
+    const res = await fetch("/questions", {
+        method: "POST",
+        body: JSON.stringify({author, title, text}),
+        headers: {"Content-Type" : "application/json"}
+    })
+
+    const json = await res.json();
+
+    if (json.error) {
+        dispatch({type: "questions/askQuestion/rejected", error: json.error})
+    } else {
+        dispatch({type: "questions/askQuestion/fulfilled", success: json.success});
+    }
+}
+
 export default reducer;
