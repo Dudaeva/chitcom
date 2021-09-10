@@ -1,11 +1,11 @@
 import { Redirect, Route, Switch } from "react-router-dom";
 import SignUp from "./components/Authorization/SignUp";
 import SignIn from "./components/Authorization/SignIn";
-import {Posts, OnePost} from "./components/posts/"
+import {Posts, OnePost} from "./components/Posts/"
 import {useSelector} from "react-redux";
 import HomePage from "./components/HomePage/HomePage";
-import QuestionsPage from "./components/question-answer/QuestionsPage";
-import SingleQuestionPage from "./components/question-answer/SingleQuestionPage";
+import QuestionsPage from "./components/Questions/QuestionsPage";
+import SingleQuestionPage from "./components/Questions/SingleQuestionPage";
 
 const App = () => {
 

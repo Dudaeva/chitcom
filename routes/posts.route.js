@@ -3,10 +3,10 @@ const { postsController } = require("../controllers/posts.controller");
 
 const router = Router();
 
-router.post("/posts", postsController.addPosts);
-router.patch("/posts/:id", postsController.updatePosts);
-router.delete("/posts/:id", postsController.deletePosts);
-router.get("/posts", postsController.getPosts);
-router.patch("/posts/review/:id", postsController.addReviews);
+router.post("/Posts", postsController.addPosts);
+router.patch("/Posts/:id", postsController.updatePosts);
+router.delete("/Posts/:id", postsController.deletePosts);
+router.get("/Posts", postsController.getPosts);
+router.patch("/Posts/review/:id", postsController.addReviews);
 
 module.exports = router;

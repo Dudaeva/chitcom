@@ -1,16 +1,13 @@
-import React from 'react';
-import {AppBar, Box, IconButton, Toolbar, Typography} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import {AppBar, InputBase, makeStyles, alpha, Box, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {Menu as MenuIcon, Search as SearchIcon, } from "@material-ui/icons";
 import logotype from "../images/ref-logo.png";
-import SearchIcon from "@material-ui/icons/Search";
-import InputBase from "@material-ui/core/InputBase";
 import profileIcon from "../images/profile.png";
-import {alpha, makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-    menuButton: {
-        marginRight: theme.spacing(1),
+    toolbarFrame: {
+        margin: theme.spacing(0, "auto"),
+        width: "90%"
     },
     title: {
         flexGrow: 1,
@@ -57,22 +54,22 @@ const useStyles = makeStyles((theme) => ({
     },
     profile: {
         cursor: "pointer"
-    }
+    },
 }))
 
 const Header = () => {
-    const token = "";
+    const token = "1";
     const classes = useStyles();
     const history = useHistory();
 
     return (
-        <AppBar position="static">
+        <AppBar position="static" className={classes.toolbarFrame}>
             <Toolbar>
                 <IconButton
                     edge="start"
                     color="inherit"
                     aria-label="menu"
-                    className={classes.menuButton}
+                    mr={1}
                 >
                     <MenuIcon />
                 </IconButton>

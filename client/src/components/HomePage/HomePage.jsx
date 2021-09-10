@@ -129,7 +129,7 @@ function HomePage() {
                           color="primary"
                           disableElevation
                           className={classes.button1}
-                          onClick={() => history.push("/posts")}
+                          onClick={() => history.push("/Posts")}
                       >
                         Посты
                       </Button>
