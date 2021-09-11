@@ -3,11 +3,13 @@ const Post = require("../models/Post.model");
 module.exports.postsController = {
   addPosts: async (req, res) => {
     try {
+      const { category, author, title, text, review } = req.body;
       const posts = await Post.create({
-        category: req.body.category,
-        user: req.body.user,
-        text: req.body.text,
-        review: req.body.review,
+        category,
+        author,
+        title,
+        text,
+        review,
       });
       res.json(posts);
     } catch (e) {

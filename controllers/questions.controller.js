@@ -3,14 +3,12 @@ const Question = require("../models/Question.model");
 module.exports.questionsController = {
   addQuestion: async (req, res) => {
     try {
-      const questions = await Question.create({
-        user: req.body.user,
-        title: req.body.title,
-        text: req.body.text,
-      });
-      res.json(questions);
+      const {author, title, text} = req.body;
+      await Question.create({author, title, text});
+
+      res.status(200).json({success: "Вопрос успешно задан"});
     } catch (e) {
-      res.json(e);
+      res.status(404).json({error: e});
     }
   },
   deleteQuestion: async (req, res) => {
@@ -47,18 +45,23 @@ module.exports.questionsController = {
   },
   getAllQuestions: async (req, res) => {
     try {
-      const questions = await Question.find();
+      const questions = await Question.find().populate("author");
       res.json(questions);
     } catch (e) {
       res.json(e);
     }
   },
-  getQuestionsById: async (req, res) => {
+  getQuestionById: async (req, res) => {
     try {
-      const questions = await Question.findById(req.params.id);
-      res.json(questions);
+      const question = await Question.findById(req.params.questionId)
+      .populate("answers author").populate({path: "answers", populate: {path: "author", model: "User"}});
+
+      if (!question) 
+        return res.status(404).json({error: "Ошибка! Вопроса с таким ID не существует"});
+      
+      return res.status(200).json({success: "Вопрос был успешно загружен", question});
     } catch (e) {
-      res.json(e);
+      return res.status(404).json({error: e});
     }
   },
 };
