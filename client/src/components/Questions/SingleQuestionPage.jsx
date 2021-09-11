@@ -54,6 +54,9 @@ const SingleQuestionPage = (props) => {
 
   const dispatch = useDispatch();
 
+  const correctTime = (time) =>
+      `${new Date(time).toLocaleDateString()} в ${new Date(time).toTimeString().slice(0, 9)}`;
+
   useEffect(() => {
     dispatch(getOneQuestion(questionId));
   }, [questionId, dispatch]);
@@ -100,7 +103,7 @@ const SingleQuestionPage = (props) => {
                     Вопрос задан
                     <p>
                       <DateRangeIcon />
-                      {currentAsk?.createdAt}
+                      {correctTime(currentAsk?.createdAt)}
                     </p>
                   </Box>
                 </Box>
@@ -152,7 +155,9 @@ const SingleQuestionPage = (props) => {
                             />
                             <Typography>{item.author.name || item.author.login}</Typography>
                           </Box>
-                          <Box> {new Date(item.createdAt).toLocaleDateString()} -- {new Date(item.createdAt).toTimeString().slice(0, 9)}</Box>
+                          <Box>
+                            {correctTime(item.createdAt)}
+                          </Box>
                         </Box>
                         <Box p={1.25} mb={2.5}>
                           <Typography>

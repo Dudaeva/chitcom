@@ -60,6 +60,9 @@ const QuestionsPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const correctTime = (time) =>
+      `${new Date(time).toLocaleDateString()} -- ${new Date(time).toTimeString().slice(0, 12)}`;
+
   useEffect(() => {
     dispatch(getQuestions());
   }, [dispatch]);
@@ -84,7 +87,10 @@ const QuestionsPage = () => {
                         flexDirection="column"
                         width={200}
                       >
-                        <Box>
+                        <Box
+                            px={3}
+                            style={{cursor: "pointer"}}
+                            onClick={() => history.push(`/user/${question.author._id}`)} >
                           <CardMedia
                             image={question.author.avatar_URI}
                             className={classes.avatar}
@@ -126,7 +132,7 @@ const QuestionsPage = () => {
                         >
                           <Box>
                             <DateRangeIcon />
-                            {new Date(question.createdAt).toLocaleDateString()} -- {new Date(question.createdAt).toTimeString().slice(0, 12)}
+                            {correctTime(question.createdAt)}
                           </Box>
                           <Box>
                             <CommentIcon />
