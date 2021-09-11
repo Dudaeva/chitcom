@@ -1,11 +1,21 @@
-import { Box, CardMedia, Typography, Grid, Paper, makeStyles } from "@material-ui/core";
-import {DateRange as DateRangeIcon, Comment as CommentIcon} from "@material-ui/icons";
+import {
+  Box,
+  CardMedia,
+  Typography,
+  Grid,
+  Paper,
+  makeStyles,
+} from "@material-ui/core";
+import {
+  DateRange as DateRangeIcon,
+  Comment as CommentIcon,
+} from "@material-ui/icons";
 import SearchBar from "./SearchBar";
 import Header from "../Header";
-import {useHistory} from "react-router-dom";
-import {useEffect} from "react";
-import {getQuestions} from "../../redux/feautures/questions";
-import {useDispatch, useSelector} from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { getQuestions } from "../../redux/feautures/questions";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,81 +59,81 @@ const QuestionsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getQuestions())
-  }, [])
+    dispatch(getQuestions());
+  }, [dispatch]);
 
   return (
-      <>
-        <Header />
-        <Paper className={classes.paper}>
+    <>
+      <Header />
+      <Paper className={classes.paper}>
+        <SearchBar />
 
-          <SearchBar />
-
-          <Box>
-            {loading ?
-                <h4>Загружаем вопросы...</h4> :
-                asks?.map(question =>
-                <Grid container className={classes.question}>
-                  <Box
-                      mx={1}
-                      pb={1}
-                      display="flex"
-                      alignItems="center"
-                      flexDirection="column"
-                      width={200}
-                  >
+        <Box>
+          {loading ? (
+            <h4>Загружаем вопросы...</h4>
+          ) : (
+            asks.map((question) => (
+              <Grid container className={classes.question}>
+                <Box
+                  mx={1}
+                  pb={1}
+                  display="flex"
+                  alignItems="center"
+                  flexDirection="column"
+                  width={200}
+                >
+                  <Box>
                     <CardMedia
-                        image={question.author.avatar_URI}
-                        className={classes.avatar}
+                      image={question.author.avatar_URI}
+                      className={classes.avatar}
                     />
                     <Box pb={2} mb={2} className={classes.login}>
                       {question.author.name || question.author.login}
                     </Box>
-                    {question.author.telegram_URI &&
-                      <Box>
-                        <a href={`https://t.me/${question.author.telegram_URI}`}>
-                           @{question.author.telegram_URI}
-                        </a>
-                      </Box>}
                   </Box>
+                  {question.author.telegram_URI && (
+                    <Box>
+                      <a href={`https://t.me/${question.author.telegram_URI}`}>
+                        @{question.author.telegram_URI}
+                      </a>
+                    </Box>
+                  )}
+                </Box>
 
-                  <Box
-                      position="relative"
-                      width="70%"
-                      className={classes.block}
-                  >
-                    <Box height="100%" p={4} >
-                      <Typography
-                          fontWeight={500}
-                          variant="h5"
-                          style={{cursor: "pointer"}}
-                          onClick={() => history.push(`/asks/${question.id}`)}
-                      >
-                        {question.title}
-                      </Typography>
-                    </Box>
-                    <Box
-                        alignItems="center"
-                        display="flex"
-                        justifyContent="space-around"
-                        className={classes.comment}
+                <Box position="relative" width="70%" className={classes.block}>
+                  <Box height="100%" p={4}>
+                    <Typography
+                      fontWeight={500}
+                      variant="h5"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => history.push(`/asks/${question._id}`)}
                     >
-                      <Box>
-                        <DateRangeIcon />
-                        {question.createdAt.slice(0, 10)}
-                      </Box>
-                      <Box>
-                        <CommentIcon />
-                        {question.answers.length} ответов
-                      </Box>
+                      {question.title}
+                    </Typography>
+                  </Box>
+                  <Box
+                    alignItems="center"
+                    display="flex"
+                    justifyContent="space-around"
+                    className={classes.comment}
+                  >
+                    <Box>
+                      <DateRangeIcon />
+                      {question.createdAt.slice(0, 10)}
+                    </Box>
+                    <Box>
+                      <CommentIcon />
+                      {question.answers.length} ответов
                     </Box>
                   </Box>
-                </Grid>
-              )}
-          </Box>
-        </Paper>
-      </>
+                </Box>
+              </Grid>
+            ))
+          )}
+        </Box>
+      </Paper>
+    </>
   );
-}
+};
 
 export default QuestionsPage;
