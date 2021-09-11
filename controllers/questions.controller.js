@@ -53,10 +53,15 @@ module.exports.questionsController = {
   },
   getQuestionById: async (req, res) => {
     try {
-      const questions = await Question.findById(req.params.id);
-      res.json(questions);
+      const question = await Question.findById(req.params.questionId)
+      .populate("answers author").populate({path: "answers", populate: {path: "author", model: "User"}});
+
+      if (!question) 
+        return res.status(404).json({error: "Ошибка! Вопроса с таким ID не существует"});
+      
+      return res.status(200).json({success: "Вопрос был успешно загружен", question});
     } catch (e) {
-      res.json(e);
+      return res.status(404).json({error: e});
     }
   },
 };

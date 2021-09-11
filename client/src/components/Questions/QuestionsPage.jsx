@@ -1,12 +1,22 @@
-import { Box, CardMedia, Typography, Grid, Paper, makeStyles } from "@material-ui/core";
-import {DateRange as DateRangeIcon, Comment as CommentIcon} from "@material-ui/icons";
-import {Telegram as TelegramIcon} from "@mui/icons-material"
+import {
+  Box,
+  CardMedia,
+  Typography,
+  Grid,
+  Paper,
+  makeStyles,
+} from "@material-ui/core";
+import {
+  DateRange as DateRangeIcon,
+  Comment as CommentIcon,
+} from "@material-ui/icons";
+import { Telegram as TelegramIcon } from "@mui/icons-material";
 import SearchBar from "./SearchBar";
 import Header from "../Header";
-import {useHistory} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {getQuestions} from "../../redux/feautures/questions";
-import {useDispatch, useSelector} from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getQuestions } from "../../redux/feautures/questions";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,89 +54,93 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionsPage = () => {
   const classes = useStyles();
-  const {asks, loading, error} = useSelector(store => store.questions);
+  const { asks, loading, error } = useSelector((store) => store.questions);
   const [searchValue, setSearchValue] = useState(String);
 
   const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getQuestions())
-  }, [])
+    dispatch(getQuestions());
+  }, [dispatch]);
 
   return (
-      <>
-        <Header />
-        <Paper className={classes.paper}>
+    <>
+      <Header />
+      <Paper className={classes.paper}>
+        <SearchBar values={{ searchValue, setSearchValue }} />
 
-          <SearchBar values = {{searchValue, setSearchValue}}/>
-
-          <Box>
-            {loading ?
-                <h4>Загружаем вопросы...</h4> :
-                asks?.filter(item => item.title.includes(searchValue)).map(question =>
-                <Grid container className={classes.question} key={question.id}>
-                  <Box
-                      mx={1}
-                      pb={1}
-                      display="flex"
-                      alignItems="center"
-                      flexDirection="column"
-                      width={200}
-                  >
-                    <CardMedia
-                        image={question.author.avatar_URI}
-                        className={classes.avatar}
-                    />
-                    <Box pb={2} mb={2} className={classes.login}>
-                      {question.author.name || question.author.login}
-                    </Box>
-                    {question.author.telegram_URI &&
-                      <Box>
-                        <TelegramIcon fontSize={"small"} color={"primary"}/>
-                        <a href={`https://t.me/${question.author.telegram_URI}`} style={{textDecorationLine: "none"}}>
-                           @{question.author.telegram_URI}
-                        </a>
-                      </Box>}
-                  </Box>
-
-                  <Box
-                      position="relative"
-                      width="70%"
-                      className={classes.block}
-                  >
-                    <Box height="100%" p={4} >
-                      <Typography
-                          fontWeight={500}
-                          variant="h5"
-                          style={{cursor: "pointer"}}
-                          onClick={() => history.push(`/asks/${question._id}`)}
-                      >
-                        {question.title}
-                      </Typography>
-                    </Box>
-                    <Box
-                        alignItems="center"
+        <Box>
+          {loading ?
+            <h4>Загружаем вопросы...</h4> :
+            asks?.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+                .map((question) => (
+                    <Grid container className={classes.question} key={question.id}>
+                      <Box
+                        mx={1}
+                        pb={1}
                         display="flex"
-                        justifyContent="space-around"
-                        className={classes.comment}
-                    >
-                      <Box>
-                        <DateRangeIcon />
-                        {new Date(question.createdAt).toLocaleDateString()} -- {new Date(question.createdAt).toTimeString().slice(0, 12)}
+                        alignItems="center"
+                        flexDirection="column"
+                        width={200}
+                      >
+                        <Box>
+                          <CardMedia
+                            image={question.author.avatar_URI}
+                            className={classes.avatar}
+                          />
+                          <Box pb={2} mb={2} className={classes.login}>
+                            {question.author.name || question.author.login}
+                          </Box>
+                        </Box>
+                        {question.author.telegram_URI && (
+                          <Box>
+                            <TelegramIcon fontSize="small" color="primary" />
+                            <a href={`https://t.me/${question.author.telegram_URI}`} style={{textDecoration: "none"}}>
+                              @{question.author.telegram_URI}
+                            </a>
+                          </Box>
+                        )}
                       </Box>
-                      <Box>
-                        <CommentIcon />
-                        {question.answers.length} ответов
+
+                      <Box
+                        position="relative"
+                        width="70%"
+                        className={classes.block}
+                      >
+                        <Box height="100%" p={4}>
+                          <Typography
+                            fontWeight={500}
+                            variant="h5"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => history.push(`/asks/${question._id}`)}
+                          >
+                            {question.title}
+                          </Typography>
+                        </Box>
+                        <Box
+                          alignItems="center"
+                          display="flex"
+                          justifyContent="space-around"
+                          className={classes.comment}
+                        >
+                          <Box>
+                            <DateRangeIcon />
+                            {new Date(question.createdAt).toLocaleDateString()} -- {new Date(question.createdAt).toTimeString().slice(0, 12)}
+                          </Box>
+                          <Box>
+                            <CommentIcon />
+                            {question.answers.length} ответов
+                          </Box>
+                        </Box>
                       </Box>
-                    </Box>
-                  </Box>
                 </Grid>
-              )}
-          </Box>
-        </Paper>
-      </>
+              )
+          )}
+        </Box>
+      </Paper>
+    </>
   );
-}
+};
 
 export default QuestionsPage;
