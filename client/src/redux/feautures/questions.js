@@ -38,6 +38,24 @@ export const getQuestions = () => async (dispatch) => {
     }
 }
 
+export const askNewQuestion = (title, text, author) => async (dispatch) => {
+    dispatch({type: "questions/askQuestion/pending"});
+
+    const res = await fetch("/questions", {
+        method: "POST",
+        body: JSON.stringify({author, title, text}),
+        headers: {"Content-Type" : "application/json"}
+    })
+
+    const json = await res.json();
+
+    if (json.error) {
+        dispatch({type: "questions/askQuestion/rejected", error: json.error})
+    } else {
+        dispatch({type: "questions/askQuestion/fulfilled", success: json.success});
+    }
+}
+
 export const getOneQuestion = (questionId) => async (dispatch) => {
     dispatch({type: "questions/getOneQuestion/pending"});
 
@@ -49,6 +67,7 @@ export const getOneQuestion = (questionId) => async (dispatch) => {
     } else {
         dispatch({type: "questions/getOneQuestion/fulfilled", payload: {success: json.success, data: json.question}});
     }
-} 
+}
+
 
 export default reducer;
