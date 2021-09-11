@@ -1,5 +1,6 @@
 import { Box, CardMedia, Typography, Grid, Paper, makeStyles } from "@material-ui/core";
 import {DateRange as DateRangeIcon, Comment as CommentIcon} from "@material-ui/icons";
+import {Telegram as TelegramIcon} from "@mui/icons-material"
 import SearchBar from "./SearchBar";
 import Header from "../Header";
 import {useHistory} from "react-router-dom";
@@ -82,7 +83,8 @@ const QuestionsPage = () => {
                     </Box>
                     {question.author.telegram_URI &&
                       <Box>
-                        <a href={`https://t.me/${question.author.telegram_URI}`}>
+                        <TelegramIcon fontSize={"small"} color={"primary"}/>
+                        <a href={`https://t.me/${question.author.telegram_URI}`} style={{textDecorationLine: "none"}}>
                            @{question.author.telegram_URI}
                         </a>
                       </Box>}

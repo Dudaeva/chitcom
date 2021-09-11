@@ -30,7 +30,7 @@ export const getQuestions = () => async (dispatch) => {
     }
 }
 
-export const askNewQuestion = (title, text, author = "613b74ab9fbd2d296753e985") => async (dispatch) => {
+export const askNewQuestion = (title, text, author) => async (dispatch) => {
     dispatch({type: "questions/askQuestion/pending"});
 
     const res = await fetch("/questions", {
