@@ -1,21 +1,30 @@
-import { Box, CardMedia, Grid, Typography, Paper, makeStyles  } from "@material-ui/core";
+import {
+  Box,
+  CardMedia,
+  Grid,
+  Typography,
+  Paper,
+  makeStyles,
+} from "@material-ui/core";
 import {
   DateRange as DateRangeIcon,
   Comment as CommentIcon,
   KeyboardArrowUp as KeyboardArrowUpIcon,
   BookmarkBorder as BookmarkBorderIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon
+  KeyboardArrowDown as KeyboardArrowDownIcon,
 } from "@material-ui/icons";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { getOneQuestion } from "../../redux/feautures/questions";
 import Header from "../Header";
-import {green} from "@material-ui/core/colors";
-import {red} from "@mui/material/colors";
 
 const useStyles = makeStyles((theme) => ({
   main: {
     paddingTop: 10,
     fontSize: 15,
     margin: theme.spacing(5, "auto"),
-    width: "90%"
+    width: "90%",
   },
   avatar: {
     width: 150,
@@ -37,116 +46,122 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SingleQuestionPage(props) {
+const SingleQuestionPage = (props) => {
   const classes = useStyles();
+  const { loading, error, currentAsk } = useSelector((store) => store.questions);
+
+  const { questionId } = useParams();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getOneQuestion(questionId));
+  }, [questionId, dispatch]);
 
   return (
-      <>
-        <Header />
-        <Paper className={classes.main}>
+    <>
+      <Header />
+      <Paper className={classes.main}>
+        {loading ? (
+          <h2>Идёт загрузка....</h2>
+        ) : error ? (
+          <h2>
+            Упс.. ошибочка вышла <br /> {error}
+          </h2>
+        ) : (
           <div>
             <Grid container display="flex">
               <Grid item xs={12} sm={2}>
                 <Box
-                    ml={3}
-                    mr={1}
-                    display="flex"
-                    alignItems="center"
-                    flexDirection="column"
-                    height="100%"
+                  ml={3}
+                  mr={1}
+                  display="flex"
+                  alignItems="center"
+                  flexDirection="column"
+                  height="100%"
                 >
                   <CardMedia
-                      image={"https://ru.joblum.com/uploads/115/114179.png"}
-                      className={classes.avatar}
+                    image={currentAsk?.author.avatar_URI}
+                    className={classes.avatar}
                   />
                   <Box pb={2}>
-                    Евгений Кузьмин
+                    {currentAsk?.author.name || currentAsk?.author.login}
                   </Box>
-                  <Box pb={2}>@telegram</Box>
+                  {currentAsk?.author.telegram_URI && (
+                    <Box>
+                      <a
+                        href={`https://t.me/${currentAsk?.author.telegram_URI}`}
+                      >
+                        @{currentAsk?.author.telegram_URI}
+                      </a>
+                    </Box>
+                  )}
                   <Box display="row">
                     Вопрос задан
                     <p>
-                      {" "}
-                      <DateRangeIcon/>
-                      27.12.2019
+                      <DateRangeIcon />
+                      {currentAsk?.createdAt}
                     </p>
                   </Box>
                 </Box>
               </Grid>
 
               <Grid item xs={12} sm={9}>
-                <Box>
+                <Box minHeight={500}>
                   <Typography variant="h5" className={classes.title_question}>
-                    Что на работе делает Java Программист без опыта работы, который
-                    только что устроился. Часть 1
+                    {currentAsk?.title}
                   </Typography>
                   <Typography className={classes.text_question}>
-                      Итак, всем привет! В эту предновогоднюю пятницу я пришел на своё
-                      рабочее место и решил поделиться с новичками дела, уже как
-                      сторожил - а чем же занимается джуниор на работе по своему
-                      опыту.
-                      Это будет короткий пост, времени мало - тасков куча, да и кучу
-                      мануалов опять читать) учеба по 5 часов каждый день. Первый мой
-                      пост - https://javarush.ru/forum/25. Тут я писал, что устроился
-                      в компанию просто отсылая резюме всем подряд с пометками типа :
-                      "возьмите, я научусь, любые курсы за свои деньги, найму под ваши
-                      задачи себе ментора" и меня в итоге взяли. Страх был не просто
-                      большой, а огромный! Но я его преодолел и вышел на работу.
-                      Когда нибудь я напишу об этом большую статью на своём личном
-                      сайте. Маленький совет, перед выходом надо знать - что в 80%
-                      случаев работодатель трезво оценивает ваши знания. Ну плюс минус,
-                      так что берет он вас не просто так! Так что снимаем волнение.
+                    {currentAsk?.text}
                   </Typography>
                 </Box>
-                <Paper style={{backgroundColor: "#ffd711"}}>
+                <Paper style={{ backgroundColor: "#ffd711" }}>
                   <Box textAlign="center" p={3} mt={2}>
                     <h5>
                       ОТВЕТЫ НА ВОПРОС (
-                      <CommentIcon/>
-                      212)
+                      <CommentIcon />
+                      {currentAsk?.answers.length})
                     </h5>
                   </Box>
 
                   <Paper>
+                    {currentAsk?.answers.map(item => 
                     <Box display="flex">
                       <Box textAlign="center" width={100}>
                         <Box p={3}>
-                          <BookmarkBorderIcon/>
+                          <BookmarkBorderIcon />
                         </Box>
                         <button>
-                          <KeyboardArrowUpIcon/>
+                          <KeyboardArrowUpIcon />
                         </button>
                         <h4>0</h4>
                         <button>
-                          <KeyboardArrowDownIcon/>
+                          <KeyboardArrowDownIcon />
                         </button>
                       </Box>
                       <Box width="100%">
-                        <Box p={2} display="flex" justifyContent="space-between">
+                        <Box
+                          p={2}
+                          display="flex"
+                          justifyContent="space-between"
+                        >
                           <Box display="flex">
                             <CardMedia
-                                image={"https://ru.joblum.com/uploads/115/114179.png"}
-                                className={classes.avatar_anw}
+                               image={item.author.avatar_URI}
+                              className={classes.avatar_anw}
                             />
-                            <Typography>lorem</Typography>
+                            <Typography>{item.author.name || item.author.login}</Typography>
                           </Box>
-                          <Box>30 августа, 16:06</Box>
+                          <Box> {new Date(item.createdAt).toLocaleDateString()} -- {new Date(item.createdAt).toTimeString().slice(0, 9)}</Box>
                         </Box>
                         <Box p={1.25} mb={2.5}>
                           <Typography>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            Quo voluptas ipsam officia dolores facere, eveniet id
-                            impedit necessitatibus delectus est libero perspiciatis,
-                            corrupti blanditiis doloremque. Maiores animi non
-                            inventore iusto! Lorem, ipsum dolor sit amet consectetur
-                            adipisicing elit. Maiores libero voluptatem tempore
-                            eveniet consectetur dolore nulla modi accusantium aliquam
-                            atque! Nemo laboriosam facilis quis ad eius explicabo
-                            alias iusto provident?
+                            {item.text}
                           </Typography>
                         </Box>
                       </Box>
                     </Box>
+                    )}
                   </Paper>
                 </Paper>
 
@@ -162,9 +177,10 @@ function SingleQuestionPage(props) {
               </Grid>
             </Grid>
           </div>
-        </Paper>
-      </>
+        )}
+      </Paper>
+    </>
   );
-}
+};
 
 export default SingleQuestionPage;

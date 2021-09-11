@@ -1,16 +1,17 @@
 const Answer = require("../models/Answer.model");
+const Question = require("../models/Question.model");
 
 module.exports.answersController = {
   addAnswer: async (req, res) => {
     try {
-      const answers = await Answer.create({
-        user: req.body.user,
-        text: req.body.text,
-        toQuestion: req.body.toQuestion,
-      });
-      res.json(answers);
+      const {author, text, toQuestion} = req.body;
+
+      const answer = await Answer.create({ author, text, toQuestion });
+      await Question.findByIdAndUpdate(toQuestion, {$push: {answers: answer.id}});
+
+      res.status(200).json({success: "Комментарий успешно оставлен"});
     } catch (e) {
-      res.json(e);
+      res.status(404).json({error: e});
     }
   },
   updateAnswer: async (req, res) => {
@@ -35,14 +36,6 @@ module.exports.answersController = {
     try {
       await Answer.findOneAndRemove(req.params.id);
       res.send("Ответ удален");
-    } catch (e) {
-      res.json(e);
-    }
-  },
-  getAnswers: async (req, res) => {
-    try {
-      const answers = await Answer.find();
-      res.json(answers);
     } catch (e) {
       res.json(e);
     }
