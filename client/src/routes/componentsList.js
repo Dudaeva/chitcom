@@ -3,6 +3,7 @@ import PostPage from "../components/Posts/PostPage";
 import SinglePostPage from "../components/Posts/SinglePostPage";
 import QuestionsPage from "../components/Questions/QuestionsPage";
 import SingleQuestionPage from "../components/Questions/SingleQuestionPage";
+import MyProfilePage from "../components/MyProfilePage";
 import SignUpComponent from "../components/Authorization/SignUp"
 import SignInComponent from "../components/Authorization/SignIn"
 
@@ -20,4 +21,4 @@ export const SignUp = () => <SignUpComponent />
 
 export const SignIn = () => <SignInComponent />
 
-export const MyAccount = () => <div>Мой профиль</div>
+export const MyAccount = () => <MyProfilePage />

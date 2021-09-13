@@ -1,15 +1,6 @@
-import {
-  Box,
-  CardMedia,
-  Typography,
-  Grid,
-  Paper,
-  makeStyles,
-} from "@material-ui/core";
-import {
-  DateRange as DateRangeIcon,
-  Comment as CommentIcon,
-} from "@material-ui/icons";
+import {Box, CardMedia, Typography, Grid, Paper, makeStyles,} from "@material-ui/core";
+import {DateRange as DateRangeIcon, Comment as CommentIcon} from "@material-ui/icons";
+
 import { Telegram as TelegramIcon } from "@mui/icons-material";
 import SearchBar from "./SearchBar";
 import Header from "../Header";
@@ -17,13 +8,14 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../redux/feautures/questions";
 import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     flexGrow: 1,
-    width: "90%",
+    width: "89%",
     padding: 20,
-    margin: theme.spacing(0, "auto"),
+    margin: theme.spacing(5, "auto"),
   },
   question: {
     width: "auto",
@@ -75,7 +67,11 @@ const QuestionsPage = () => {
 
         <Box>
           {loading ?
-            <h4>Загружаем вопросы...</h4> :
+          <Box>
+            <h4>Загружаем вопросы...</h4>
+            <CircularProgress />
+            </Box>
+            :
             asks?.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
                 .map((question) => (
                     <Grid container className={classes.question} key={question._id}>

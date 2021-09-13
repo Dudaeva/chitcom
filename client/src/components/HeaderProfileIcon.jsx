@@ -32,7 +32,7 @@ const HeaderProfileIcon = () => {
     return (
         <>
             <Tooltip title="Мой аккаунт">
-                <IconButton onClick={handleClick} size="small" sx={{ ml: 2, color: '#fff' }}>
+                <IconButton onClick={handleClick} size="small" sx={{ p: 0, ml: 2, color: '#fff' }}>
                     <img
                         src={profileIcon}
                         alt="profile"
