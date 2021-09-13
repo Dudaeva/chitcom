@@ -1,8 +1,9 @@
 import {AppBar, InputBase, makeStyles, alpha, Box, Toolbar, Typography} from "@material-ui/core";
 import { Search as SearchIcon, } from "@material-ui/icons";
-import logotype from "../images/ref-logo.png";
+import logotype from "../../images/ref-logo.png";
 import {useHistory} from "react-router-dom";
 import HeaderProfileIcon from "./HeaderProfileIcon";
+import Language from "./Language";
 
 const useStyles = makeStyles((theme) => ({
   toolbar:{
@@ -72,7 +73,10 @@ const Header = () => {
               </Typography>
             </Box>
             <Box display="flex">
-              <Box className={classes.search}>
+              <Box>
+                <Language />
+              </Box>
+              {/* <Box className={classes.search}>
                 <Box className={classes.searchIcon}>
                   <SearchIcon />
                 </Box>
@@ -84,7 +88,7 @@ const Header = () => {
                   }}
                   inputProps={{ "aria-label": "search" }}
                 />
-              </Box>
+              </Box> */}
               <Box mr={3}>
                   <HeaderProfileIcon />
               </Box>
