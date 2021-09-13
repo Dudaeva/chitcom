@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionsPage = () => {
   const classes = useStyles();
-  const { asks, loading, error } = useSelector((store) => store.questions);
+  const { asks, loading, error, askSuccess } = useSelector((store) => store.questions);
   const [searchValue, setSearchValue] = useState(String);
 
   const history = useHistory();
@@ -78,7 +78,7 @@ const QuestionsPage = () => {
             <h4>Загружаем вопросы...</h4> :
             asks?.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
                 .map((question) => (
-                    <Grid container className={classes.question} key={question.id}>
+                    <Grid container className={classes.question} key={question._id}>
                       <Box
                         mx={1}
                         pb={1}

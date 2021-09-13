@@ -40,6 +40,8 @@ module.exports.usersController = {
 
       if (password.length > 18)
         return getStatus(404, "Макс. допустимая длина пароля - 18 символов")
+      if (password.length < 8)
+        return getStatus(404, "Мин. допустимая длина пароля - 8 символов")
 
       const hashedPassword = bcrypt.hashSync(password, Number(HASH_KEY));
       const newUser = {

@@ -6,14 +6,32 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+
+        //Уборщик
+        case "questions/data/clear" :
+            return {...initialState, asks: state.asks}
+
+        //Создатель ошибок
+        case "questions/setError" :
+            return {...state, error: action.error}
+
+        //Добавление нового вопроса
+        case "questions/askQuestion/pending" :
+            return {...state, asking: true, error: null, askSuccess: null}
+        case "questions/askQuestion/rejected" :
+            return {...state, asking: false, error: action.error}
+        case "questions/askQuestion/fulfilled" :
+            return {...state, asking: false, askSuccess: action.success}
+
         //Вывод одного вопроса
         case "questions/getOneQuestion/pending" :
             return {...state, loading: true, error: null}
         case "questions/getOneQuestion/rejected" :
             return {...state, loading: false, error: action.error};
         case "questions/getOneQuestion/fulfilled" :
-            return {...state, loading: false, currentAsk: action.payload.data};
-            
+            return {...state, loading: false, currentAsk: action.payload.data}
+
+        //Вывод всех вопросов
         case "questions/getQuestions/pending" :
             return {...state, loading: true}
         case "questions/getQuestions/rejected" :

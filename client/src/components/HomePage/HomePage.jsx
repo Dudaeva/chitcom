@@ -91,7 +91,7 @@ function HomePage() {
         <Grid item xs={12}>
           <Grid container justifyContent="center" spacing={spacing}>
             <Paper className={classes.paper}>
-              <Grid container justifyContent>
+              <Grid container>
                 <Grid item xs={6}>
                   <Grid
                     container

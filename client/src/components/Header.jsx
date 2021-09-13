@@ -1,8 +1,10 @@
 import {AppBar, InputBase, makeStyles, alpha, Box, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu as MenuIcon, Search as SearchIcon, } from "@material-ui/icons";
 import logotype from "../images/ref-logo.png";
-import profileIcon from "../images/profile.png";
 import {useHistory} from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import HeaderProfileIcon from "./HeaderProfileIcon";
 
 const useStyles = makeStyles((theme) => ({
     toolbarFrame: {
@@ -52,13 +54,9 @@ const useStyles = makeStyles((theme) => ({
             width: "20ch",
         },
     },
-    profile: {
-        cursor: "pointer"
-    },
 }))
 
 const Header = () => {
-    const token = "";
     const classes = useStyles();
     const history = useHistory();
 
@@ -74,7 +72,7 @@ const Header = () => {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" className={classes.title} onClick={() => history.push("/")}>
-                    <img src={logotype}/>
+                    <img src={logotype} alt="profile icon" />
                 </Typography>
                 <div className={classes.search}>
                     <div className={classes.searchIcon}>
@@ -90,12 +88,7 @@ const Header = () => {
                     />
                 </div>
                 <Box mr={3}>
-                    <img
-                        className={classes.profile}
-                        src={profileIcon}
-                        onClick={() => history.push(token ? "/my-profile" : "/sign-up")}
-                        alt="profile"
-                    />
+                    <HeaderProfileIcon />
                 </Box>
             </Toolbar>
         </AppBar>
