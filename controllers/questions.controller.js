@@ -52,10 +52,17 @@ module.exports.questionsController = {
   },
   getAllQuestions: async (req, res) => {
     try {
-      const questions = await Question.find().populate("author");
-      res.json(questions);
+      const { page = 1, limit = 10 } = req.query;
+      const questions = await Question
+          .find()
+          .sort('-updatedAt')
+          .populate("author")
+          .limit(limit * 1)
+          .skip((page - 1) * limit);
+
+      res.status(200).json({questions, success: "Новости успешно загружены"});
     } catch (e) {
-      res.json(e);
+      res.status(404).json({error: e});
     }
   },
   getQuestionById: async (req, res) => {
