@@ -23,6 +23,24 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "transparent",
     color: "#fafafa",
     boxShadow: "none"
+  },
+  bigBox: {
+    width: "80%",
+    minHeight: 550,
+    marginLeft: theme.spacing(17),
+    padding: theme.spacing(5),
+    fontSize: 18,
+    borderRadius: 10,
+    display: "flex"
+  },
+  secondBox: {
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "space-around",
+    borderBottom: "2px solid #d0d7dd",
+    bottom: "0%",
+    width: "100%",
+    height: 35
   }
 }));
 
@@ -31,15 +49,7 @@ function MyProfilePage() {
 
   return (
     <Grid container className={classes.main}>
-      <Box
-        width="80%"
-        minHeight={550}
-        ml={17}
-        p={5}
-        fontSize="18px"
-        borderRadius="10px"
-        display="flex"
-      >
+      <Box className={classes.bigBox}>
         <Paper className={classes.data}>
           <CardMedia
             image={"https://ru.joblum.com/uploads/115/114179.png"}
@@ -65,15 +75,7 @@ function MyProfilePage() {
               quae eos atque minima? Animi, iusto ut ducimus aliquam aut debitis
               accusantium.
             </Box>
-            <Box
-              alignItems="center"
-              display="flex"
-              justifyContent="space-around"
-              borderBottom="2px solid #d0d7dd"
-              bottom="0%"
-              width="100%"
-              height={35}
-            >
+            <Box className={classes.secondBox}>
               <Box>
                 <DateRangeIcon />
                 12.09.2021
