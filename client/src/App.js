@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import HomePage from "./components/HomePage/HomePage";
 import QuestionsPage from "./components/Questions/QuestionsPage";
 import SingleQuestionPage from "./components/Questions/SingleQuestionPage";
+import MyProfilePage from "./components/MyProfilePage";
 
 const App = () => {
 
@@ -30,7 +31,7 @@ const App = () => {
                   <OnePost />
               </Route>
               <Route path="/my-profile">
-                  Мой профиль
+                  <MyProfilePage />
               </Route>
               <Route exact path="/sign-up">
                   <SignUp />
