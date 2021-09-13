@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../redux/feautures/questions";
 import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -75,7 +76,11 @@ const QuestionsPage = () => {
 
         <Box>
           {loading ?
-            <h4>Загружаем вопросы...</h4> :
+          <Box>
+            <h4>Загружаем вопросы...</h4>
+            <CircularProgress />
+            </Box>
+            :
             asks?.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
                 .map((question) => (
                     <Grid container className={classes.question} key={question.id}>
