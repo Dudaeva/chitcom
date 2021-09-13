@@ -46,24 +46,24 @@ const reducer = (state = initialState, action) => {
 
 const aURI = "https://krot.mobi/uploads/posts/2020-10/1603480760_1-p-fon-dlya-avatarki-3.jpg";
 
-export const createUser = (data) => async (dispatch) => {
-    const { name, login, password, avatar_URI = aURI, telegram_URI = "eva_sbn" } = data;
-
-    dispatch({type: "users/createUser/pending"});
-
-    const res = await fetch("/signup", {
-        method: "POST",
-        body: JSON.stringify({name, login, password, avatar_URI, telegram_URI }),
-        headers: { "Content-Type" : "application/json" }
-    });
-    const json = await res.json();
-
-    if (json.error)
-        dispatch({type: "users/createUser/rejected", error: json.error});
-    else
-        dispatch({type: "users/createUser/fulfilled", success: `${json.success}
-        Вы будете автоматически переправлены на страницу авторизации`});
-}
+// export const createUser = (data) => async (dispatch) => {
+//     const { name, login, password, avatar_URI = aURI, telegram_URI = "eva_sbn" } = data;
+//
+//     dispatch({type: "users/createUser/pending"});
+//
+//     const res = await fetch("/signup", {
+//         method: "POST",
+//         body: JSON.stringify({name, login, password, avatar_URI, telegram_URI }),
+//         headers: { "Content-Type" : "application/json" }
+//     });
+//     const json = await res.json();
+//
+//     if (json.error)
+//         dispatch({type: "users/createUser/rejected", error: json.error});
+//     else
+//         dispatch({type: "users/createUser/fulfilled", success: `${json.success}
+//         Вы будете автоматически переправлены на страницу авторизации`});
+// }
 
 export const clearData = () => (dispatch) =>
     dispatch({type: "users/data/clear"});

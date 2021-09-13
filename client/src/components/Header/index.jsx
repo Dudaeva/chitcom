@@ -1,8 +1,9 @@
 import {AppBar, InputBase, makeStyles, alpha, Box, Toolbar, Typography} from "@material-ui/core";
 import { Search as SearchIcon, } from "@material-ui/icons";
-import logotype from "../images/ref-logo.png";
-import profileIcon from "../images/profile.png";
-import { useHistory } from "react-router-dom";
+import logotype from "../../images/ref-logo.png";
+import {useHistory} from "react-router-dom";
+import HeaderProfileIcon from "./HeaderProfileIcon";
+import Language from "./Language";
 
 const useStyles = makeStyles((theme) => ({
   toolbar:{
@@ -15,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
         "& > img": {
+            height: "55px",
             cursor: "pointer"
         },
     },
@@ -55,50 +57,45 @@ const useStyles = makeStyles((theme) => ({
             width: "20ch",
         },
     },
-    profile: {
-        cursor: "pointer"
-    },
-}));
+}))
 
 const Header = () => {
-  const token = "";
-  const classes = useStyles();
-  const history = useHistory();
+    const classes = useStyles();
+    const history = useHistory();
 
-  return (
-    <AppBar position="static" className={classes.toolbarFrame}>
-      <Toolbar className={classes.toolbar}>
-        <Box>
-          <Typography variant="h6" className={classes.title}
-            onClick={() => history.push("/")}
-          >
-            <img src={logotype} alt = "logo" />
-          </Typography>
-        </Box>
-        <Box display="flex">
-          <Box className={classes.search}>
-            <Box className={classes.searchIcon}>
-              <SearchIcon />
+
+      return (
+        <AppBar position="static" className={classes.toolbarFrame}>
+          <Toolbar className={classes.toolbar}>
+            <Box>
+              <Typography variant="h6" className={classes.title} onClick={() => history.push("/")}>
+                <img src={logotype} alt = "logo" />
+              </Typography>
             </Box>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Box>
-          <Box mr={3}>
-            <img className={classes.profile} src={profileIcon}
-              onClick={() => history.push(token ? "/my-profile" : "/sign-up")}
-              alt="profile"
-            />
-          </Box>
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
+            <Box display="flex">
+              <Box>
+                <Language />
+              </Box>
+              {/* <Box className={classes.search}>
+                <Box className={classes.searchIcon}>
+                  <SearchIcon />
+                </Box>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Box> */}
+              <Box mr={3}>
+                  <HeaderProfileIcon />
+              </Box>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      );
 };
 
 export default Header;
