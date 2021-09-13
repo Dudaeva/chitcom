@@ -57,8 +57,7 @@ function HomePage() {
           <Grid className={classes.container}>
             <Grid
                 container
-                display
-                flex
+                display="flex"
                 justifyContent="center"
                 alignItems="center"
             >

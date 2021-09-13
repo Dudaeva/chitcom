@@ -4,11 +4,12 @@ import {DateRange as DateRangeIcon, Comment as CommentIcon} from "@material-ui/i
 import { Telegram as TelegramIcon } from "@mui/icons-material";
 import SearchBar from "./SearchBar";
 import Header from "../Header";
-import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {Link, useHistory, useLocation} from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
 import { getQuestions } from "../../redux/feautures/questions";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {Pagination, PaginationItem} from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,22 +43,34 @@ const useStyles = makeStyles((theme) => ({
   login: {
     boxShadow: "0 1px grey",
   },
+  root: {
+    flexGrow: 1,
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
 const QuestionsPage = () => {
   const classes = useStyles();
   const { asks, loading, error, askSuccess } = useSelector((store) => store.questions);
-  const [searchValue, setSearchValue] = useState(String);
+  const [searchValue, setSearchValue] = useState("");
 
   const history = useHistory();
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const query = new URLSearchParams(location.search);
+
+  const page = query.get("page") ? Number(query.get("page")) : 1;
+
+  // console.log(typeof Number(queryParams));
 
   const correctTime = (time) =>
       `${new Date(time).toLocaleDateString()} -- ${new Date(time).toTimeString().slice(0, 12)}`;
 
   useEffect(() => {
-    dispatch(getQuestions());
-  }, [dispatch]);
+    dispatch(getQuestions(page));
+  }, [page, dispatch]);
 
   return (
     <>
@@ -71,74 +84,91 @@ const QuestionsPage = () => {
             <h4>Загружаем вопросы...</h4>
             <CircularProgress />
             </Box>
-            :
-            asks?.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-                .map((question) => (
-                    <Grid container className={classes.question} key={question._id}>
-                      <Box
-                        mx={1}
-                        pb={1}
-                        display="flex"
-                        alignItems="center"
-                        flexDirection="column"
-                        width={200}
-                      >
-                        <Box
-                            px={3}
-                            style={{cursor: "pointer"}}
-                            onClick={() => history.push(`/user/${question.author._id}`)} >
-                          <CardMedia
-                            image={question.author.avatar_URI}
-                            className={classes.avatar}
-                          />
-                          <Box pb={2} mb={2} className={classes.login}>
-                            {question.author.name || question.author.login}
-                          </Box>
-                        </Box>
-                        {question.author.telegram_URI && (
-                          <Box>
-                            <TelegramIcon fontSize="small" color="primary" />
-                            <a href={`https://t.me/${question.author.telegram_URI}`} style={{textDecoration: "none"}}>
-                              @{question.author.telegram_URI}
-                            </a>
-                          </Box>
-                        )}
-                      </Box>
+            : asks?.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+                  .map((question) => (
+                          <Grid container className={classes.question} key={question._id}>
+                            <Box
+                                mx={1}
+                                pb={1}
+                                display="flex"
+                                alignItems="center"
+                                flexDirection="column"
+                                width={200}
+                            >
+                              <Box
+                                  px={3}
+                                  style={{cursor: "pointer"}}
+                                  onClick={() => history.push(`/user/${question.author._id}`)}>
+                                <CardMedia
+                                    image={question.author.avatar_URI}
+                                    className={classes.avatar}
+                                />
+                                <Box pb={2} mb={2} className={classes.login}>
+                                  {question.author.name || question.author.login}
+                                </Box>
+                              </Box>
+                              {question.author.telegram_URI && (
+                                  <Box>
+                                    <TelegramIcon fontSize="small" color="primary"/>
+                                    <a href={`https://t.me/${question.author.telegram_URI}`}
+                                       style={{textDecoration: "none"}}>
+                                      @{question.author.telegram_URI}
+                                    </a>
+                                  </Box>
+                              )}
+                            </Box>
 
-                      <Box
-                        position="relative"
-                        width="70%"
-                        className={classes.block}
-                      >
-                        <Box height="100%" p={4}>
-                          <Typography
-                            fontWeight={500}
-                            variant="h5"
-                            style={{ cursor: "pointer" }}
-                            onClick={() => history.push(`/asks/${question._id}`)}
-                          >
-                            {question.title}
-                          </Typography>
-                        </Box>
-                        <Box
-                          alignItems="center"
-                          display="flex"
-                          justifyContent="space-around"
-                          className={classes.comment}
-                        >
-                          <Box>
-                            <DateRangeIcon />
-                            {correctTime(question.createdAt)}
-                          </Box>
-                          <Box>
-                            <CommentIcon />
-                            {question.answers.length} ответов
-                          </Box>
-                        </Box>
-                      </Box>
-                </Grid>
-              )
-          )}
+                            <Box
+                                position="relative"
+                                width="70%"
+                                className={classes.block}
+                            >
+                              <Box height="100%" p={4}>
+                                <Typography
+                                    fontWeight={500}
+                                    variant="h5"
+                                    style={{cursor: "pointer"}}
+                                    onClick={() => history.push(`/asks/${question._id}`)}
+                                >
+                                  {question.title}
+                                </Typography>
+                              </Box>
+                              <Box
+                                  alignItems="center"
+                                  display="flex"
+                                  justifyContent="space-around"
+                                  className={classes.comment}
+                              >
+                                <Box>
+                                  <DateRangeIcon/>
+                                  {correctTime(question.createdAt)}
+                                </Box>
+                                <Box>
+                                  <CommentIcon/>
+                                  {question.answers.length} ответов
+                                </Box>
+                              </Box>
+                            </Box>
+                          </Grid>
+                      )
+                  )
+              }
+          { !loading  &&
+            <div className={classes.root}>
+              <Pagination
+                  page={page}
+                  count={10}
+                  shape="rounded"
+                  renderItem={(item) => (
+                      <PaginationItem
+                          component={Link}
+                          to={`/asks${item.page === 1 ? '' : `?page=${item.page}`}`}
+                          {...item}
+                      />
+                  )}
+              />
+            </div>
+          }
         </Box>
       </Paper>
     </>
