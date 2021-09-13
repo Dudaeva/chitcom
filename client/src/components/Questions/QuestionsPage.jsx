@@ -1,15 +1,6 @@
-import {
-  Box,
-  CardMedia,
-  Typography,
-  Grid,
-  Paper,
-  makeStyles,
-} from "@material-ui/core";
-import {
-  DateRange as DateRangeIcon,
-  Comment as CommentIcon,
-} from "@material-ui/icons";
+import {Box, CardMedia, Typography, Grid, Paper, makeStyles,} from "@material-ui/core";
+import {DateRange as DateRangeIcon, Comment as CommentIcon} from "@material-ui/icons";
+
 import { Telegram as TelegramIcon } from "@mui/icons-material";
 import SearchBar from "./SearchBar";
 import Header from "../Header";
@@ -22,9 +13,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   paper: {
     flexGrow: 1,
-    width: "90%",
+    width: "89%",
     padding: 20,
-    margin: theme.spacing(0, "auto"),
+    margin: theme.spacing(5, "auto"),
   },
   question: {
     width: "auto",
@@ -55,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionsPage = () => {
   const classes = useStyles();
-  const { asks, loading, error } = useSelector((store) => store.questions);
+  const { asks, loading, error, askSuccess } = useSelector((store) => store.questions);
   const [searchValue, setSearchValue] = useState(String);
 
   const history = useHistory();
@@ -83,7 +74,7 @@ const QuestionsPage = () => {
             :
             asks?.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
                 .map((question) => (
-                    <Grid container className={classes.question} key={question.id}>
+                    <Grid container className={classes.question} key={question._id}>
                       <Box
                         mx={1}
                         pb={1}

@@ -25,7 +25,7 @@ export const register = theme => ({
         flexDirection: "column",
         alignItems: "center",
         background:
-            "linear-gradient(180deg, rgba(169,198,217,1) 15%, rgba(242,167,75,1) 90%)",
+            "linear-gradient(180deg, rgb(118 136 158) 15%, rgb(208 160 101) 90%)",
         boxShadow: ".2px 12px 18px rgba(131,153,167,0.6)",
 
         "&:hover": {
@@ -35,10 +35,8 @@ export const register = theme => ({
     avatar: {
         marginTop: 20,
         position: "relative",
-        background: "rgba(255,255,255,0.85)",
         width: "100px",
         height: "100px",
-        boxShadow: "0px 0px 12px rgba(131,153,167,0.99)"
     },
 
     icon: {
@@ -146,8 +144,18 @@ export const register = theme => ({
     },
 
     passwordEye: {
-        color: "rgba(131,153,167,0.9)",
+        color: "rgba(49,110,148,0.9)",
         opacity: 0.7,
         cursor: "pointer"
+    },
+
+    haveAccount: {
+        cursor: "pointer",
+        width: "fit-content",
+        color: "#233a59",
+        paddingLeft: theme.spacing(1),
+        "&:hover" : {
+            color: "#2c4a72"
+        }
     }
 });

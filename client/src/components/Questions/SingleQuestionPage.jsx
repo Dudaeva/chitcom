@@ -84,8 +84,9 @@ const SingleQuestionPage = (props) => {
                   height="100%"
                 >
                   <CardMedia
-                    image={currentAsk?.author.avatar_URI}
-                    className={classes.avatar}
+                      src={currentAsk?.author.avatar_URI}
+                      className={classes.avatar}
+                      component={"img"}
                   />
                   <Box pb={2}>
                     {currentAsk?.author.name || currentAsk?.author.login}
@@ -129,7 +130,7 @@ const SingleQuestionPage = (props) => {
 
                   <Paper>
                     {currentAsk?.answers.map(item => 
-                    <Box display="flex">
+                    <Box display="flex" key={item._id}>
                       <Box textAlign="center" width={100}>
                         <Box p={3}>
                           <BookmarkBorderIcon />
