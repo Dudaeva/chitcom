@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     height: "18%",
     marginTop: 25,
   },
-  thirdBlock: { //width={933} height={300} ml={14} mt={4} borderRadius="10px" pt = {8} style = {{backgroundColor:"#ffd95c", color:'black'}}>
+  thirdBlock: {
     width: "79%",
     height: 300,
     marginLeft: theme.spacing(15),
