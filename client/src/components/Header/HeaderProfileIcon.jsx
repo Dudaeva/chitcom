@@ -1,5 +1,5 @@
 import {Avatar, IconButton, MenuItem, Divider, ListItemIcon, Menu, Tooltip, } from '@mui/material';
-import profileIcon from "../images/profile.png";
+import profileIcon from "../../images/profile.png";
 import {useState} from "react";
 import {ManageAccounts, Logout} from "@mui/icons-material";
 import {useHistory} from "react-router-dom";
