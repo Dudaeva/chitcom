@@ -111,18 +111,18 @@ const AskQuestion = () => {
                 aria-labelledby="alert-dialog-slide-title"
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle id="alert-dialog-slide-title">{"Упс.. что-то пошло не так"}</DialogTitle>
+                <DialogTitle id="alert-dialog-slide-title">{text.questionError}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        {"Чтобы задать вопрос, вам нужно войти в свой аккаунт.. :(" || error}
+                        {text.questionErrorSignIn || error}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        Закрыть
+                        {text.closeButton}
                     </Button>
                     <Button onClick={() => history.push("/sign-up")} color="primary">
-                        Авторизоваться
+                        {text.questionSignIn}
                     </Button>
                 </DialogActions>
             </Dialog>
