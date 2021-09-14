@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   question: {
     width: "auto",
-    backgroundColor: "rgba(0, 0, 0, 0.12)",
+    backgroundColor: "#5e62c51f",
     margin: theme.spacing(2, 9),
     border: " 1px solid grey",
   },
@@ -130,7 +130,7 @@ const QuestionsPage = () => {
                                     style={{cursor: "pointer"}}
                                     onClick={() => history.push(`/asks/${question._id}`)}
                                 >
-                                  {question.title}
+                                  {question?.title}
                                 </Typography>
                               </Box>
                               <Box
