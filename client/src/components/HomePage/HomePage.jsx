@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   thirdBlock: {
     width: "79%",
     height: 300,
-    marginLeft: theme.spacing(15),
+    marginLeft: theme.spacing(14),
     marginTop: theme.spacing(4),
     paddingTop: theme.spacing(8),
     borderRadius: 10,
@@ -145,7 +145,8 @@ function HomePage() {
                           wrapper="p"
                       />
                     </h1>)
-                : (
+                : 
+                  (currentLanguage === "che") &&
                   (<h1>Милана, 
                     <Typical
                         steps={['г1овг1а ма йе', 1200," серьезно, г1овг1а ма йе!" ]}
@@ -153,7 +154,6 @@ function HomePage() {
                         wrapper="p"
                     />
                   </h1>)
-                )
                 }
               </Box>
             </Grid>
