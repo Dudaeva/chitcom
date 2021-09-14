@@ -27,7 +27,7 @@ function Language() {
           <MenuItem value={"en"}>
             English
           </MenuItem>
-          <MenuItem value={"che"} disabled>
+          <MenuItem value={"che"}>
             Нохчийн
           </MenuItem>
         </Select>
