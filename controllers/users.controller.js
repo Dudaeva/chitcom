@@ -17,6 +17,16 @@ module.exports.usersController = {
       res.json(e);
     }
   },
+  signOut: async (req, res) => {
+    try {
+      res.cookie("token", 'none', {
+        expires: new Date(Date.now()),
+      })
+      res.status(200).json({success: "Выход был успешно выполнен"})
+    } catch (e) {
+      res.status(404).json({error: "Упс.. что-то пошло не так " + e});
+    }
+  },
 
   signUp: async (req, res) => {
     try {
@@ -110,7 +120,6 @@ module.exports.usersController = {
       if (!user)
         return res.status(404).json({error: "Пользователь с таким ID не найден"});
 
-      console.log(user);
       return res.status(200).json({success: "Пользователь успешно найден", user});
     } catch (e) {
       return res.status(404).json({error: "Упс..ошибочка вышла " + e});

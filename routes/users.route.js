@@ -6,6 +6,7 @@ const router = Router();
 
 router.post("/signup", usersController.signUp);
 router.post("/signin", usersController.signIn);
-router.get("/user-profile/", authMiddleware, usersController.getUserById)
+router.post("/signout", authMiddleware, usersController.signOut);
+router.get("/user-profile", authMiddleware, usersController.getUserById);
 
 module.exports = router;

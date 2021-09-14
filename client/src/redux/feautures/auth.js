@@ -15,14 +15,14 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         //Уборщик
         case "auth/data/clear" :
-            return {...initialState}
+            return {...state, isSigningUp: false, isSigningIn: false, isSignedIn: false, success: null, token: null, error: null}
         //Уборщик, если вход был выполнен
         case "auth/data/loginClear" :
-            return {...initialState, isSignedIn: true}
+            return {...state, error: null, isSigningIn: false, success: null, isSignedIn: true}
 
         //Выход из аккаунта
         case "auth/signOut" : {
-            document.cookie = `token=; expires=${new Date(Date.now())}; path=/;`
+            document.cookie = `token=;`
             return {...state, token: null, isSignedIn: false, myData: null}
         }
 
@@ -39,7 +39,7 @@ const reducer = (state = initialState, action) => {
         case "auth/logIn/rejected" :
             return {...state, error: action.error}
         case "auth/logIn/fulfilled" : {
-            return {...state, success: action.success}
+            return {...state, success: action.success, token: action.token}
         }
 
         //Регистрация
@@ -102,20 +102,38 @@ export const logIn = (login, password) => async (dispatch) => {
         const {success, token, expires} = json;
         const successMessage = success + " Вы будете автоматически перенаправлены на главную страницу";
 
-        dispatch({type: "auth/logIn/fulfilled", success: successMessage });
+        dispatch({type: "auth/logIn/fulfilled", success: successMessage, token: `Bearer ${token}` });
         document.cookie = encodeURIComponent("token") + `=Bearer ${token};expires=${expires}; path=/;`;
+        loadUserData();
     }
 }
 
+export const SignOut = () => async(dispatch, getStore) => {
+    const store = getStore();
 
-export const loadUserData = () => async (dispatch, getState) => {
+    const res = await fetch("/signout", {
+        method: "POST",
+        headers: {
+            Authorization: store.auth.token
+        }});
+    const json = await res.json();
+    console.log(json, res);
+}
+
+
+export const loadUserData = () => async (dispatch, getStore) => {
+    const store = getStore();
+    console.log(store.auth.isSignedIn)
+    if (!store.auth.isSignedIn) {
+        return;
+    }
+
     dispatch({ type: "auth/loadUser/pending" });
 
-    const state = getState();
     const response = await fetch("/user-profile", {
+        method: "GET",
         headers: {
-            method: "GET",
-            Authorization: state.auth.token,
+            Authorization: store.auth.token,
         },
     });
     const json = await response.json();

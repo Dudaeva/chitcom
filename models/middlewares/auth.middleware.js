@@ -5,6 +5,7 @@ module.exports = async (req, res, next) => {
 
     try {
         const { authorization } = req.headers;
+        console.log(req.headers);
 
         if (!authorization) //Если в req.headers нет ключа authorization
             return res.status(404).json({error: "Пользователь не авторизован"});
