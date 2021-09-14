@@ -8,4 +8,4 @@ node_modules
 /client/README.md
 
 /client/package-lock.json
-/package-lock.json
+package-lock.json
