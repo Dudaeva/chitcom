@@ -11,15 +11,16 @@ import {
   Comment as CommentIcon,
   KeyboardArrowUp as KeyboardArrowUpIcon,
   BookmarkBorder as BookmarkBorderIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon,
+  KeyboardArrowDown as KeyboardArrowDownIcon, BlurCircular, BlurOn,
 } from "@material-ui/icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getOneQuestion } from "../../redux/feautures/questions";
 import Header from "../Header";
+import Answers from "./Answers";
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   main: {
     paddingTop: 10,
     fontSize: 15,
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar_anw: {
     width: 50,
-    height: 40,
+    height: 50,
     borderRadius: "50%",
     margin: theme.spacing(0, 1),
   },
@@ -111,78 +112,7 @@ const SingleQuestionPage = (props) => {
                   </Box>
                 </Box>
               </Grid>
-
-              <Grid item xs={12} sm={9}>
-                <Box minHeight={500}>
-                  <Typography variant="h5" className={classes.title_question}>
-                    {currentAsk?.title}
-                  </Typography>
-                  <Typography className={classes.text_question}>
-                    {currentAsk?.text}
-                  </Typography>
-                </Box>
-                <Paper style={{ backgroundColor: "#ffd711" }}>
-                  <Box textAlign="center" p={3} mt={2}>
-                    <h5>
-                      {text.asksQuestionAmount} (
-                      <CommentIcon />
-                      {currentAsk?.answers.length})
-                    </h5>
-                  </Box>
-
-                  <Paper>
-                    {currentAsk?.answers.map(item => 
-                    <Box display="flex" key={item._id}>
-                      <Box textAlign="center" width={100}>
-                        <Box p={3}>
-                          <BookmarkBorderIcon />
-                        </Box>
-                        <button>
-                          <KeyboardArrowUpIcon />
-                        </button>
-                        <h4>0</h4>
-                        <button>
-                          <KeyboardArrowDownIcon />
-                        </button>
-                      </Box>
-                      <Box width="100%">
-                        <Box
-                          p={2}
-                          display="flex"
-                          justifyContent="space-between"
-                        >
-                          <Box display="flex">
-                            <CardMedia
-                               image={item.author.avatar_URI}
-                              className={classes.avatar_anw}
-                            />
-                            <Typography>{item.author.name || item.author.login}</Typography>
-                          </Box>
-                          <Box>
-                            {correctTime(item.createdAt)}
-                          </Box>
-                        </Box>
-                        <Box p={1.25} mb={2.5}>
-                          <Typography>
-                            {item.text}
-                          </Typography>
-                        </Box>
-                      </Box>
-                    </Box>
-                    )}
-                  </Paper>
-                </Paper>
-
-                <Box>
-                  <Box>
-                    <h3>{text.comment}</h3>
-                    <textarea rows="10" cols="100" name="text" />
-                  </Box>
-                  <button className="btn btn-primary" type="button">
-                    {text.commentButton}
-                  </button>
-                </Box>
-              </Grid>
+              <Answers correctTime={correctTime}/>
             </Grid>
           </div>
         )}
