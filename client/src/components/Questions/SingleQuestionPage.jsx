@@ -48,7 +48,9 @@ const useStyles = makeStyles((theme) => ({
 
 const SingleQuestionPage = (props) => {
   const classes = useStyles();
+  
   const { loading, error, currentAsk } = useSelector((store) => store.questions);
+  const { text } = useSelector((store) => store.languages);
 
   const { questionId } = useParams();
 
@@ -66,10 +68,10 @@ const SingleQuestionPage = (props) => {
       <Header />
       <Paper className={classes.main}>
         {loading ? (
-          <h2>Идёт загрузка....</h2>
+          <h2>{text.loaderOneQuestion}</h2>
         ) : error ? (
           <h2>
-            Упс.. ошибочка вышла <br /> {error}
+            {text.loaderOneQuestion2} <br /> {error}
           </h2>
         ) : (
           <div>
@@ -101,7 +103,7 @@ const SingleQuestionPage = (props) => {
                     </Box>
                   )}
                   <Box display="row">
-                    Вопрос задан
+                    {text.dateQuestion}
                     <p>
                       <DateRangeIcon />
                       {correctTime(currentAsk?.createdAt)}
@@ -122,7 +124,7 @@ const SingleQuestionPage = (props) => {
                 <Paper style={{ backgroundColor: "#ffd711" }}>
                   <Box textAlign="center" p={3} mt={2}>
                     <h5>
-                      ОТВЕТЫ НА ВОПРОС (
+                      {text.asksQuestionAmount} (
                       <CommentIcon />
                       {currentAsk?.answers.length})
                     </h5>
@@ -173,11 +175,11 @@ const SingleQuestionPage = (props) => {
 
                 <Box>
                   <Box>
-                    <h3>Введите ваш ответ</h3>
+                    <h3>{text.comment}</h3>
                     <textarea rows="10" cols="100" name="text" />
                   </Box>
                   <button className="btn btn-primary" type="button">
-                    Отправить
+                    {text.commentButton}
                   </button>
                 </Box>
               </Grid>

@@ -15,12 +15,13 @@ body {
 }
 .wrapper {
   max-width: 1450px;
-  padding-top: 15px ;
+  padding-top: 15px !important;
   margin: 0 auto;
-  font-family: "Source Sans Pro", serif;
+  font-family: "Source Sans Pro";
 }
 .header {
-  padding: 32px 64px 0;
+  padding: 0 64px;
+  padding-top: 32px;
   margin-bottom: 24px;
   align-items: center;
   display: flex;
@@ -43,7 +44,7 @@ body {
 }
 .title {
   padding-top: 60px;
-  padding-bottom: 32px ;
+  padding-bottom: 32px !important;
   padding-left: 20px;
 }
 .container {
@@ -53,19 +54,19 @@ body {
 }
 .content {
   display: flex;
-  flex-flow: row wrap ;
+  flex-flow: row wrap !important;
 }
 .randomPost {
   width: 45%;
-  padding: 18px ;
+  padding: 18px !important;
 }
 .img {
   width: 100%;
-  margin-bottom: 16px ;
+  margin-bottom: 16px !important;
 }
 .posts {
   width: 20%;
-  padding: 20px ;
+  padding: 20px !important;
 }
 .category {
   display: inline-flex;
@@ -76,7 +77,7 @@ body {
   background-color: gray;
   border-style: solid;
   text-decoration: none;
-  margin-right: 12px ;
+  margin-right: 12px !important;
   color: rgb(110, 9, 9);
 }
 .category_date {
@@ -84,20 +85,20 @@ body {
   color: rgb(110, 9, 9);
 }
 .text {
-  margin-bottom: 24px ;
+  margin-bottom: 24px !important;
 }
 .author {
-  padding-bottom: 16px ;
-  margin-top: auto ;
-  border-bottom-style: solid;
-  border-bottom-width: 1px ;
+  padding-bottom: 16px !important;
+  margin-top: auto !important;
+  border-bottom-style: solid !important;
+  border-bottom-width: 1px !important;
   border-color: grey;
   color: rgb(110, 9, 9);
 }
 .footer {
   background-color: #191a19;
-  padding-top: 64px ;
-  padding-bottom: 64px ;
+  padding-top: 64px !important;
+  padding-bottom: 64px !important;
 }
 .block {
   display: flex;
@@ -120,6 +121,7 @@ body {
   padding: 10px;
 }
 .whole_post {
-  padding: 100px 150px 100px 100px;
+  padding: 100px;
+  padding-right: 150px;
   font-size: 20px;
 }

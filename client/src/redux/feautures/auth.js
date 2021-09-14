@@ -15,7 +15,8 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         //Уборщик
         case "auth/data/clear" :
-            return {...state, isSigningUp: false, isSigningIn: false, isSignedIn: false, success: null, token: null, error: null}
+            return {...state, isSigningUp: false, isSigningIn: false,
+                isSignedIn: false, success: null, token: null, error: null}
         //Уборщик, если вход был выполнен
         case "auth/data/loginClear" :
             return {...state, error: null, isSigningIn: false, success: null, isSignedIn: true}

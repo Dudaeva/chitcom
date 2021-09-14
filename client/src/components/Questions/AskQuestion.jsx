@@ -18,6 +18,8 @@ const AskQuestion = () => {
     const {isSignedIn} = useSelector(store => store.auth);
     const {askSuccess, error, asking} = useSelector(store => store.questions);
 
+    const { text } = useSelector((store) => store.languages);
+
     const [openForm, setOpenForm] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
 
@@ -47,13 +49,13 @@ const AskQuestion = () => {
     return (
         <div>
             <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Задать вопрос
+                {text.askQuestion}
             </Button>
             <Dialog open={openForm} onClose={handleClose} >
-                <DialogTitle id="form-dialog-title">Ваш вопрос...</DialogTitle>
+                <DialogTitle id="form-dialog-title">{text.question}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Чтобы задать вопрос, заполните пожалуйста парочку обязательных полей
+                        {text.questionInstruction}
                     </DialogContentText>
                         {(askSuccess || error) &&
                             <Alert
@@ -74,7 +76,7 @@ const AskQuestion = () => {
                         autoFocus
                         margin="dense"
                         id="title"
-                        label="Заголовок"
+                        label={text.questionTitle}
                         type="text"
                         fullWidth
                         ref={inputTitle}
@@ -83,7 +85,7 @@ const AskQuestion = () => {
                     <TextField
                         margin="dense"
                         id="text"
-                        label="Текст вашего вопроса"
+                        label={text.questionText}
                         type="text"
                         fullWidth
                         ref={inputText}
@@ -92,10 +94,10 @@ const AskQuestion = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
-                        Закрыть
+                        {text.closeButton}
                     </Button>
                     <Button disabled={asking ? true : !!askSuccess} onClick={handleSubmit} color="primary">
-                        Спросить
+                        {text.askButton}
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -14,6 +14,7 @@ import { purple } from "@material-ui/core/colors";
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AskQuestion from "./AskQuestion";
+import { useSelector } from "react-redux";
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -37,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
 function SearchBar({values: {searchValue, setSearchValue}}) {
   const classes = useStyles();
 
+  const { text } = useSelector((store) => store.languages);
+
   return (
     <Grid
       container
@@ -46,7 +49,7 @@ function SearchBar({values: {searchValue, setSearchValue}}) {
     >
       <Box flex="0.8">
         <TextField
-          placeholder="Search"
+          placeholder={text.search}
           type="text"
           variant="outlined"
           fullWidth
