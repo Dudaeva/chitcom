@@ -1,21 +1,8 @@
-import {
-  Box,
-  CardMedia,
-  Grid,
-  Typography,
-  Paper,
-  makeStyles,
-} from "@material-ui/core";
-import {
-  DateRange as DateRangeIcon,
-  Comment as CommentIcon,
-  KeyboardArrowUp as KeyboardArrowUpIcon,
-  BookmarkBorder as BookmarkBorderIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon, BlurCircular, BlurOn,
-} from "@material-ui/icons";
+import { Box, CardMedia, Grid, Paper, makeStyles,} from "@material-ui/core";
+import {DateRange as DateRangeIcon,} from "@material-ui/icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import { getOneQuestion } from "../../redux/feautures/questions";
 import Header from "../Header";
 import Answers from "./Answers";
