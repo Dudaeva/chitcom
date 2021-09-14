@@ -9,6 +9,7 @@ const HeaderProfileIcon = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const {isSignedIn} = useSelector(store => store.auth);
+    const { text } = useSelector((store) => store.languages);
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -31,7 +32,7 @@ const HeaderProfileIcon = () => {
 
     return (
         <>
-            <Tooltip title="Мой аккаунт">
+            <Tooltip title={text.profileTitle}>
                 <IconButton onClick={handleClick} size="small" sx={{ p: 0, ml: 2, color: '#fff' }}>
                     <img
                         src={profileIcon}
@@ -79,14 +80,14 @@ const HeaderProfileIcon = () => {
                     <ListItemIcon>
                         <ManageAccounts fontSize="medium" />
                     </ListItemIcon>
-                     Профиль
+                     {text.profile}
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={handleSignOut}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
-                    Выйти
+                    {text.logOut}
                 </MenuItem>
             </Menu>
         </>
