@@ -57,8 +57,7 @@ function HomePage() {
           <Grid className={classes.container}>
             <Grid
                 container
-                display
-                flex
+                display="flex"
                 justifyContent="center"
                 alignItems="center"
             >
@@ -72,8 +71,7 @@ function HomePage() {
                       />
                   </Box>
                   <Box variant="h6" component="h5" m={3} className={classes.text}>
-                    Find the best answer to your technical question, help others
-                    answer theirs
+                   {text.homeFirstBlockTitle}
                   </Box>
                   <Box>
                     <Button
@@ -111,7 +109,7 @@ function HomePage() {
                       m={3}
                       className={classes.text2}
                   >
-                    Want a secure, private space for your technical know ledge?
+                  {text.homeSecondBlockTitle}
                   </Box>
 
                   <Box>
@@ -122,7 +120,7 @@ function HomePage() {
                         className={classes.button}
                         onClick={() => history.push("/asks")}
                     >
-                      Ответ? / Answer!
+                     {text.homeSecondBlockButton}
                     </Button>
                   </Box>
                 </Paper>
@@ -130,9 +128,9 @@ function HomePage() {
             </Grid>
             <Grid>
               <Box className={classes.thirdBlock}>
-                <h1>Lorem ipsum
+                <h1>Альви,
                   <Typical
-                      steps={["dolor sit", 1200, " amet consectetur adipisicing elit."]}
+                      steps={['спасибо', 1200," что ты есть!" ]}
                       loop={5}
                       wrapper="p"
                   />

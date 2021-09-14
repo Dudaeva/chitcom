@@ -43,16 +43,16 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-export const getQuestions = () => async (dispatch) => {
+export const getQuestions = (page = 1) => async (dispatch) => {
     dispatch({type: "questions/getQuestions/pending"});
 
-    const res = await fetch("/questions");
+    const res = await fetch(`/questions?page=${page}`);
     const data = await res.json();
 
     if (data.error) {
         dispatch({type: "questions/getQuestions/rejected", error: data.error});
     } else {
-        dispatch({type: "questions/getQuestions/fulfilled", payload: data});
+        dispatch({type: "questions/getQuestions/fulfilled", payload: data.questions});
     }
 }
 

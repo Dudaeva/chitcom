@@ -14,6 +14,7 @@ import {logIn} from "../../redux/feautures/auth";
 
 const SignIn = (props) =>  {
     const { error, success, isSigningIn} = useSelector(store => store.auth);
+    const { text } = useSelector((store) => store.languages);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -99,14 +100,14 @@ const SignIn = (props) =>  {
 
                 <img className={classes.avatar} src={logo} width={20} height={20}  alt="logo"/>
 
-                <Typography>Авторизация</Typography>
+                <Typography>{text.signIn}</Typography>
                 <form
                     className={classes.form}
                     onSubmit={() => submitAuthorization}
                 >
                     <FormControl required fullWidth margin="normal">
                         <InputLabel htmlFor="login" className={classes.labels}>
-                            логин
+                            {text.login}
                         </InputLabel>
                         <Input
                             name="login"
@@ -120,7 +121,7 @@ const SignIn = (props) =>  {
 
                     <FormControl required fullWidth margin="normal">
                         <InputLabel htmlFor="password" className={classes.labels}>
-                            пароль
+                            {text.password}
                         </InputLabel>
                         <Input
                             name="password"
@@ -155,7 +156,7 @@ const SignIn = (props) =>  {
                         className={classes.haveAccount}
                         onClick={() => history.push("/sign-up")}
                     >
-                        Не успел зарегистрироваться
+                        {text.late}
                     </Typography>
 
                     <Button
@@ -167,7 +168,7 @@ const SignIn = (props) =>  {
                         type="submit"
                         onClick={submitAuthorization}
                     >
-                        Войти
+                        {text.SignInButton}
                     </Button>
                 </form>
             </Paper>
