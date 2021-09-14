@@ -48,7 +48,7 @@ function HomePage() {
   const classes = useStyles();
   const history = useHistory();
 
-  const { text } = useSelector((store) => store.languages);
+  const { text, currentLanguage } = useSelector((store) => store.languages);
 
   return (
       <>
@@ -127,14 +127,34 @@ function HomePage() {
               </Grid>
             </Grid>
             <Grid>
-              <Box className={classes.thirdBlock}>
-                <h1>Альви,
-                  <Typical
-                      steps={['спасибо', 1200," что ты есть!" ]}
-                      loop={5}
-                      wrapper="p"
-                  />
-                </h1>
+               <Box className={classes.thirdBlock}>
+                 {(currentLanguage === "en" ) ?
+                    (<h1>Ahmed,
+                        <Typical
+                            steps={['thanks', 1200," for the help" ]}
+                            loop={5}
+                            wrapper="p"
+                        />
+                    </h1>)
+                 :
+                 (currentLanguage === "ru") ?
+                    (<h1>Альви,
+                      <Typical
+                          steps={['спасибо', 1200," что ты есть!" ]}
+                          loop={5}
+                          wrapper="p"
+                      />
+                    </h1>)
+                : (
+                  (<h1>Милана, 
+                    <Typical
+                        steps={['г1овг1а ма йе', 1200," серьезно, г1овг1а ма йе!" ]}
+                        loop={5}
+                        wrapper="p"
+                    />
+                  </h1>)
+                )
+                }
               </Box>
             </Grid>
           </Grid>
