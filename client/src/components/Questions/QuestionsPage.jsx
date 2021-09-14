@@ -53,6 +53,9 @@ const useStyles = makeStyles((theme) => ({
 const QuestionsPage = () => {
   const classes = useStyles();
   const { asks, loading, error, askSuccess } = useSelector((store) => store.questions);
+
+  const { text } = useSelector((store) => store.languages);
+
   const [searchValue, setSearchValue] = useState("");
 
   const history = useHistory();
@@ -81,7 +84,7 @@ const QuestionsPage = () => {
         <Box>
           {loading ?
           <Box>
-            <h4>Загружаем вопросы...</h4>
+            <h4>{text.loader}</h4>
             <CircularProgress />
             </Box>
             : asks?.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
@@ -145,7 +148,7 @@ const QuestionsPage = () => {
                                 </Box>
                                 <Box>
                                   <CommentIcon/>
-                                  {question.answers.length} ответов
+                                  {question.answers.length} {text.answers}
                                 </Box>
                               </Box>
                             </Box>

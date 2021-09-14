@@ -13,6 +13,8 @@ import {signUp} from "../../redux/feautures/auth";
 
 const SignUp = (props) =>  {
     const { error, success, isSigningUp } = useSelector(store => store.auth);
+    const { text } = useSelector((store) => store.languages);
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -99,14 +101,14 @@ const SignUp = (props) =>  {
                 <Avatar className={classes.avatar}>
                     <PeopleAlt className={classes.icon} />
                 </Avatar>
-                <Typography>Зарегистрироваться</Typography>
+                <Typography>{text.signUp}</Typography>
                 <form
                     className={classes.form}
                     onSubmit={() => submitRegistration}
                 >
                     <FormControl required fullWidth margin="normal">
                         <InputLabel htmlFor="login" className={classes.labels}>
-                            логин
+                            {text.login}
                         </InputLabel>
                         <Input
                             name="login"
@@ -120,7 +122,7 @@ const SignUp = (props) =>  {
 
                     <FormControl required fullWidth margin="normal">
                         <InputLabel htmlFor="password" className={classes.labels}>
-                            пароль
+                            {text.password}
                         </InputLabel>
                         <Input
                             name="password"
@@ -155,7 +157,7 @@ const SignUp = (props) =>  {
                         className={classes.haveAccount}
                         onClick={() => history.push("/sign-in")}
                     >
-                         Войти в свой аккаунт
+                         {text.signInToProfile}
                     </Typography>
 
                     <Button
@@ -167,7 +169,7 @@ const SignUp = (props) =>  {
                         type="submit"
                         onClick={submitRegistration}
                     >
-                        Попробовать
+                        {text.signUpButton}
                     </Button>
                 </form>
             </Paper>
