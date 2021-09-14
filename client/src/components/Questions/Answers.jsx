@@ -38,7 +38,7 @@ const Answers = ({correctTime}) => {
                 <Paper>
                     {currentAsk?.answers.map(item =>
                         <Box display="flex" key={item._id}>
-                            <Box textAlign="center" width={100} mb={2}>
+                            <Box textAlign="center" width={90} mb={2}>
                                 <Box p={1}>
                                     {/*<IconButton disabled aria-label="delete" size={"medium"} >*/}
                                     {/*    <BlurCircular htmlColor={"#6fe02e"} fontSize={"large"} />*/}
@@ -59,13 +59,14 @@ const Answers = ({correctTime}) => {
                                     <ThumbDown htmlColor={"#bdb1b1"} fontSize={"medium"} />
                                 </IconButton>
                             </Box>
-                            <Box width="100%">
+                            <Box width="90%">
                                 <Box
-                                    p={2}
+                                    p={1}
+                                    mt={2}
                                     display="flex"
                                     justifyContent="space-between"
                                 >
-                                    <Box display="flex">
+                                    <Box display="flex" alignItems={"center"} >
                                         <CardMedia
                                             image={item.author.avatar_URI}
                                             className={classes.avatar_anw}
@@ -76,7 +77,7 @@ const Answers = ({correctTime}) => {
                                         {correctTime(item.createdAt)}
                                     </Box>
                                 </Box>
-                                <Box p={1.25} mb={2.5}>
+                                <Box p={1} mb={1}>
                                     <Typography>
                                         {item.text}
                                     </Typography>

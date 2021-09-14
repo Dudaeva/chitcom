@@ -35,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   avatar_anw: {
     width: 50,
-    height: 40,
+    height: 50,
     borderRadius: "50%",
     margin: theme.spacing(0, 1),
   },
