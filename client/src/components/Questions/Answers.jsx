@@ -9,6 +9,7 @@ import {
 } from "@material-ui/icons";
 import {useSelector} from "react-redux";
 import { useStyles } from "./SingleQuestionPage";
+import {ThumbDown, ThumbUp} from "@mui/icons-material";
 
 const Answers = ({correctTime}) => {
     const { currentAsk } = useSelector(store => store.questions);
@@ -50,13 +51,13 @@ const Answers = ({correctTime}) => {
                                     {/*</IconButton>*/}
 
                                 </Box>
-                                <button>
-                                    <KeyboardArrowUpIcon />
-                                </button>
+                                <IconButton aria-label="delete" size={"medium"} >
+                                    <ThumbUp htmlColor={"#bdb1b1"} fontSize={"medium"} />
+                                </IconButton>
                                 <h4>0</h4>
-                                <button>
-                                    <KeyboardArrowDownIcon />
-                                </button>
+                                <IconButton aria-label="delete" size={"medium"} >
+                                    <ThumbDown htmlColor={"#bdb1b1"} fontSize={"medium"} />
+                                </IconButton>
                             </Box>
                             <Box width="100%">
                                 <Box
