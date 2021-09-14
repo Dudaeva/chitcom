@@ -15,8 +15,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 
 const AskQuestion = () => {
-    const token = "613b73ba9fbd2d296753e97d";
-    const author = token;
+    const {isSignedIn} = useSelector(store => store.auth);
     const {askSuccess, error, asking} = useSelector(store => store.questions);
 
     const { text } = useSelector((store) => store.languages);
@@ -31,7 +30,7 @@ const AskQuestion = () => {
     const inputText = useRef("");
 
     const handleClickOpen = () => { //Если есть токен, то открывается диалог с формой, в ином же случае выскакивает диалог
-         (token) ? setOpenForm(true) : setOpenAlert(true); //с ошибкой
+         (isSignedIn) ? setOpenForm(true) : setOpenAlert(true); //с ошибкой
     };
 
     const handleClose = () => { //Если открыт диалог с формой, то это окошко закрывается. В ином же случае закрывается
@@ -44,7 +43,7 @@ const AskQuestion = () => {
     };
 
     const handleSubmit = () => {
-        dispatch(askNewQuestion(String(inputTitle.current),String(inputText.current), author));
+        dispatch(askNewQuestion(String(inputTitle.current), String(inputText.current)));
     }
 
     return (

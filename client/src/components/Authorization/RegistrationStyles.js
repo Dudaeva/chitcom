@@ -38,6 +38,13 @@ export const register = theme => ({
         width: "100px",
         height: "100px",
     },
+    signup: {
+        backgroundColor: "#ffffff",
+
+        "&:hover" : {
+            backgroundColor: "#f1f1f1",
+        }
+    },
 
     icon: {
         width: "80px",
@@ -157,5 +164,9 @@ export const register = theme => ({
         "&:hover" : {
             color: "#2c4a72"
         }
-    }
+    },
+
+    fileInput: {
+        display: "none"
+    },
 });

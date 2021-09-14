@@ -3,7 +3,8 @@ const Question = require("../models/Question.model");
 module.exports.questionsController = {
   addQuestion: async (req, res) => {
     try {
-      const {author, title, text} = req.body;
+      const { id } = req.user;
+      const {title, text} = req.body;
       if (!title || !text)
         return res.status(404).json({error: "Поля ввода не могут быть пустыми!"});
 
@@ -11,9 +12,9 @@ module.exports.questionsController = {
       if (isExists)
         return res.status(404).json({error: "Такой вопрос уже существует!"});
 
-      await Question.create({author, title, text});
+      const question = await Question.create({author: id, title, text});
 
-      return res.status(200).json({success: "Вопрос успешно задан"});
+      return res.status(200).json({success: "Вопрос успешно задан", question});
     } catch (e) {
       res.status(404).json({error: e});
     }
@@ -53,6 +54,10 @@ module.exports.questionsController = {
   getAllQuestions: async (req, res) => {
     try {
       const { page = 1, limit = 10 } = req.query;
+
+      const list = await Question.find();
+      const pagesCount = Math.ceil(list.length / 10);
+
       const questions = await Question
           .find()
           .sort('-updatedAt')
@@ -60,7 +65,7 @@ module.exports.questionsController = {
           .limit(limit * 1)
           .skip((page - 1) * limit);
 
-      res.status(200).json({questions, success: "Новости успешно загружены"});
+      res.status(200).json({questions, pagesCount, success: "Новости успешно загружены"});
     } catch (e) {
       res.status(404).json({error: e});
     }

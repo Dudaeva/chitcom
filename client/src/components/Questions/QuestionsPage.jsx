@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionsPage = () => {
   const classes = useStyles();
-  const { asks, loading, error, askSuccess } = useSelector((store) => store.questions);
+  const { asks, loading, error, askSuccess, pagesCount } = useSelector((store) => store.questions);
 
   const { text } = useSelector((store) => store.languages);
 
@@ -63,10 +63,7 @@ const QuestionsPage = () => {
   const location = useLocation();
 
   const query = new URLSearchParams(location.search);
-
   const page = query.get("page") ? Number(query.get("page")) : 1;
-
-  // console.log(typeof Number(queryParams));
 
   const correctTime = (time) =>
       `${new Date(time).toLocaleDateString()} -- ${new Date(time).toTimeString().slice(0, 12)}`;
@@ -101,21 +98,21 @@ const QuestionsPage = () => {
                               <Box
                                   px={3}
                                   style={{cursor: "pointer"}}
-                                  onClick={() => history.push(`/user/${question.author._id}`)}>
+                                  onClick={() => history.push(`/user/${question.author?._id}`)}>
                                 <CardMedia
-                                    image={question.author.avatar_URI}
+                                    image={question.author?.avatar_URI}
                                     className={classes.avatar}
                                 />
                                 <Box pb={2} mb={2} className={classes.login}>
-                                  {question.author.name || question.author.login}
+                                  {question.author?.name || question.author?.login}
                                 </Box>
                               </Box>
-                              {question.author.telegram_URI && (
+                              {question.author?.telegram_URI && (
                                   <Box>
                                     <TelegramIcon fontSize="small" color="primary"/>
-                                    <a href={`https://t.me/${question.author.telegram_URI}`}
+                                    <a href={`https://t.me/${question.author?.telegram_URI}`}
                                        style={{textDecoration: "none"}}>
-                                      @{question.author.telegram_URI}
+                                      @{question.author?.telegram_URI}
                                     </a>
                                   </Box>
                               )}
@@ -160,7 +157,7 @@ const QuestionsPage = () => {
             <div className={classes.root}>
               <Pagination
                   page={page}
-                  count={10}
+                  count={pagesCount}
                   shape="rounded"
                   renderItem={(item) => (
                       <PaginationItem
