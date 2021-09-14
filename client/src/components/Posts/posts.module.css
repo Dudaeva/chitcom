@@ -8,7 +8,10 @@ body {
   background-color: #00183d;
   font-size: 15px;
   line-height: 1.30769231;
-  color: rgb(114, 112, 112); 
+  color: rgb(114, 112, 112);
+  justify-content: center;
+  vertical-align: center;
+  text-align: center!important;
 }
 .wrapper {
   max-width: 1450px;

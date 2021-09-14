@@ -7,7 +7,7 @@ const en = {
 
   search:"Search",
   askQuestion:"Ask a Question",
-  answers:"answer",
+  answers:"answers",
   question:"Your question...",
   questionInstruction:"To ask a question, please fill in a couple of required fields",
   questionTitle:"Heading",
