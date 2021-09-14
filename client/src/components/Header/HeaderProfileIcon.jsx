@@ -1,14 +1,15 @@
 import {Avatar, IconButton, MenuItem, Divider, ListItemIcon, Menu, Tooltip, } from '@mui/material';
 import profileIcon from "../../images/profile.png";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ManageAccounts, Logout} from "@mui/icons-material";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {loadUserData} from "../../redux/feautures/auth";
 
 const HeaderProfileIcon = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const {isSignedIn} = useSelector(store => store.auth);
+    const {isSignedIn, myData} = useSelector(store => store.auth);
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -18,6 +19,10 @@ const HeaderProfileIcon = () => {
 
         setAnchorEl(event.currentTarget);
     };
+
+    useEffect(() => {
+        dispatch(loadUserData());
+    }, [isSignedIn]);
 
     const handleClose = () => {
         setAnchorEl(null);
@@ -73,7 +78,8 @@ const HeaderProfileIcon = () => {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 <MenuItem>
-                    <Avatar src="https://krot.mobi/uploads/posts/2020-10/1603480760_1-p-fon-dlya-avatarki-3.jpg" /> Salman
+                    <Avatar src={myData?.avatar_URI} />
+                    {myData? (myData.name || myData.login) : null}
                 </MenuItem>
                 <MenuItem onClick={() => sendToAddress("/my-profile")}>
                     <ListItemIcon>

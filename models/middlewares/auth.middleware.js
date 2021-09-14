@@ -1,6 +1,6 @@
 const { verify } = require("jsonwebtoken");
 
-module.exports.Authentication = (req, res, next) => {
+module.exports = async (req, res, next) => {
     if (req.method === "OPTIONS") next();
 
     try {
@@ -12,10 +12,12 @@ module.exports.Authentication = (req, res, next) => {
         const [type, token] = req.headers.authorization.split(" ");
 
         const isValidType = (type === "Bearer");
-        const isValidToken = verify(token, process.env.KEY);
+        const isValidToken = await verify(token, process.env.KEY);
 
         if (!isValidType || !isValidToken) //Если тип токена или сам токен не валидны
             return res.status(404).json({error: "Ошибка! Ваш токен не валиден!"});
+
+        req.user = isValidToken;
 
         next();
 

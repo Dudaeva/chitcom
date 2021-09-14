@@ -1,6 +1,8 @@
-import { useState} from "react";
-import { Paper, SnackbarContent, Snackbar,  Input, InputLabel, withStyles,
-    FormControl,  Avatar , Button , InputAdornment, IconButton } from "@material-ui/core";
+import {useEffect, useState} from "react";
+import {
+    Paper, SnackbarContent, Snackbar, Input, InputLabel, withStyles,
+    FormControl, Avatar, Button, InputAdornment, IconButton, FormControlLabel
+} from "@material-ui/core";
 import { PeopleAlt, VisibilityTwoTone, VisibilityOffTwoTone } from "@material-ui/icons";
 import { register } from "./RegistrationStyles";
 import {useDispatch, useSelector} from "react-redux";
@@ -9,6 +11,13 @@ import {Close, Error} from "@mui/icons-material";
 import {useHistory} from "react-router-dom";
 import {Typography} from "@mui/material";
 import {signUp} from "../../redux/feautures/auth";
+
+export const SignUpAvatar = ({classes, state}) => (
+    <Avatar className={`${classes.avatar} ${classes.signup}`}
+            style={state.avatar ? {backgroundColor: "#344892"} : null}>
+        <PeopleAlt className={classes.icon} /> {/*Если пользователь выбрал аватарку, то фон меняется */}
+    </Avatar>
+);
 
 
 const SignUp = (props) =>  {
@@ -19,6 +28,7 @@ const SignUp = (props) =>  {
     const [state, setState] = useState({
         login: "",
         password: "",
+        avatar: "",
         hidePassword: true,
         statusMessageOpen: false
     })
@@ -33,9 +43,9 @@ const SignUp = (props) =>  {
         dispatch({type: "auth/data/clear"});
     };
 
-    const handleChange = name => e => {
+    const handleChange = (name, option = "value") => e => {
         setState({...state,
-            [name]: e.target.value
+            [name]: e.target[option]
         });
     };
 
@@ -46,6 +56,8 @@ const SignUp = (props) =>  {
     const submitRegistration = e => {
         e.preventDefault();
         const newUserCredentials = {
+            avatar_URI: state.avatar,
+            telegram_URI: "bimurzaew",
             login: state.login,
             password: state.password,
         };
@@ -96,9 +108,14 @@ const SignUp = (props) =>  {
                         />
                     </Snackbar>
                 )}
-                <Avatar className={classes.avatar}>
-                    <PeopleAlt className={classes.icon} />
-                </Avatar>
+                <FormControlLabel
+                    style={{marginRight: "-9px"}}
+                    control={
+                        <input name="avatar" accept="image/*" className={classes.fileInput} type="file" />
+                    }
+                    label={<SignUpAvatar classes={classes} state={state} />}
+                    onChange={handleChange("avatar", "files")}
+                />
                 <Typography>Зарегистрироваться</Typography>
                 <form
                     className={classes.form}
