@@ -72,7 +72,7 @@ module.exports.usersController = {
         name,
         login,
         password: hashedPassword,
-        avatar_URI: filePath || "https://i.pinimg.com/originals/f5/27/41/f52741fb62bf1d821948a49204406bdc.jpg",
+        avatar_URI: filePath || "/images/avatars/avatar_blank.png",
         telegram_URI,
       };
 
