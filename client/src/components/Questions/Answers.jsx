@@ -37,13 +37,18 @@ const Answers = ({correctTime}) => {
                 <Paper>
                     {currentAsk?.answers.map(item =>
                         <Box display="flex" key={item._id}>
-                            <Box textAlign="center" width={100}>
-                                <Box p={3}>
-                                    <IconButton disabled aria-label="delete">
-                                        <BlurCircular htmlColor={"#6fe02e"} fontSize={"large"} />
+                            <Box textAlign="center" width={100} mb={2}>
+                                <Box p={1}>
+                                    {/*<IconButton disabled aria-label="delete" size={"medium"} >*/}
+                                    {/*    <BlurCircular htmlColor={"#6fe02e"} fontSize={"large"} />*/}
+                                    {/*</IconButton>*/}
+                                    <IconButton aria-label="delete" size={"medium"} >
+                                        <BlurOn htmlColor={"#bdb1b1"} fontSize={"large"} />
                                     </IconButton>
-                                    {/*<BookmarkBorderIcon color={"primary"} htmlColor={"#f43"} />*/}
-                                    <BlurOn htmlColor={"#bdb1b1"} fontSize={"large"} />
+                                    {/*<IconButton disabled aria-label="delete" size={"medium"} >*/}
+                                    {/*    <BlurOn htmlColor={"#bdb1b1"} fontSize={"large"} />*/}
+                                    {/*</IconButton>*/}
+
                                 </Box>
                                 <button>
                                     <KeyboardArrowUpIcon />
