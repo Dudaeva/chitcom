@@ -15,6 +15,9 @@ const en = {
   askButton:"Ask",
   closeButton:"Close",
   loader:"Loading questions ...",
+  questionError:"Oops, something went wrong",
+  questionErrorSignIn:"To ask a question, you need to log into your account ..",
+  questionSignIn:"Login",
 
   loaderOneQuestion:"Loading ...",
   loaderOneQuestion2:"Oops .. the error came out",

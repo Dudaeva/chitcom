@@ -9,7 +9,7 @@ const reducer = (state = initialState, action) => {
 
         //Уборщик
         case "questions/data/clear" :
-            return {...initialState, asks: state.asks}
+            return {...initialState, asks: state.asks, pagesCount: state.pagesCount || 1}
 
         //Создатель ошибок
         case "questions/setError" :
@@ -21,7 +21,9 @@ const reducer = (state = initialState, action) => {
         case "questions/askQuestion/rejected" :
             return {...state, asking: false, error: action.error}
         case "questions/askQuestion/fulfilled" :
-            return {...state, asking: false, askSuccess: action.success}
+            return {...state, asking: false, askSuccess: action.payload.success, 
+               
+            asks:[action.payload.question,...state.asks]}
 
         //Вывод одного вопроса
         case "questions/getOneQuestion/pending" :
@@ -73,7 +75,7 @@ export const askNewQuestion = (title, text) => async (dispatch, getStore) => {
     if (json.error) {
         dispatch({type: "questions/askQuestion/rejected", error: json.error})
     } else {
-        dispatch({type: "questions/askQuestion/fulfilled", success: json.success});
+        dispatch({type: "questions/askQuestion/fulfilled", payload: {success: json.success, question: {...json.question, author: store.auth.myData}}});
     }
 }
 
