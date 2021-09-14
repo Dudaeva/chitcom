@@ -7,23 +7,32 @@ const initialState = {
     isSignedIn : Boolean(!!tokenFromCookie),
     error: null,
     token: tokenFromCookie || null,
-    success: null
+    success: null,
+    myData: null
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         //Уборщик
         case "auth/data/clear" :
-            return {...initialState}
+            return {...state, isSigningUp: false, isSigningIn: false,
+                isSignedIn: false, success: null, token: null, error: null}
         //Уборщик, если вход был выполнен
         case "auth/data/loginClear" :
-            return {...initialState, isSignedIn: true}
+            return {...state, error: null, isSigningIn: false, success: null, isSignedIn: true}
 
         //Выход из аккаунта
         case "auth/signOut" : {
-            document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; max-age=-1`
-            return {...state, token: null, isSignedIn: false}
+            document.cookie = `token=;`
+            return {...state, token: null, isSignedIn: false, myData: null}
         }
+
+        case "auth/loadUser/pending" :
+            return {...state, userLoading: true};
+        case "auth/loadUser/rejected" :
+            return {...state, error: action.error, userLoading: false}
+        case "auth/loadUser/fulfilled" :
+            return {...state, myData: action.payload, userLoading: false}
 
         //Авторизация
         case "auth/logIn/pending" :
@@ -31,7 +40,7 @@ const reducer = (state = initialState, action) => {
         case "auth/logIn/rejected" :
             return {...state, error: action.error}
         case "auth/logIn/fulfilled" : {
-            return {...state, success: action.success}
+            return {...state, success: action.success, token: action.token}
         }
 
         //Регистрация
@@ -47,8 +56,6 @@ const reducer = (state = initialState, action) => {
     }
 }
 
-const aURI = "https://cdn.icon-icons.com/icons2/643/PNG/512/ninja-cat-figure-avatar-face_icon-icons.com_59284.png";
-
 const fetchOptions = (method = "GET", data) => ({
     method,
     body: JSON.stringify(data),
@@ -56,14 +63,22 @@ const fetchOptions = (method = "GET", data) => ({
 })
 
 export const signUp = (data) => async (dispatch) => {
-    const { name, login, password, avatar_URI = aURI, telegram_URI = "bimurzaew" } = data;
 
+    const formData = new FormData();
+    const { avatar_URI } = data;
+
+    for(let key in data) { //Для каждого ключа из объекта finalUserData запускается цикл, который будет вставлять ключ в форм-дату\
+        if (key === 'avatar_URI' && avatar_URI) {
+            formData.set("image", avatar_URI[0]);
+        } else {
+            formData.set(key, data[key])
+        }
+    }
     dispatch({type: "auth/signUp/pending"});
 
     const res = await fetch("/signup", {
         method: "POST",
-        body: JSON.stringify({name, login, password, avatar_URI, telegram_URI }),
-        headers: { "Content-Type" : "application/json" }
+        body: formData,
     });
     const json = await res.json();
 
@@ -88,9 +103,47 @@ export const logIn = (login, password) => async (dispatch) => {
         const {success, token, expires} = json;
         const successMessage = success + " Вы будете автоматически перенаправлены на главную страницу";
 
-        dispatch({type: "auth/logIn/fulfilled", success: successMessage });
+        dispatch({type: "auth/logIn/fulfilled", success: successMessage, token: `Bearer ${token}` });
         document.cookie = encodeURIComponent("token") + `=Bearer ${token};expires=${expires}; path=/;`;
+        loadUserData();
     }
 }
+
+export const SignOut = () => async(dispatch, getStore) => {
+    const store = getStore();
+
+    const res = await fetch("/signout", {
+        method: "POST",
+        headers: {
+            Authorization: store.auth.token
+        }});
+    const json = await res.json();
+    console.log(json, res);
+}
+
+
+export const loadUserData = () => async (dispatch, getStore) => {
+    const store = getStore();
+    console.log(store.auth.isSignedIn)
+    if (!store.auth.isSignedIn) {
+        return;
+    }
+
+    dispatch({ type: "auth/loadUser/pending" });
+
+    const response = await fetch("/user-profile", {
+        method: "GET",
+        headers: {
+            Authorization: store.auth.token,
+        },
+    });
+    const json = await response.json();
+
+    if (json.error) {
+        dispatch({ type: "auth/loadUser/rejected", error: json.error });
+    } else {
+        dispatch({ type: "auth/loadUser/fulfilled", payload: json.user });
+    }
+};
 
 export default reducer;

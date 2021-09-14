@@ -37,7 +37,7 @@ const reducer = (state = initialState, action) => {
         case "questions/getQuestions/rejected" :
             return {...state, loading: false, error: action.error}
         case "questions/getQuestions/fulfilled" :
-            return {...state, loading: false, asks: action.payload}
+            return {...state, loading: false, asks: action.payload.questions, pagesCount: action.payload.pagesCount}
         default:
             return state;
     }
@@ -49,20 +49,23 @@ export const getQuestions = (page = 1) => async (dispatch) => {
     const res = await fetch(`/questions?page=${page}`);
     const data = await res.json();
 
-    if (data.error) {
-        dispatch({type: "questions/getQuestions/rejected", error: data.error});
+    const {error, success, questions, pagesCount} = data;
+
+    if (error) {
+        dispatch({type: "questions/getQuestions/rejected", error});
     } else {
-        dispatch({type: "questions/getQuestions/fulfilled", payload: data.questions});
+        dispatch({type: "questions/getQuestions/fulfilled", payload: {questions, pagesCount}});
     }
 }
 
-export const askNewQuestion = (title, text, author) => async (dispatch) => {
+export const askNewQuestion = (title, text) => async (dispatch, getStore) => {
+    const store = getStore()
     dispatch({type: "questions/askQuestion/pending"});
 
     const res = await fetch("/questions", {
         method: "POST",
-        body: JSON.stringify({author, title, text}),
-        headers: {"Content-Type" : "application/json"}
+        body: JSON.stringify({title, text}),
+        headers: {"Content-Type" : "application/json", "Authorization" : store.auth.token}
     })
 
     const json = await res.json();
