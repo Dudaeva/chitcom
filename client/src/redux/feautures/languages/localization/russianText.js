@@ -14,6 +14,9 @@ const ru = {
   questionText:"Текст вашего вопроса",
   askButton:"Спросить",
   closeButton:"Закрыть",
+  questionError:"Упс.. что-то пошло не так",
+  questionErrorSignIn:"Чтобы задать вопрос, вам нужно войти в свой аккаунт..",
+  questionSignIn:"Авторизоваться",
 
   loader:"Загружаем вопросы...",
   loaderOneQuestion:"Идёт загрузка....",

@@ -130,7 +130,7 @@ const QuestionsPage = () => {
                                     style={{cursor: "pointer"}}
                                     onClick={() => history.push(`/asks/${question._id}`)}
                                 >
-                                  {question.title}
+                                  {question?.title}
                                 </Typography>
                               </Box>
                               <Box

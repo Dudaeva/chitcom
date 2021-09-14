@@ -76,7 +76,7 @@ const SignIn = (props) =>  {
                     >
                         <SnackbarContent
                             className={classes.error}
-                            style={success && {color: "#31671a", border: `1.2px solid ${green[900]}`}}
+                            style={success && { display: 'flex', color: "#31671a", border: `1.2px solid ${green[900]}`}}
                             message={
                                 <div>
                                     <span style={{ marginRight: "8px" }}>
