@@ -4,20 +4,11 @@ body {
   background-position: 50% 0;
   background-size: 100% 215px;
   box-sizing: border-box;
-  min-height: 100%;
   background-color: #00183d;
   font-size: 15px;
-  line-height: 1.30769231;
-  color: rgb(114, 112, 112);
   justify-content: center;
   vertical-align: center;
   text-align: center!important;
-}
-.wrapper {
-  max-width: 1450px;
-  padding-top: 15px !important;
-  margin: 0 auto;
-  font-family: "Source Sans Pro";
 }
 .header {
   padding: 0 64px;
@@ -25,103 +16,20 @@ body {
   margin-bottom: 24px;
   align-items: center;
   display: flex;
+  width: 100%;
 }
 .logo {
-  width: 300px;
+  width: 250px;
 }
-.description {
+ .description {
   margin-left: 32px;
   max-width: 315px;
+  color:white;
+
 }
 .input {
   flex-grow: 3;
   padding-left: 250px;
   display: flex;
-  justify-content: space-between;
-}
-.form {
-  display: flex;
-}
-.title {
-  padding-top: 60px;
-  padding-bottom: 32px !important;
-  padding-left: 20px;
-}
-.container {
-  max-width: 1450px;
-  padding: 0 40px;
-  box-sizing: inherit;
-}
-.content {
-  display: flex;
-  flex-flow: row wrap !important;
-}
-.randomPost {
-  width: 45%;
-  padding: 18px !important;
-}
-.img {
-  width: 100%;
-  margin-bottom: 16px !important;
-}
-.posts {
-  width: 20%;
-  padding: 20px !important;
-}
-.category {
-  display: inline-flex;
-  padding-left: 4px;
-  padding-right: 4px;
-  border-color: transparent;
-  border-radius: 5px;
-  background-color: gray;
-  border-style: solid;
-  text-decoration: none;
-  margin-right: 12px !important;
-  color: rgb(110, 9, 9);
-}
-.category_date {
-  font-size: 13px;
-  color: rgb(110, 9, 9);
-}
-.text {
-  margin-bottom: 24px !important;
-}
-.author {
-  padding-bottom: 16px !important;
-  margin-top: auto !important;
-  border-bottom-style: solid !important;
-  border-bottom-width: 1px !important;
-  border-color: grey;
-  color: rgb(110, 9, 9);
-}
-.footer {
-  background-color: #191a19;
-  padding-top: 64px !important;
-  padding-bottom: 64px !important;
-}
-.block {
-  display: flex;
-  padding-top: 80px;
-  padding-left: 30px;
-  font-size: 18px;
-}
-.slogan {
-  width: 45%;
-}
-.slogan_image {
-  width: 40%;
-  padding-left: 100px;
-}
-.img_ {
-  width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(172, 16, 16, 0.5);
-  height: 90%;
-  padding: 10px;
-}
-.whole_post {
-  padding: 100px;
-  padding-right: 150px;
-  font-size: 20px;
+  justify-content: space-evenly;
 }

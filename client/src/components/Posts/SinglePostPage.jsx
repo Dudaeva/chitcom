@@ -1,64 +1,70 @@
 import React from "react";
 import Header from "./Header";
-import styles from "./posts.module.css";
-import chit from "../../images/horizontal_on_white_by_logaster.png";
-import Footer from "./Footer";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
+import PostImage from "../../images/ahmed.png";
+import { Box } from "@mui/system";
 
-function SinglePostPage(props) {
+const useStyles = makeStyles((theme) => ({
+  main: {
+    width: "90%",
+    color: "white",
+    margin: theme.spacing(16, "auto"),
+  },
+  title: {
+    padding: 30,
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: "50%",
+  },
+  infoAuthor: {
+    position: "absolute",
+    bottom: "0%",
+    display: "flex",
+    borderTop: " 1px solid grey",
+    width: "100%",
+    p: "10px",
+  },
+  footer: {
+    position: "relative",
+  },
+  text: {
+    padding: 20,
+    fontSize: 20,
+  },
+}));
+
+function SinglePostPage() {
+  const classes = useStyles();
+
   return (
-    <div className={styles.wrapper}>
+    <Grid container>
       <Header />
-      <div className={styles.container}>
-        <div className={styles.block}>
-          <div className={styles.slogan}>
-            <div className={styles.category_date}>
-              <a href="#" className={styles.category}>
-                code-for-a-living
-              </a>{" "}
-              SEPTEMBER 2, 2021
-            </div>
-            <div>
-              <h1>
-                Pandemic lockdowns accelerated cloud migration by three to four
-                years
-              </h1>
-            </div>
-            {/* блок с описанием поста */}
-            <div className={styles.text}>
-              The number of questions across Stack Overflow surged, and new
-              research solidifies this trend.
-            </div>
-            {/* блок с автором и его аватаркой */}
-            <div className={styles.author}>
-              <div>Ben Stone</div>
-            </div>
-          </div>
-          <div className={styles.slogan_image}>
-            <img src={chit} className={styles.img_} alt="" />
-          </div>
-        </div>
-        <div className={styles.whole_post}>
-          Welcome to our second Stack Overflow Knows pulse survey. In our first
-          edition, we focused on blockchain technologies. This time, we are
-          shifting our focus to the cloud. We will be running these smaller
-          surveys every few months as a compliment to our annual Developer
-          Survey to allow us to dive deeper into specific topics. If you have a
-          suggestion for what we should explore next, email us or share on
-          social with the hashtag #StackOverflowKnows.
-          <h1>Cloud adoption skyrockets</h1>
-          The migration from localized to cloud computing has been accelerating
-          for more than a decade, so perhaps it’s no surprise that 90% of
-          respondents to our latest survey indicated that their companies
-          increased usage of the cloud over the last year. It was a global
-          phenomenon, with every region showing at least 75% of its participants
-          growing their cloud adoption. While we know that the pandemic
-          accelerated many aspects of digital transformation, we wanted to see
-          if we could make an educated guess at exactly how big of a leap
-          forward the worldwide lockdowns precipitated.
-        </div>
-      </div>
-      <Footer/>
-    </div>
+      <Grid className={classes.main}>
+        <Box display="flex" justifyContent="space-between" mb={7}>
+          <Grid item xs={12} sm={7}>
+            <img src={PostImage} alt="" width={800} />
+          </Grid>
+          <Grid item xs={12} sm={4} className={classes.footer}>
+            <Typography variant="h5" className={classes.title}>
+              Смешной запрос в Google Переводчике
+            </Typography>
+            <Box className={classes.infoAuthor}>
+              <Box>
+                <img src={PostImage} className={classes.avatar} alt="" />
+              </Box>
+              <Box p={1}>Mansur</Box>
+            </Box>
+          </Grid>
+        </Box>
+        <Grid item xs={12} sm={12} className={classes.text}>
+          Зашёл в Google переводчик, чтобы правильно перевести Ахьмада на
+          английский. На деле, вывелись какие-то не понятные запросы :) Решил
+          поделиться, ибо запросы-то прикольные) Советую вам к просмотру!
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
