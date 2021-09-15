@@ -1,13 +1,18 @@
 import {Box, CardMedia, Grid, IconButton, Paper, Typography} from "@material-ui/core";
 import {BlurOn, Comment as CommentIcon} from "@material-ui/icons";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useStyles } from "../SingleQuestionPage";
-import {ThumbDown, ThumbUp} from "@mui/icons-material";
+import {BlurCircular, ThumbDown, ThumbUp} from "@mui/icons-material";
 import AddAnswer from "./AddAnswer";
 
+import {chooseBest, dislikeAnswer, likeAnswer} from "../../../redux/feautures/answers";
+import {SnackbarProvider, useSnackbar} from "notistack";
+import Answer from "./Answer";
+
+
 const Answers = ({correctTime}) => {
-    const { currentAsk } = useSelector(store => store.questions);
-    const { myData } = useSelector(store => store.auth);
+    const { currentAsk, isSignedIn } = useSelector(store => store.questions);
+    const { liking, disliking, success, error } = useSelector(store => store.answers);
     const { text } = useSelector(store => store.languages);
 
     const classes = useStyles();
@@ -32,59 +37,8 @@ const Answers = ({correctTime}) => {
                 </Box>
 
                 <Paper>
-                    {currentAsk?.answers.map(item =>
-                        <Box display="flex" key={item._id}>
-                            <Box textAlign="center" width={90} mb={2}>
-                                <Box p={1}>
-                                    {/*<IconButton disabled aria-label="delete" size={"medium"} >*/}
-                                    {/*    <BlurCircular htmlColor={"#6fe02e"} fontSize={"large"} />*/}
-                                    {/*</IconButton>*/}
-                                    <IconButton
-                                        disabled={currentAsk?.author._id !== myData?._id}
-                                        aria-label="delete"
-                                        size={"medium"}
-                                        onClick={(e) => console.log("Произошёл клик")}
-                                    >
-                                        <BlurOn htmlColor={"#bdb1b1"} fontSize={"large"} />
-                                    </IconButton>
-                                    {/*<IconButton disabled aria-label="delete" size={"medium"} >*/}
-                                    {/*    <BlurOn htmlColor={"#bdb1b1"} fontSize={"large"} />*/}
-                                    {/*</IconButton>*/}
-
-                                </Box>
-                                <IconButton disabled={item.author._id === myData?._id} aria-label="like" size={"medium"} >
-                                    <ThumbUp htmlColor={"#d2cfcf"} fontSize={"medium"} />
-                                </IconButton>
-                                <h4>0</h4>
-                                <IconButton disabled={item.author._id === myData?._id} aria-label="unlike" size={"medium"} >
-                                    <ThumbDown htmlColor={"#d2cfcf"} fontSize={"medium"} />
-                                </IconButton>
-                            </Box>
-                            <Box width="90%">
-                                <Box
-                                    p={1}
-                                    mt={2}
-                                    display="flex"
-                                    justifyContent="space-between"
-                                >
-                                    <Box display="flex" alignItems={"center"} >
-                                        <CardMedia
-                                            image={item.author.avatar_URI}
-                                            className={classes.avatar_anw}
-                                        />
-                                        <Typography>{item.author.name || item.author.login}</Typography>
-                                    </Box>
-                                    <Box>
-                                        {correctTime(item.createdAt)}
-                                    </Box>
-                                </Box>
-                                <Box p={1} mb={1}>
-                                    <Typography>
-                                        {item.text}
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        </Box>
+                    {currentAsk?.answers.map((item, index) =>
+                        <Answer key={item._id} item={item} index={index} correctTime={correctTime}/>
                     )}
                 </Paper>
             </Paper>

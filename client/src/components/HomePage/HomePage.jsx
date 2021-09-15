@@ -79,7 +79,7 @@ function HomePage() {
                         color="primary"
                         disableElevation
                         className={classes.button}
-                        onClick={() => history.push("/Posts")}
+                        onClick={() => history.push("/posts")}
                     >
                       {text.homeFirstBlockButton}
                     </Button>
@@ -131,7 +131,7 @@ function HomePage() {
                  {(currentLanguage === "en" ) ?
                     (<h1>Ahmed,
                         <Typical
-                            steps={['thanks', 1200," for the help" ]}
+                            steps={['thanks', 800," for the help" ]}
                             loop={5}
                             wrapper="p"
                         />
@@ -140,7 +140,7 @@ function HomePage() {
                  (currentLanguage === "ru") ?
                     (<h1>Альви,
                       <Typical
-                          steps={['спасибо', 1200," что ты есть!" ]}
+                          steps={['спасибо', 1000," что ты есть!" ]}
                           loop={5}
                           wrapper="p"
                       />

@@ -4,11 +4,11 @@ const che = {
     homeSecondBlockTitle: "Нагахь санна  шу цхьана халонца нийсадаллехь,я шуна цхьаннин г1о да лаахь",
     homeSecondBlockButton: "Хаттар? Жоп х1ар ду!",
 
-    search:"Лоьху х1умма",
+    search:"Лоьху х1ума...",
     askQuestion:"Хаттар ло",
-    answers:"Жоьпаш",
+    answers:"жоьпаш",
     question:"Хьа хаттар...",
-    questionInstruction:"Нагахь санна хаттар луш далахь,маситта оьшуш йолу полеш заполнить я еза",
+    questionInstruction:"Нагахь санна хаттар луш далахь, маситта оьшуш йолу полеш заполнить ян еза",
     questionTitle:"Шу хаттаран коьрта ц1е",
     questionText:"Шу хаттаран текст",
     askButton:"Хатта",
@@ -24,6 +24,7 @@ const che = {
     asksQuestionAmount:"Жоьпаш делла",
     comment:"Хьай жоп яз де",
     commentButton:"Д1аяхьийт",
+    commentPlaceholder: "Хаттаран жоп хааьхь/цуна хаттаран т1е жопа дала лаьа? Т1аккха ло!",
 
     signIn:"Авторизаци ",
     login:"логин",

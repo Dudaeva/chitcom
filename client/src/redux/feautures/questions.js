@@ -15,6 +15,11 @@ const reducer = (state = initialState, action) => {
         case "questions/setError" :
             return {...state, error: action.error}
 
+        //Добавление комментария в массив
+        case "questions/addQuestion" :
+            return {...state, currentAsk: {...state.currentAsk,
+                    answers: [...state.currentAsk.answers, action.payload]}}
+
         //Добавление нового вопроса
         case "questions/askQuestion/pending" :
             return {...state, asking: true, error: null, askSuccess: null}

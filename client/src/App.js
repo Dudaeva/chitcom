@@ -1,11 +1,12 @@
 import Router from "./routes";
+import {SnackbarProvider} from "notistack";
 
 const App = () => {
 
     return (
-      <>
-          <Router />
-      </>
+        <SnackbarProvider maxSnack={3}>
+            <Router />
+        </SnackbarProvider>
     );
 }
 

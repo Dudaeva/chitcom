@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const answerSchema = new Schema(
-  {
+const answerSchema = new Schema({
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
@@ -11,6 +10,18 @@ const answerSchema = new Schema(
       required: true,
     },
     resolved: false,
+    likes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        }
+    ],
+    dislikes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        }
+    ],
     toQuestion: {
       type: Schema.Types.ObjectId,
       ref: "Question",
