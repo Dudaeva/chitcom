@@ -25,6 +25,7 @@ const ru = {
   asksQuestionAmount:" ОТВЕТЫ НА ВОПРОС",
   comment:"Введите ваш ответ",
   commentButton:"Отправить",
+  commentPlaceholder: "Знаете правильный ответ/хотите ответить на вопрос? Так ответьте!",
 
   signIn:"Авторизация",
   login:"логин",

@@ -25,6 +25,8 @@ const en = {
   asksQuestionAmount:"ANSWERS TO THE QUESTION",
   comment:"Enter your answer",
   commentButton:"Send",
+  commentPlaceholder: "Do you have a right answer/would answer to the question? Let's do it!",
+
 
   signIn:"Authorization",
   login:"login",

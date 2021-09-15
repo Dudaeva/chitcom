@@ -1,5 +1,8 @@
 import { DateRange as DateRangeIcon, Comment as CommentIcon, Telegram as TelegramIcon } from "@material-ui/icons";
 import { CardMedia, Grid, makeStyles, Paper, Box} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {loadUserData} from "../redux/feautures/auth";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -46,44 +49,53 @@ const useStyles = makeStyles((theme) => ({
 
 function MyProfilePage() {
   const classes = useStyles();
+  const { myData } = useSelector(store => store.auth);
+  const dispatch = useDispatch();
+
+  const correctTime = (time) =>
+      `${new Date(time).toLocaleDateString()} в ${new Date(time).toTimeString().slice(0, 9)}`;
+  
+  useEffect(() => dispatch(loadUserData()), []);
 
   return (
     <Grid container className={classes.main}>
       <Box className={classes.bigBox}>
         <Paper className={classes.data}>
           <CardMedia
-            image={"https://ru.joblum.com/uploads/115/114179.png"}
+            image={myData?.avatar_URI}
             className={classes.avatar}
           />
           <Box mt={3} borderBottom="1px solid #d0d7dd">
-            Евгений Кузьмин
+            {myData?.name || myData?.login}
           </Box>
           <Box mt={3} borderBottom="1px solid #d0d7dd">
-            <TelegramIcon fontSize="small" color="primary" />
-            <a href={``} style={{ textDecoration: "none" }}>
-              @telegram
-            </a>
+            {myData?.telegram_URI && (
+                <Box>
+                  <TelegramIcon fontSize="small" color="primary"/>
+                  <a href={`https://t.me/${myData?.telegram_URI}`}
+                     style={{textDecoration: "none"}}>
+                    @{myData?.telegram_URI}
+                  </a>
+                </Box>
+            )}
+
+
+          </Box>
+          <Box mt={3} borderBottom="1px solid #d0d7dd">
+            <DateRangeIcon />
+            Зарегистрирован: <br />
+            {correctTime(myData?.createdAt)}
           </Box>
         </Paper>
 
         <Paper className={classes.about}>
           <h1>Коротко обо мне</h1>
           <Box position="relative" width={756}>
-            <Box p={3} borderBottom="2px solid #d0d7dd">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam
-              culpa eaque eos quasi ducimus! Doloremque debitis molestiae nulla
-              quae eos atque minima? Animi, iusto ut ducimus aliquam aut debitis
-              accusantium.
+            <Box p={3}>
+              FullStack разработчик, мой стек - MERN. Мне 18 лет, прожил всю свою жизнь в Англии, в последнем году
+              переехал в Чечню. Говорят, что у меня сгорела гарантия :(
             </Box>
-            <Box className={classes.secondBox}>
-              <Box>
-                <DateRangeIcon />
-                12.09.2021
-              </Box>
-              <Box>
-                <CommentIcon />0 ответов
-              </Box>
-            </Box>
+
           </Box>
         </Paper>
       </Box>
