@@ -1,19 +1,15 @@
-import React from 'react';
 import {Box, CardMedia, Grid, IconButton, Paper, Typography} from "@material-ui/core";
-import {
-    BlurCircular,
-    BlurOn,
-    Comment as CommentIcon,
-    KeyboardArrowDown as KeyboardArrowDownIcon,
-    KeyboardArrowUp as KeyboardArrowUpIcon
-} from "@material-ui/icons";
+import {BlurOn, Comment as CommentIcon} from "@material-ui/icons";
 import {useSelector} from "react-redux";
-import { useStyles } from "./SingleQuestionPage";
+import { useStyles } from "../SingleQuestionPage";
 import {ThumbDown, ThumbUp} from "@mui/icons-material";
+import AddAnswer from "./AddAnswer";
 
 const Answers = ({correctTime}) => {
     const { currentAsk } = useSelector(store => store.questions);
+    const { myData } = useSelector(store => store.auth);
     const { text } = useSelector(store => store.languages);
+
     const classes = useStyles();
 
     return (
@@ -43,7 +39,12 @@ const Answers = ({correctTime}) => {
                                     {/*<IconButton disabled aria-label="delete" size={"medium"} >*/}
                                     {/*    <BlurCircular htmlColor={"#6fe02e"} fontSize={"large"} />*/}
                                     {/*</IconButton>*/}
-                                    <IconButton aria-label="delete" size={"medium"} >
+                                    <IconButton
+                                        disabled={currentAsk?.author._id !== myData?._id}
+                                        aria-label="delete"
+                                        size={"medium"}
+                                        onClick={(e) => console.log("Произошёл клик")}
+                                    >
                                         <BlurOn htmlColor={"#bdb1b1"} fontSize={"large"} />
                                     </IconButton>
                                     {/*<IconButton disabled aria-label="delete" size={"medium"} >*/}
@@ -51,12 +52,12 @@ const Answers = ({correctTime}) => {
                                     {/*</IconButton>*/}
 
                                 </Box>
-                                <IconButton aria-label="delete" size={"medium"} >
-                                    <ThumbUp htmlColor={"#bdb1b1"} fontSize={"medium"} />
+                                <IconButton disabled={item.author._id === myData?._id} aria-label="like" size={"medium"} >
+                                    <ThumbUp htmlColor={"#d2cfcf"} fontSize={"medium"} />
                                 </IconButton>
                                 <h4>0</h4>
-                                <IconButton aria-label="delete" size={"medium"} >
-                                    <ThumbDown htmlColor={"#bdb1b1"} fontSize={"medium"} />
+                                <IconButton disabled={item.author._id === myData?._id} aria-label="unlike" size={"medium"} >
+                                    <ThumbDown htmlColor={"#d2cfcf"} fontSize={"medium"} />
                                 </IconButton>
                             </Box>
                             <Box width="90%">
@@ -88,15 +89,7 @@ const Answers = ({correctTime}) => {
                 </Paper>
             </Paper>
 
-            <Box>
-                <Box>
-                    <h3>{text.comment}</h3>
-                    <textarea rows="10" cols="100" name="text" />
-                </Box>
-                <button className="btn btn-primary" type="button">
-                    {text.commentButton}
-                </button>
-            </Box>
+            <AddAnswer />
         </Grid>
     );
 };

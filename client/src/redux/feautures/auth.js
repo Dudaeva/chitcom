@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
 
         //Выход из аккаунта
         case "auth/signOut" : {
-            document.cookie = `token=;`
+            document.cookie = `token=; path=/;`;
             return {...state, token: null, isSignedIn: false, myData: null}
         }
 

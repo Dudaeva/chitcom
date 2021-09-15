@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create("width"),
         width: "100%",
@@ -61,8 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
     const classes = useStyles();
-    const history = useHistory();
-
+    const history = useHistory()
 
       return (
         <AppBar position="static" className={classes.toolbarFrame}>
@@ -76,19 +74,6 @@ const Header = () => {
               <Box>
                 <Language />
               </Box>
-              {/* <Box className={classes.search}>
-                <Box className={classes.searchIcon}>
-                  <SearchIcon />
-                </Box>
-                <InputBase
-                  placeholder="Search…"
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Box> */}
               <Box mr={3}>
                   <HeaderProfileIcon />
               </Box>
