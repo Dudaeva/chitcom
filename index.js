@@ -17,11 +17,11 @@ app.use(cors());
 
 app.use(require("./routes/index"));
 
-if (NODE_ENV === "production") {
+// if (NODE_ENV === "production") {
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
-}
+// }
 
 const start = async () => {
   try {
