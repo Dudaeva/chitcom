@@ -1,20 +1,26 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const postSchema = mongoose.Schema(
+const postSchema = new Schema(
   {
     category: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Category",
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
+    author: {
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
-    title: String,
-    text: String,
+    title: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
     review: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Review",
       },
     ],
@@ -22,6 +28,4 @@ const postSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Post = mongoose.model("Post", postSchema);
-
-module.exports = Post;
+module.exports = model("Post", postSchema);

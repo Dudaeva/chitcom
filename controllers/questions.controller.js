@@ -3,14 +3,20 @@ const Question = require("../models/Question.model");
 module.exports.questionsController = {
   addQuestion: async (req, res) => {
     try {
-      const questions = await Question.create({
-        user: req.body.user,
-        title: req.body.title,
-        text: req.body.text,
-      });
-      res.json(questions);
+      const { id } = req.user;
+      const {title, text} = req.body;
+      if (!title || !text)
+        return res.status(404).json({error: "Поля ввода не могут быть пустыми!"});
+
+      const isExists = await Question.findOne({text});
+      if (isExists)
+        return res.status(404).json({error: "Такой вопрос уже существует!"});
+
+      const question = await Question.create({author: id, title, text});
+
+      return res.status(200).json({success: "Вопрос успешно задан", question});
     } catch (e) {
-      res.json(e);
+      res.status(404).json({error: e});
     }
   },
   deleteQuestion: async (req, res) => {
@@ -47,18 +53,34 @@ module.exports.questionsController = {
   },
   getAllQuestions: async (req, res) => {
     try {
-      const questions = await Question.find();
-      res.json(questions);
+      const { page = 1, limit = 10 } = req.query;
+
+      const list = await Question.find();
+      const pagesCount = Math.ceil(list.length / 10);
+
+      const questions = await Question
+          .find()
+          .sort('-updatedAt')
+          .populate("author")
+          .limit(limit * 1)
+          .skip((page - 1) * limit);
+
+      res.status(200).json({questions, pagesCount, success: "Новости успешно загружены"});
     } catch (e) {
-      res.json(e);
+      res.status(404).json({error: e});
     }
   },
-  getQuestionsById: async (req, res) => {
+  getQuestionById: async (req, res) => {
     try {
-      const questions = await Question.findById(req.params.id);
-      res.json(questions);
+      const question = await Question.findById(req.params.questionId)
+      .populate("answers author").populate({path: "answers", populate: {path: "author", model: "User"}});
+
+      if (!question) 
+        return res.status(404).json({error: "Ошибка! Вопроса с таким ID не существует"});
+      
+      return res.status(200).json({success: "Вопрос был успешно загружен", question});
     } catch (e) {
-      res.json(e);
+      return res.status(404).json({error: e});
     }
   },
 };

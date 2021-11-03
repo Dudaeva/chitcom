@@ -1,35 +1,53 @@
 import {useEffect, useState} from "react";
-import { Paper, SnackbarContent, Snackbar, CssBaseline, Input, InputLabel, withStyles,
-    FormControl,  Avatar , Button , InputAdornment, IconButton } from "@material-ui/core";
+import {
+    Paper, SnackbarContent, Snackbar, Input, InputLabel, withStyles,
+    FormControl, Avatar, Button, InputAdornment, IconButton, FormControlLabel
+} from "@material-ui/core";
 import { PeopleAlt, VisibilityTwoTone, VisibilityOffTwoTone } from "@material-ui/icons";
 import { register } from "./RegistrationStyles";
 import {useDispatch, useSelector} from "react-redux";
-import {clearData, createUser} from "../../redux/feautures/users";
-import {green, red} from "@material-ui/core/colors";
+import {green} from "@material-ui/core/colors";
 import {Close, Error} from "@mui/icons-material";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {Typography} from "@mui/material";
+import {signUp} from "../../redux/feautures/auth";
+
+export const SignUpAvatar = ({classes, state}) => (
+    <Avatar className={`${classes.avatar} ${classes.signup}`}
+            style={state.avatar ? {backgroundColor: "#344892"} : null}>
+        <PeopleAlt className={classes.icon} /> {/*Если пользователь выбрал аватарку, то фон меняется */}
+    </Avatar>
+);
 
 
 const SignUp = (props) =>  {
-    const { error, success, signingUp } = useSelector(store => store.users);
+    const { error, success, isSigningUp } = useSelector(store => store.auth);
+    const { text } = useSelector((store) => store.languages);
+
     const dispatch = useDispatch();
     const history = useHistory();
 
     const [state, setState] = useState({
         login: "",
         password: "",
+        avatar: "",
         hidePassword: true,
-        errorOpen: false
+        statusMessageOpen: false
     })
 
-    const errorClose = e => {
-        setState({...state, errorOpen: false });
+    const closeStatusMessage = e => {
+        setState({...state, statusMessageOpen: false });
+
+        if (success) {
+            dispatch({type: "auth/data/clear"});
+            return history.push("/sign-in")
+        }
+        dispatch({type: "auth/data/clear"});
     };
 
-    const handleChange = name => e => {
+    const handleChange = (name, option = "value") => e => {
         setState({...state,
-            [name]: e.target.value
+            [name]: e.target[option]
         });
     };
 
@@ -37,26 +55,24 @@ const SignUp = (props) =>  {
         setState({...state, hidePassword: !state.hidePassword });
     };
 
-    if (success?.includes("Пользователь успешно зарегистрирован!"))
-        setTimeout(() => history.push("/sign-in"), 3000);
-
     const submitRegistration = e => {
         e.preventDefault();
         const newUserCredentials = {
+            avatar_URI: state.avatar,
+            telegram_URI: "bimurzaew",
             login: state.login,
             password: state.password,
         };
 
-        dispatch(createUser(newUserCredentials));
+        dispatch(signUp(newUserCredentials));
 
-        setState({...state, errorOpen: true});
+        setState({...state, statusMessageOpen: true});
     };
 
     const { classes } = props;
 
     return (
         <div className={classes.main}>
-            <CssBaseline />
 
             <Paper className={classes.paper}>
                 {(error || success) && (
@@ -67,8 +83,8 @@ const SignUp = (props) =>  {
                             vertical: "top",
                             horizontal: "center"
                         }}
-                        open={state.errorOpen}
-                        onClose={errorClose}
+                        open={state.statusMessageOpen}
+                        onClose={closeStatusMessage}
                         autoHideDuration={3000}
                     >
                         <SnackbarContent
@@ -86,7 +102,7 @@ const SignUp = (props) =>  {
                                 <IconButton
                                     key="close"
                                     aria-label="close"
-                                    onClick={errorClose}
+                                    onClick={closeStatusMessage}
                                 >
                                     <Close color={error ? "error" : "success"} />
                                 </IconButton>
@@ -94,17 +110,24 @@ const SignUp = (props) =>  {
                         />
                     </Snackbar>
                 )}
-                <Avatar className={classes.avatar}>
-                    <PeopleAlt className={classes.icon} />
-                </Avatar>
-                <Typography>Регистрация</Typography>
+
+                <FormControlLabel
+                    style={{marginRight: "-9px"}}
+                    control={
+                        <input name="avatar" accept="image/*" className={classes.fileInput} type="file" />
+                    }
+                    label={<SignUpAvatar classes={classes} state={state} />}
+                    onChange={handleChange("avatar", "files")}
+                />
+                <Typography>{text.signUp}</Typography>
+
                 <form
                     className={classes.form}
                     onSubmit={() => submitRegistration}
                 >
                     <FormControl required fullWidth margin="normal">
                         <InputLabel htmlFor="login" className={classes.labels}>
-                            login
+                            {text.login}
                         </InputLabel>
                         <Input
                             name="login"
@@ -118,7 +141,7 @@ const SignUp = (props) =>  {
 
                     <FormControl required fullWidth margin="normal">
                         <InputLabel htmlFor="password" className={classes.labels}>
-                            password
+                            {text.password}
                         </InputLabel>
                         <Input
                             name="password"
@@ -148,10 +171,16 @@ const SignUp = (props) =>  {
                             }
                         />
                     </FormControl>
-                    <Link to="/sign-in">Уже сделали это? Тогда включайся</Link>
+                    <div /> <br />
+                    <Typography
+                        className={classes.haveAccount}
+                        onClick={() => history.push("/sign-in")}
+                    >
+                         {text.signInToProfile}
+                    </Typography>
 
                     <Button
-                        disabled={signingUp}
+                        disabled={isSigningUp}
                         disableRipple
                         fullWidth
                         variant="outlined"
@@ -159,7 +188,7 @@ const SignUp = (props) =>  {
                         type="submit"
                         onClick={submitRegistration}
                     >
-                        Join
+                        {text.signUpButton}
                     </Button>
                 </form>
             </Paper>

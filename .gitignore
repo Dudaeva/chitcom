@@ -1,8 +1,11 @@
-#Папка backend'a
+#Backend
 .env
 node_modules
 .idea
+package-lock.json
 
+#Frontend
 /client/node_modules
 /client/.idea
 /client/README.md
+/client/package-lock.json

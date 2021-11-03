@@ -1,0 +1,35 @@
+body {
+  background-image: url(../../images/bg-header.svg);
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: 100% 215px;
+  box-sizing: border-box;
+  background-color: #00183d;
+  font-size: 15px;
+  justify-content: center;
+  vertical-align: center;
+  text-align: center!important;
+}
+.header {
+  padding: 0 64px;
+  padding-top: 32px;
+  margin-bottom: 24px;
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+.logo {
+  width: 250px;
+}
+ .description {
+  margin-left: 32px;
+  max-width: 315px;
+  color:white;
+
+}
+.input {
+  flex-grow: 3;
+  padding-left: 250px;
+  display: flex;
+  justify-content: space-evenly;
+}
