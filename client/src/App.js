@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Redirect, Route, Switch } from "react-router-dom";
 import SignUp from "./components/Authorization/SignUp";
 import SignIn from "./components/Authorization/SignIn";
@@ -36,6 +37,12 @@ const App = () => {
           </Switch>
       </>
     );
+=======
+function App() {
+  return (
+    <div className="App" />
+  );
+>>>>>>> d742f526dc0e5c742a0ce056a6439da7ccceb5db
 }
 
 export default App;
