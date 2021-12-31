@@ -111,7 +111,7 @@ function PostPage() {
               </Box>
 
               {items.map((post) => (
-                <Box ml={3} mb = '30px' minHeight={500} position="relative">
+                <Box ml={3} mb = '30px' minHeight={500} position="relative" width={500}>
                   <Box>
                     <img src={chit} className={classes.imglogo} alt="" />
                   </Box>

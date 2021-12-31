@@ -1,7 +1,7 @@
 const initialState = {
   loading: false,
   items: [],
-  error:null
+  error:null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,13 +13,12 @@ const reducer = (state = initialState, action) => {
     case "posts/fetch/rejected":
       return {...state,loading: false,error: action.error};
 
-      case "posts/fetch-single/pending" :
+    case "posts/fetch-single/pending" :
         return {...state, loading: true, error: null}
     case "posts/fetch-single/fulfilled" :
-        return {...state, loading: false, items:action.payload};
+        return {...state, loading: false, currentPost: action.payload.data};
     case "posts/fetch-single/rejected" :
         return {...state, loading: false, error: action.error}
-
 
     case "posts/fetch-by-category/pending":
       return {...state,loading: true};
@@ -47,26 +46,38 @@ export const getAllPosts = () => {
   };
 };
 
-export const getSinglePost = (id) => {
-  return async (dispatch, getState) => {
-    const { posts } = getState();
+export const getSinglePost = (postId) => async (dispatch) => {
+  dispatch({ type: "posts/fetch-single/pending" });
 
-    if (posts.items.find((post) => post._id === id)) {
-      return;
-    }
+  try {
+    const responce = await fetch(`/post/${postId}`);
+    const json = await responce.json();
 
-    dispatch({ type: "posts/fetch-single/pending" });
-
-    try {
-      const res = await fetch(`/Posts/${id}`);
-      const posts = await res.json();
-
-      dispatch({ type: "posts/fetch-single/fulfilled", payload: posts });
-    } catch (e) {
-      dispatch({ type: "posts/fetch-single/rejected", error: e.toString() });
-    }
-  };
+    dispatch({ type: "posts/fetch-single/fulfilled", payload: {success: json.success, data: json.post} });
+  } catch (e) {
+    dispatch({ type: "posts/fetch-single/rejected", error: e.toString() });
+  }
 };
+// {
+//   return async (dispatch, getState) => {
+//     const { posts } = getState();
+
+//     if (posts.items.find((post) => post._id === id)) {
+//       return;
+//     }
+
+//     dispatch({ type: "posts/fetch-single/pending" });
+
+//     try {
+//       const res = await fetch(`/Posts/${id}`);
+//       const posts = await res.json();
+
+//       dispatch({ type: "posts/fetch-single/fulfilled", payload: posts });
+//     } catch (e) {
+//       dispatch({ type: "posts/fetch-single/rejected", error: e.toString() });
+//     }
+//   };
+// };
 
 export const getPostsByCategory = (categoryId) => {
   return async (dispatch) => {

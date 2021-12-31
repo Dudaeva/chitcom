@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Header from "./Header";
-import { Grid, makeStyles, Typography } from "@material-ui/core";
-import PostImage from "../../images/ahmed.png";
-import { Box } from "@mui/system";
+import { Grid, makeStyles, Typography, CardMedia } from "@material-ui/core";
+import { getSinglePost } from "../../redux/feautures/posts";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -37,33 +38,33 @@ const useStyles = makeStyles((theme) => ({
 
 function SinglePostPage() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const { loading, currentPost } = useSelector((store) => store.posts);
+  const { postId } = useParams();
+
+  useEffect(() => {
+    dispatch(getSinglePost(postId));
+  }, [postId, dispatch]);
 
   return (
     <Grid container>
       <Header />
-      <Grid className={classes.main}>
-        <Box display="flex" justifyContent="space-between" mb={7}>
-          <Grid item xs={12} sm={7}>
-            <img src={PostImage} alt="" width={800} />
+      {loading ? (
+        <h3>loading...</h3>
+      ) : (
+        <Grid className={classes.main}>
+          {currentPost?.title}
+          <CardMedia
+            image={currentPost?.author?.avatar_URI}
+            className={classes.avatar}
+          />
+          {currentPost?.author?.name || currentPost?.author?.login}
+          <Grid item xs={12} sm={12} className={classes.text}>
+            {currentPost?.text}
           </Grid>
-          <Grid item xs={12} sm={4} className={classes.footer}>
-            <Typography variant="h5" className={classes.title}>
-              Смешной запрос в Google Переводчике
-            </Typography>
-            <Box className={classes.infoAuthor}>
-              <Box>
-                <img src={PostImage} className={classes.avatar} alt="" />
-              </Box>
-              <Box p={1}>Mansur</Box>
-            </Box>
-          </Grid>
-        </Box>
-        <Grid item xs={12} sm={12} className={classes.text}>
-          Зашёл в Google переводчик, чтобы правильно перевести Ахьмада на
-          английский. На деле, вывелись какие-то не понятные запросы :) Решил
-          поделиться, ибо запросы-то прикольные) Советую вам к просмотру!
         </Grid>
-      </Grid>
+      )}
     </Grid>
   );
 }

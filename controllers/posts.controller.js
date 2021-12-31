@@ -40,10 +40,13 @@ module.exports.postsController = {
       res.json(e);
     }
   },
-  getPostById:async (req, res) => {
-    try{
-      const posts = await Post.findById(req.params.id).populate("category author");
-      res.json(posts)
+  getPostById: async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.postId).populate("category author");
+      if (!post)
+        return res.status(404).json({ error: "Ошибка! Пост с таким ID не существует" });
+
+      return res.status(200).json({ success: "Пост был успешно загружен", post });
     } catch (e) {
       res.json(e);
     }
@@ -61,14 +64,6 @@ module.exports.postsController = {
       return res.status(400).json({error: e.toString()});
     }
   },
-
-
-
-  //     res.json(posts)
-  //   } catch (e) {
-  //     res.json(e);
-  //   }
-  // },
   addReviews: async (req, res) => {
     try {
       await Post.findByIdAndUpdate(req.params.id, {
