@@ -1,6 +1,7 @@
 const initialState = {
   loading: false,
   items: [],
+  categories: [],
   error:null,
 };
 
@@ -26,6 +27,14 @@ const reducer = (state = initialState, action) => {
       return {...state,loading: false,items: action.payload};
     case "posts/fetch-by-category/rejected":
       return {...state,loading: false,error: action.error};
+
+    case "categories/fetch/pending":
+      return {...state, loading: true}
+    case "categories/fetch/fulfilled":
+      return {...state, loading: false, categories: action.payload}
+    case "categories/fetch/rejected":
+      return {...state, loading:false, error: action.error}
+
       default:
         return state;
   }
@@ -58,6 +67,38 @@ export const getSinglePost = (postId) => async (dispatch) => {
     dispatch({ type: "posts/fetch-single/rejected", error: e.toString() });
   }
 };
+
+export const getCategories = () => async (dispatch) => {
+  dispatch ({type: "categories/fetch/pending"})
+
+  try {
+    const res = await fetch('/categories')
+    const categories = await res.json()
+
+    dispatch ({type: "categories/fetch/fulfilled", payload: categories})
+  } catch (e) {
+    dispatch ({type: "categories/fetch/rejected", error: e.toString() })
+  }
+}
+
+export const getPostsByCategory = (categoryId) => {
+  return async (dispatch) => {
+    dispatch({ type: "posts/fetch-by-category/pending"});
+
+    try {
+      const res = await fetch(`/posts/category/${categoryId}`);
+      const posts = await res.json();
+
+      dispatch({type: "posts/fetch-by-category/fulfilled",payload: posts,
+      });
+    } catch (e) {
+      dispatch({type: "posts/fetch-by-category/rejected",error: e.toString(),
+      });
+    }
+  };
+};
+
+
 // {
 //   return async (dispatch, getState) => {
 //     const { posts } = getState();
@@ -79,21 +120,6 @@ export const getSinglePost = (postId) => async (dispatch) => {
 //   };
 // };
 
-export const getPostsByCategory = (categoryId) => {
-  return async (dispatch) => {
-    dispatch({ type: "posts/fetch-by-category/pending" });
 
-    try {
-      const res = await fetch(`/Posts/category/${categoryId}`);
-      const posts = await res.json();
-
-      dispatch({type: "posts/fetch-by-category/fulfilled",payload: posts,
-      });
-    } catch (e) {
-      dispatch({type: "posts/fetch-by-category/rejected",error: e.toString(),
-      });
-    }
-  };
-};
 
 export default reducer
