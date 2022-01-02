@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-function AllPostsPage(props) {
+function AllPostsPage({ post }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();

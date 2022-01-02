@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button, CardMedia, Grid, Typography } from "@material-ui/core";
 import { Box } from "@mui/system";
 import { Pagination } from "@mui/material";
@@ -8,6 +9,8 @@ import Header from "./Header";
 import {getAllPosts,getCategories,getPostsByCategory} from "../../redux/feautures/posts";
 import logo from "../../images/bg-header.svg";
 import AllPostsPage from "./AllPostsPage";
+
+import chit from "../../images/horizontal_on_white_by_logaster.png";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -55,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
 function PostPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const correctTime = (time) => `${new Date(time).toLocaleDateString()}`;
 
   const { items, categories, loading } = useSelector((store) => store.posts);
   const { text } = useSelector((store) => store.languages);
@@ -71,16 +77,22 @@ function PostPage() {
     dispatch(getCategories());
   }, [dispatch]);
 
+  
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, [dispatch]);
+
+
   return (
     <Grid container className={classes.main}>
       <Header />
 
-      {/* {loading ? (
-        <h3>loading...</h3>
-      ) : ( */}
+      {loading ? (
+        <Typography variant="h4" style={{margin: '100px auto'}} >loading...</Typography>
+      ) : (
         <>
           <Grid container>
-            <Box width="100%" my={9}>
+            <Box width="100%" my={11}>
               <Typography variant="h4">{text.posts}</Typography>
               <Typography variant="h5">{text.postsTitle}</Typography>
               <Typography className={classes.catList}>
@@ -94,10 +106,36 @@ function PostPage() {
             </Box>
 
             <Box display="contents">
-              {/* {items.map((item) => {
-                return <AllPostsPage item={item} key={item.id} />;
-              })} */}
-              <AllPostsPage />
+              {/* {items.map((post) => {
+                return <AllPostsPage post={post} />;
+              })}   бесконечно рендерится если разбит на компонент*/}
+              {/* <AllPostsPage /> */}
+              {items.map((post) => (
+        <Box ml={3} mb="30px" minHeight={500} position="relative" width={500}>
+          <Box>
+            <img src={chit} className={classes.imglogo} alt="" />
+          </Box>
+          <Box display="flex" justifyContent="space-between">
+            <Box
+              className={classes.category}
+              onClick={() => history.push(`/posts/${post.category._id}`)}
+            >
+              {post.category.name}
+            </Box>
+            <Box>{correctTime(post.createdAt)}</Box>
+          </Box>
+          <Box pt={2} onClick={() => history.push(`/posts/${post._id}`)}>
+            <Typography variant="h5">{post.title}</Typography>
+          </Box>
+          <Box className={classes.infoAuthor}>
+            <CardMedia
+              image={post.author?.avatar_URI}
+              className={classes.avatar}
+            />
+            <Box p={1}>{post.author?.name || post.author?.login}</Box>
+          </Box>
+        </Box>
+      ))}
             </Box>
           </Grid>
 
@@ -105,7 +143,7 @@ function PostPage() {
             <Pagination count={10} shape="rounded" />
           </Box>
         </>
-      {/* )} */}
+       )}
     </Grid>
   );
 }

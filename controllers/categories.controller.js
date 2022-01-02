@@ -14,8 +14,8 @@ module.exports.categoriesController = {
   },
   deleteCategory: async (req, res) => {
     try {
-      const categories = await Category.findByIdAndDelete(req.params.id);
-      res.json(categories);
+      await Category.findByIdAndDelete(req.params.id);
+      res.json("Категория успешно удалена");
     } catch (err) {
       console.log(err);
     }
