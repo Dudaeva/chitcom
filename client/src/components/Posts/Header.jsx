@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./posts.module.css";
 import logo from "../../images/ref-logo.png";
-import { Search } from "@mui/icons-material";
 import {
   Telegram as TelegramIcon,
   WhatsApp as WhatsAppIcon,
@@ -22,11 +21,10 @@ function Header() {
           </Typography>
         </div>
         <div className={styles.description}>
-          Здесь вы можете поделиться интересными постами и т.д. Просто и с
+          Здесь вы можете поделиться интересными постами. Просто и с
           комфортом :)
         </div>
         <div className={styles.input}>
-          <Search />
           <div>
             <TelegramIcon fontSize="small" color="primary" />
           </div>

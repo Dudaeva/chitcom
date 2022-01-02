@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button, CardMedia, Grid, Typography } from "@material-ui/core";
@@ -9,8 +9,8 @@ import Header from "./Header";
 import {getAllPosts,getCategories,getPostsByCategory} from "../../redux/feautures/posts";
 import logo from "../../images/bg-header.svg";
 import AllPostsPage from "./AllPostsPage";
-
 import chit from "../../images/horizontal_on_white_by_logaster.png";
+import SearchIn from "./Search";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -26,6 +26,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-around",
     marginTop: "50px",
+  },
+  mainPost: {
+    marginLeft:24,
+    marginBottom:"30px",
+    minHeight: 500,
+    position: "relative",
+    width: 500
   },
   category: {
     width: "40%",
@@ -60,6 +67,8 @@ function PostPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [textSearch, setTextSearch] = useState("");
+
   const correctTime = (time) => `${new Date(time).toLocaleDateString()}`;
 
   const { items, categories, loading } = useSelector((store) => store.posts);
@@ -77,22 +86,22 @@ function PostPage() {
     dispatch(getCategories());
   }, [dispatch]);
 
-  
   useEffect(() => {
     dispatch(getAllPosts());
   }, [dispatch]);
 
-
   return (
     <Grid container className={classes.main}>
       <Header />
-
+      <SearchIn values={{ textSearch, setTextSearch }} />
       {loading ? (
-        <Typography variant="h4" style={{margin: '100px auto'}} >loading...</Typography>
+        <Typography variant="h4" style={{ margin: "100px auto" }}>
+          loading...
+        </Typography>
       ) : (
         <>
           <Grid container>
-            <Box width="100%" my={11}>
+            <Box width="100%" my={9}>
               <Typography variant="h4">{text.posts}</Typography>
               <Typography variant="h5">{text.postsTitle}</Typography>
               <Typography className={classes.catList}>
@@ -110,32 +119,39 @@ function PostPage() {
                 return <AllPostsPage post={post} />;
               })}   бесконечно рендерится если разбит на компонент*/}
               {/* <AllPostsPage /> */}
-              {items.map((post) => (
-        <Box ml={3} mb="30px" minHeight={500} position="relative" width={500}>
-          <Box>
-            <img src={chit} className={classes.imglogo} alt="" />
-          </Box>
-          <Box display="flex" justifyContent="space-between">
-            <Box
-              className={classes.category}
-              onClick={() => history.push(`/posts/${post.category._id}`)}
-            >
-              {post.category.name}
-            </Box>
-            <Box>{correctTime(post.createdAt)}</Box>
-          </Box>
-          <Box pt={2} onClick={() => history.push(`/posts/${post._id}`)}>
-            <Typography variant="h5">{post.title}</Typography>
-          </Box>
-          <Box className={classes.infoAuthor}>
-            <CardMedia
-              image={post.author?.avatar_URI}
-              className={classes.avatar}
-            />
-            <Box p={1}>{post.author?.name || post.author?.login}</Box>
-          </Box>
-        </Box>
-      ))}
+              {items
+                .filter((item) =>
+                  item.title?.toLowerCase().includes(textSearch.toLowerCase())
+                )
+                .map((post) => (
+                  <Box className={classes.mainPost}>
+                    <Box>
+                      <img src={chit} className={classes.imglogo} alt="" />
+                    </Box>
+                    <Box display="flex" justifyContent="space-between">
+                      <Box
+                        className={classes.category}
+                        onClick={() => history.push(`/posts/${post.category._id}`)}
+                      >
+                        {post.category.name}
+                      </Box>
+                      <Box>{correctTime(post.createdAt)}</Box>
+                    </Box>
+                    <Box
+                      pt={2}
+                      onClick={() => history.push(`/posts/${post._id}`)}
+                    >
+                      <Typography variant="h5">{post.title}</Typography>
+                    </Box>
+                    <Box className={classes.infoAuthor}>
+                      <CardMedia
+                        image={post.author?.avatar_URI}
+                        className={classes.avatar}
+                      />
+                      <Box p={1}>{post.author?.name || post.author?.login}</Box>
+                    </Box>
+                  </Box>
+                ))}
             </Box>
           </Grid>
 
@@ -143,7 +159,7 @@ function PostPage() {
             <Pagination count={10} shape="rounded" />
           </Box>
         </>
-       )}
+      )}
     </Grid>
   );
 }
