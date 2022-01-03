@@ -11,20 +11,9 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { purple } from "@material-ui/core/colors";
-import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AskQuestion from "./AskQuestion";
 import { useSelector } from "react-redux";
-
-const ColorButton = withStyles((theme) => ({
-  root: {
-    color: theme.palette.getContrastText(purple[800]),
-    backgroundColor: purple[800],
-    "&:hover": {
-      backgroundColor: purple[900],
-    },
-  },
-}))(Button);
 
 const useStyles = makeStyles((theme) => ({
   search: {

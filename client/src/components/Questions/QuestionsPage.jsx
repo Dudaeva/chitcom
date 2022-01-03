@@ -5,7 +5,7 @@ import { Telegram as TelegramIcon } from "@mui/icons-material";
 import SearchBar from "./SearchBar";
 import Header from "../Header";
 import {Link, useHistory, useLocation} from "react-router-dom";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { getQuestions } from "../../redux/feautures/questions";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionsPage = () => {
   const classes = useStyles();
-  const { asks, loading, error, askSuccess, pagesCount } = useSelector((store) => store.questions);
+  const { asks, loading, pagesCount } = useSelector((store) => store.questions);
 
   const { text } = useSelector((store) => store.languages);
 

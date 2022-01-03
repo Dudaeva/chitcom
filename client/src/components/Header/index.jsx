@@ -1,5 +1,4 @@
-import {AppBar, InputBase, makeStyles, alpha, Box, Toolbar, Typography} from "@material-ui/core";
-import { Search as SearchIcon, } from "@material-ui/icons";
+import {AppBar, makeStyles, alpha, Box, Toolbar, Typography} from "@material-ui/core";
 import logotype from "../../images/ref-logo.png";
 import {useHistory} from "react-router-dom";
 import HeaderProfileIcon from "./HeaderProfileIcon";

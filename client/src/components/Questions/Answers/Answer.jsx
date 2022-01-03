@@ -5,11 +5,11 @@ import {useSnackbar} from "notistack";
 import {useStyles} from "../SingleQuestionPage";
 import {chooseBest, dislikeAnswer, likeAnswer} from "../../../redux/feautures/answers";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 const Answer = ({item, index, correctTime}) => {
-    const { currentAsk, isSignedIn } = useSelector(store => store.questions);
-    const { liking, disliking, success, error } = useSelector(store => store.answers);
+    const { currentAsk } = useSelector(store => store.questions);
+    const { liking, disliking } = useSelector(store => store.answers);
     const { myData } = useSelector(store => store.auth);
     const dispatch = useDispatch();
     const [state, setState] = useState(0);

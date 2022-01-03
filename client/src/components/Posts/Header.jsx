@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./posts.module.css";
+import styles from "./headerPosts.module.css";
 import logo from "../../images/ref-logo.png";
 import {
   Telegram as TelegramIcon,

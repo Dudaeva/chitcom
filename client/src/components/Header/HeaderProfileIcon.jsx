@@ -24,7 +24,7 @@ const HeaderProfileIcon = () => {
 
     useEffect(() => {
         dispatch(loadUserData());
-    }, [isSignedIn]);
+    }, [dispatch]);
 
     const handleClose = () => {
         setAnchorEl(null);

@@ -93,7 +93,7 @@ function PostPage() {
   return (
     <Grid container className={classes.main}>
       <Header />
-      <SearchIn values={{ textSearch, setTextSearch }} />
+      <Box><SearchIn values={{ textSearch, setTextSearch }} /></Box>
       {loading ? (
         <Typography variant="h4" style={{ margin: "100px auto" }}>
           loading...

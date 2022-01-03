@@ -1,18 +1,13 @@
-import {Box, CardMedia, Grid, IconButton, Paper, Typography} from "@material-ui/core";
-import {BlurOn, Comment as CommentIcon} from "@material-ui/icons";
-import {useDispatch, useSelector} from "react-redux";
+import {Box, Grid, Paper, Typography} from "@material-ui/core";
+import {Comment as CommentIcon} from "@material-ui/icons";
+import {useSelector} from "react-redux";
 import { useStyles } from "../SingleQuestionPage";
-import {BlurCircular, ThumbDown, ThumbUp} from "@mui/icons-material";
 import AddAnswer from "./AddAnswer";
-
-import {chooseBest, dislikeAnswer, likeAnswer} from "../../../redux/feautures/answers";
-import {SnackbarProvider, useSnackbar} from "notistack";
 import Answer from "./Answer";
 
 
 const Answers = ({correctTime}) => {
-    const { currentAsk, isSignedIn } = useSelector(store => store.questions);
-    const { liking, disliking, success, error } = useSelector(store => store.answers);
+    const { currentAsk } = useSelector(store => store.questions);
     const { text } = useSelector(store => store.languages);
 
     const classes = useStyles();

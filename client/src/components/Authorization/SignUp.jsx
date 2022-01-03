@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {
     Paper, SnackbarContent, Snackbar, Input, InputLabel, withStyles,
     FormControl, Avatar, Button, InputAdornment, IconButton, FormControlLabel
