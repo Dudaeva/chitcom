@@ -3,15 +3,22 @@ const Post = require("../models/Post.model");
 module.exports.postsController = {
   addPosts: async (req, res) => {
     try {
-      const { category, author, title, text, review } = req.body;
+      const { id } = req.user
+      const { category, title, text } = req.body;
+      if (!title || !text)
+        return res.status(404).json({ error: "Поля ввода не могут быть пустыми!" });
+
+      const isExists = await Post.findOne({ text });
+      if (isExists)
+        return res.status(404).json({ error: "Такой пост уже существует!" });
+
       const posts = await Post.create({
+        author:id,
         category,
-        author,
         title,
         text,
-        review,
       });
-      res.json(posts);
+      res.status(200).json({success: "Пост успешно добавлен", posts});
     } catch (e) {
       res.json(e);
     }
@@ -26,7 +33,7 @@ module.exports.postsController = {
   },
   deletePosts: async (req, res) => {
     try {
-      await Post.findOneAndRemove(req.params.id);
+      await Post.findByIdAndRemove(req.params.id);
       res.json("Пост удален");
     } catch (e) {
       res.json(e);
@@ -52,8 +59,8 @@ module.exports.postsController = {
     }
   },
   getPostsCategoryId: async (req, res) => {
-    try{
-      const posts = await Post.find({category:req.params.categoryId})
+    try {
+      const posts = await Post.find({ category: req.params.categoryId }).populate("category author")
       if (!posts) {
         return res.status(404).json({
           error: "В данной категории нет постов",

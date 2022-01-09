@@ -5,12 +5,9 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-  Button,
-  withStyles,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { purple } from "@material-ui/core/colors";
 import { makeStyles } from "@material-ui/core/styles";
 import AskQuestion from "./AskQuestion";
 import { useSelector } from "react-redux";

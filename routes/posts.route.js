@@ -1,9 +1,10 @@
 const { Router } = require("express");
 const { postsController } = require("../controllers/posts.controller");
+const authMiddleware = require("../models/middlewares/auth.middleware");
 
 const router = Router();
 
-router.post("/posts", postsController.addPosts);
+router.post("/posts",authMiddleware, postsController.addPosts);
 router.patch("/posts/:id", postsController.updatePosts);
 router.delete("/posts/:id", postsController.deletePosts);
 router.get("/posts", postsController.getPosts);

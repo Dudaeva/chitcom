@@ -6,11 +6,12 @@ import { Box } from "@mui/system";
 import { Pagination } from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
 import Header from "./Header";
-import {getAllPosts,getCategories,getPostsByCategory} from "../../redux/feautures/posts";
+import { getAllPosts,getCategories,getPostsByCategory } from "../../redux/feautures/posts";
 import logo from "../../images/bg-header.svg";
 import AllPostsPage from "./AllPostsPage";
 import chit from "../../images/horizontal_on_white_by_logaster.png";
 import SearchIn from "./Search";
+import CreatePost from "./CreatePost";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -28,11 +29,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "50px",
   },
   mainPost: {
-    marginLeft:24,
-    marginBottom:"30px",
+    marginLeft: 24,
+    marginBottom: "30px",
     minHeight: 500,
     position: "relative",
-    width: 500
+    width: 500,
   },
   category: {
     width: "40%",
@@ -73,6 +74,7 @@ function PostPage() {
 
   const { items, categories, loading } = useSelector((store) => store.posts);
   const { text } = useSelector((store) => store.languages);
+  const { isSignedIn } = useSelector((store) => store.auth);
 
   const handleGetAllPosts = () => {
     dispatch(getAllPosts());
@@ -93,7 +95,9 @@ function PostPage() {
   return (
     <Grid container className={classes.main}>
       <Header />
-      <Box><SearchIn values={{ textSearch, setTextSearch }} /></Box>
+      <Box>
+        <SearchIn values={{ textSearch, setTextSearch }} />
+      </Box>
       {loading ? (
         <Typography variant="h4" style={{ margin: "100px auto" }}>
           loading...
@@ -104,10 +108,16 @@ function PostPage() {
             <Box width="100%" my={9}>
               <Typography variant="h4">{text.posts}</Typography>
               <Typography variant="h5">{text.postsTitle}</Typography>
+
+              <Box>{isSignedIn ? <CreatePost /> : ""}</Box>
+
               <Typography className={classes.catList}>
                 <Button onClick={() => handleGetAllPosts()}>Все</Button>
                 {categories.map((category) => (
-                  <Button onClick={() => handleGetByCategories(category._id)}>
+                  <Button
+                    key={category._id}
+                    onClick={() => handleGetByCategories(category._id)}
+                  >
                     {category.name}
                   </Button>
                 ))}
@@ -120,11 +130,11 @@ function PostPage() {
               })}   бесконечно рендерится если разбит на компонент*/}
               {/* <AllPostsPage /> */}
               {items
-                .filter((item) =>
-                  item.title?.toLowerCase().includes(textSearch.toLowerCase())
+                ?.filter((item) =>
+                  item?.title?.toLowerCase().includes(textSearch.toLowerCase())
                 )
                 .map((post) => (
-                  <Box className={classes.mainPost}>
+                  <Box key={post._id} className={classes.mainPost}>
                     <Box>
                       <img src={chit} className={classes.imglogo} alt="" />
                     </Box>
@@ -133,7 +143,7 @@ function PostPage() {
                         className={classes.category}
                         onClick={() => history.push(`/posts/${post.category._id}`)}
                       >
-                        {post.category.name}
+                        {post.category?.name}
                       </Box>
                       <Box>{correctTime(post.createdAt)}</Box>
                     </Box>
@@ -147,6 +157,7 @@ function PostPage() {
                       <CardMedia
                         image={post.author?.avatar_URI}
                         className={classes.avatar}
+                        component="img"
                       />
                       <Box p={1}>{post.author?.name || post.author?.login}</Box>
                     </Box>

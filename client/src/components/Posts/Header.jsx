@@ -8,6 +8,7 @@ import {
 } from "@mui/icons-material";
 import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router";
+import HeaderProfileIcon from "../Header/HeaderProfileIcon";
 
 function Header() {
   const history = useHistory();
@@ -33,6 +34,9 @@ function Header() {
           </div>
           <div>
             <EmailIcon fontSize="small" color="primary" />
+          </div>
+          <div>
+            <HeaderProfileIcon />
           </div>
         </div>
       </header>

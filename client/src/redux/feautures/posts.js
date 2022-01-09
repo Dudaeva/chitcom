@@ -35,6 +35,13 @@ const reducer = (state = initialState, action) => {
     case "categories/fetch/rejected":
       return {...state, loading:false, error: action.error}
 
+    case "posts/addPost/pending":
+      return {...state, loading: false}
+    case "posts/addPost/fulfilled":
+      return {...state, loading: false, items:[action.payload.posts,...state.items]}
+    case "posts/addPost/rejected":
+      return {...state, loading: false, error: action.error}
+      
       default:
         return state;
   }
@@ -95,5 +102,25 @@ export const getPostsByCategory = (categoryId) => {
     }
   };
 };
+
+export const addPost = (category, title, text) => async (dispatch, getStore) => {
+  dispatch ({type: "posts/addPost/pending"})
+  const store = getStore()
+  try {
+    const res = await fetch("/posts", {
+      method: "POST",
+      body: JSON.stringify({ category, title, text }),
+      headers: {
+        Authorization:  store.auth.token,
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await res.json();
+    
+    dispatch({ type: "posts/addPost/fulfilled", payload: {...json.posts, author: store.auth.myData}});
+  } catch (e) {
+    dispatch ({type: "posts/addPost/rejected", error: e.toString()})
+  }  
+}
 
 export default reducer
