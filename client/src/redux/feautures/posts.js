@@ -42,6 +42,14 @@ const reducer = (state = initialState, action) => {
     case "posts/addPost/rejected":
       return {...state, loading: false, error: action.error}
       
+    case "posts/deletePost/pending":
+      return {...state, loading: false}
+    case "posts/deletePost/fulfilled":
+      return {...state, loading: false, items: state.items.filter((post) => 
+        post.id !== action.payload && post)} 
+    case "posts/deletePost/rejected":
+      return {...state, loading: false, error: action.error}
+
       default:
         return state;
   }
@@ -116,11 +124,32 @@ export const addPost = (category, title, text) => async (dispatch, getStore) => 
       },
     });
     const json = await res.json();
-    
+
     dispatch({ type: "posts/addPost/fulfilled", payload: {...json.posts, author: store.auth.myData}});
+    window.location.reload();
   } catch (e) {
     dispatch ({type: "posts/addPost/rejected", error: e.toString()})
   }  
 }
+
+export const deletePost = (id) => async (dispatch, getStore) => {
+  const store = getStore();
+  dispatch({ type: "posts/deletePost/pending" });
+
+  try {
+    const res = await fetch(`/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: store.auth.token,
+        "Content-Type": "application/json",
+      },
+    });
+    const json = res.json();
+    dispatch({ type: "posts/deletePost/fulfilled", payload: id });
+   window.location.assign('/posts')
+  } catch (e) {
+    dispatch({ type: "posts/deletePost/rejected", error: e.toString() });
+  }
+};
 
 export default reducer

@@ -13,12 +13,12 @@ module.exports.postsController = {
         return res.status(404).json({ error: "Такой пост уже существует!" });
 
       const posts = await Post.create({
-        author:id,
+        author: id,
         category,
         title,
         text,
       });
-      res.status(200).json({success: "Пост успешно добавлен", posts});
+      res.status(200).json({ success: "Пост успешно добавлен", posts });
     } catch (e) {
       res.json(e);
     }
@@ -33,8 +33,13 @@ module.exports.postsController = {
   },
   deletePosts: async (req, res) => {
     try {
-      await Post.findByIdAndRemove(req.params.id);
-      res.json("Пост удален");
+      const { id } = req.params;
+      const post = await Post.findById(id);
+      //if (post.user.toString() === req.user.id) {
+      await post.remove();
+      return res.json({ success: "Пост удален", post });
+      // }
+      // return res.status(401).json({ error: "Ошибка! Нет доступа" });
     } catch (e) {
       res.json(e);
     }
@@ -68,7 +73,7 @@ module.exports.postsController = {
       }
       return res.json(posts);
     } catch (e) {
-      return res.status(400).json({error: e.toString()});
+      return res.status(400).json({ error: e.toString() });
     }
   },
   addReviews: async (req, res) => {

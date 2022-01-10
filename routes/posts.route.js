@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/posts",authMiddleware, postsController.addPosts);
 router.patch("/posts/:id", postsController.updatePosts);
-router.delete("/posts/:id", postsController.deletePosts);
+router.delete("/posts/:id", authMiddleware, postsController.deletePosts);
 router.get("/posts", postsController.getPosts);
 router.get("/post/:postId",postsController.getPostById)
 router.get("/posts/category/:categoryId",postsController.getPostsCategoryId)

@@ -141,7 +141,7 @@ function PostPage() {
                     <Box display="flex" justifyContent="space-between">
                       <Box
                         className={classes.category}
-                        onClick={() => history.push(`/posts/${post.category._id}`)}
+                        onClick={() => handleGetByCategories(post?.category._id)}
                       >
                         {post.category?.name}
                       </Box>
@@ -149,7 +149,7 @@ function PostPage() {
                     </Box>
                     <Box
                       pt={2}
-                      onClick={() => history.push(`/posts/${post._id}`)}
+                      onClick={() => history.push(`/post/${post._id}`)}
                     >
                       <Typography variant="h5">{post.title}</Typography>
                     </Box>

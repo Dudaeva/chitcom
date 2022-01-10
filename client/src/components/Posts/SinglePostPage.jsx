@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Header from "./Header";
-import { Grid, makeStyles, Typography, CardMedia } from "@material-ui/core";
-import { getSinglePost } from "../../redux/feautures/posts";
+import { Grid, makeStyles, CardMedia, Box, Button } from "@material-ui/core";
+import { deletePost, getSinglePost } from "../../redux/feautures/posts";
 
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -41,7 +41,12 @@ function SinglePostPage() {
   const dispatch = useDispatch();
 
   const { loading, currentPost } = useSelector((store) => store.posts);
+  const { myData } = useSelector((store) => store.auth);
   const { postId } = useParams();
+  
+  const handleDeletePost = (id) => {
+    dispatch(deletePost(id))
+  }
 
   useEffect(() => {
     dispatch(getSinglePost(postId));
@@ -63,6 +68,13 @@ function SinglePostPage() {
           <Grid item xs={12} sm={12} className={classes.text}>
             {currentPost?.text}
           </Grid>
+          <Box>
+            {myData?._id === currentPost?.author?._id ? (
+              <Button onClick={() => handleDeletePost(currentPost._id)}>
+                Удалить
+              </Button>
+            ) : ("")}
+          </Box>
         </Grid>
       )}
     </Grid>
