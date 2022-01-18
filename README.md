@@ -1,5 +1,3 @@
-<!-- ## chitcom
-
 ## chitcom 🔎 [CODE][github-link]
 
 <h2 align="center">О проекте</h2>
