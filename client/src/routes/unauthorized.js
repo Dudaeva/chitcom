@@ -27,7 +27,7 @@ const routesList = [
     },
     {
         name: "Один пост",
-        path: "/posts/:postId",
+        path: "/post/:postId",
         component: OnePost,
         exact: true
     },

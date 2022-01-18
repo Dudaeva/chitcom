@@ -26,11 +26,12 @@ const useStyles = makeStyles((theme) => ({
     padding: 24,
     borderRadius: 10,
     textAlign: "center",
+    position:"relative"
   },
   button: {
     width: "60%",
-    height: "18%",
-    marginTop: 25,
+    height: "20%",
+    // marginTop: 25,
   },
   thirdBlock: {
     width: "79%",
@@ -73,7 +74,10 @@ function HomePage() {
                   <Box variant="h6" component="h5" m={3} className={classes.text}>
                    {text.homeFirstBlockTitle}
                   </Box>
-                  <Box>
+                  <Box bottom='30px'
+                      position= 'absolute'
+                      left= '0'
+                      right= '0'>
                     <Button
                         variant="contained"
                         color="primary"
@@ -112,7 +116,10 @@ function HomePage() {
                   {text.homeSecondBlockTitle}
                   </Box>
 
-                  <Box>
+                  <Box bottom='30px'
+                      position= 'absolute'
+                      left= '0'
+                      right= '0'>
                     <Button
                         variant="contained"
                         color="primary"

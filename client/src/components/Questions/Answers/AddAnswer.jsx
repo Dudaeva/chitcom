@@ -1,7 +1,7 @@
-import {Box, Button, IconButton, Typography} from "@material-ui/core";
-import {useRef, useState} from "react";
+import {Box, IconButton} from "@material-ui/core";
+import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Paper, TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import {makeStyles} from "@material-ui/core/styles";
 import {SendOutlined} from "@mui/icons-material";
 import {addAnswer} from "../../../redux/feautures/answers";
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AddAnswer = () => {
-    const { languages: {text}, answers: {error, adding, success} } = useSelector(store => store);
+    const { languages: {text}, answers: {error, adding} } = useSelector(store => store);
     const [reviewInput, setReviewInput] = useState();
     const dispatch = useDispatch();
     const classes = useStyles();

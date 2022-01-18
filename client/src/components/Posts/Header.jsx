@@ -1,7 +1,6 @@
 import React from "react";
-import styles from "./posts.module.css";
+import styles from "./headerPosts.module.css";
 import logo from "../../images/ref-logo.png";
-import { Search } from "@mui/icons-material";
 import {
   Telegram as TelegramIcon,
   WhatsApp as WhatsAppIcon,
@@ -9,6 +8,7 @@ import {
 } from "@mui/icons-material";
 import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router";
+import HeaderProfileIcon from "../Header/HeaderProfileIcon";
 
 function Header() {
   const history = useHistory();
@@ -22,11 +22,10 @@ function Header() {
           </Typography>
         </div>
         <div className={styles.description}>
-          Здесь вы можете поделиться интересными постами и т.д. Просто и с
+          Здесь вы можете поделиться интересными постами. Просто и с
           комфортом :)
         </div>
         <div className={styles.input}>
-          <Search />
           <div>
             <TelegramIcon fontSize="small" color="primary" />
           </div>
@@ -35,6 +34,9 @@ function Header() {
           </div>
           <div>
             <EmailIcon fontSize="small" color="primary" />
+          </div>
+          <div>
+            <HeaderProfileIcon />
           </div>
         </div>
       </header>

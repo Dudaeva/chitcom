@@ -56,7 +56,7 @@ export const getQuestions = (page = 1) => async (dispatch) => {
     const res = await fetch(`/questions?page=${page}`);
     const data = await res.json();
 
-    const {error, success, questions, pagesCount} = data;
+    const {error, questions, pagesCount} = data;
 
     if (error) {
         dispatch({type: "questions/getQuestions/rejected", error});
